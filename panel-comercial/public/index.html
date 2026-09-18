@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Panel Comercial · Retail</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <h1>Panel Comercial</h1>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="sucursales">Sucursales</button>
+    <button class="tab-btn" data-tab="vendedores">Vendedores</button>
+    <button class="tab-btn" data-tab="productos">Productos</button>
+    <button class="tab-btn" data-tab="ventas">Ventas</button>
+    <button class="tab-btn" data-tab="objetivos">Objetivos</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- DASHBOARD -->
+  <section id="tab-dashboard" class="tab-panel active">
+    <div class="dashboard-header">
+      <label class="periodo-label">Período
+        <input type="month" id="dashboard-periodo" />
+      </label>
+    </div>
+
+    <div class="stat-grid" id="stat-tiles"></div>
+
+    <div class="chart-grid">
+      <div class="card">
+        <h2>Ventas por día</h2>
+        <div id="chart-linea" class="chart-wrap"></div>
+      </div>
+      <div class="card">
+        <h2>Ventas por sucursal</h2>
+        <div id="chart-barras" class="chart-wrap"></div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="card">
+        <h2>Ranking de vendedores</h2>
+        <table>
+          <thead><tr><th>Vendedor</th><th class="num">Total vendido</th></tr></thead>
+          <tbody id="tabla-ranking-vendedores"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h2>Productos más vendidos</h2>
+        <table>
+          <thead><tr><th>Producto</th><th class="num">Unidades</th><th class="num">Total</th></tr></thead>
+          <tbody id="tabla-ranking-productos"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icono-alerta">⚠</span> Productos con stock bajo</h2>
+      <table>
+        <thead><tr><th>Producto</th><th class="num">Stock actual</th><th class="num">Stock mínimo</th></tr></thead>
+        <tbody id="tabla-stock-bajo"></tbody>
+      </table>
+      <p class="hint" id="sin-stock-bajo">No hay productos con stock bajo.</p>
+    </div>
+  </section>
+
+  <!-- SUCURSALES -->
+  <section id="tab-sucursales" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-sucursal" class="card">
+        <h2>Nueva sucursal</h2>
+        <label>Nombre <input type="text" id="sucursal-nombre" required /></label>
+        <label>Ciudad <input type="text" id="sucursal-ciudad" /></label>
+        <div class="form-actions"><button type="submit">Agregar sucursal</button></div>
+      </form>
+      <div class="card">
+        <h2>Sucursales</h2>
+        <table>
+          <thead><tr><th>Nombre</th><th>Ciudad</th><th></th></tr></thead>
+          <tbody id="tabla-sucursales"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENDEDORES -->
+  <section id="tab-vendedores" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-vendedor" class="card">
+        <h2>Nuevo vendedor</h2>
+        <label>Nombre <input type="text" id="vendedor-nombre" required /></label>
+        <label>Sucursal <select id="vendedor-sucursal" required></select></label>
+        <div class="form-actions"><button type="submit">Agregar vendedor</button></div>
+      </form>
+      <div class="card">
+        <h2>Vendedores</h2>
+        <table>
+          <thead><tr><th>Nombre</th><th>Sucursal</th><th></th></tr></thead>
+          <tbody id="tabla-vendedores"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section id="tab-productos" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-producto" class="card">
+        <h2>Nuevo producto</h2>
+        <label>Nombre <input type="text" id="producto-nombre" required /></label>
+        <label>Categoría <input type="text" id="producto-categoria" /></label>
+        <label>Precio ($) <input type="number" id="producto-precio" min="0" step="1" /></label>
+        <label>Stock actual <input type="number" id="producto-stock" min="0" step="1" /></label>
+        <label>Stock mínimo (alerta) <input type="number" id="producto-stock-minimo" min="0" step="1" /></label>
+        <div class="form-actions"><button type="submit">Agregar producto</button></div>
+      </form>
+      <div class="card">
+        <h2>Catálogo</h2>
+        <table>
+          <thead><tr><th>Producto</th><th>Categoría</th><th class="num">Precio</th><th class="num">Stock</th><th></th></tr></thead>
+          <tbody id="tabla-productos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAS -->
+  <section id="tab-ventas" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-venta" class="card">
+        <h2>Registrar venta</h2>
+        <label>Fecha <input type="date" id="venta-fecha" required /></label>
+        <label>Sucursal <select id="venta-sucursal" required></select></label>
+        <label>Vendedor <select id="venta-vendedor" required></select></label>
+        <label>Producto <select id="venta-producto" required></select></label>
+        <label>Cantidad <input type="number" id="venta-cantidad" min="1" step="1" value="1" /></label>
+        <label>Precio unitario ($) <input type="number" id="venta-precio" min="0" step="1" /></label>
+        <div class="form-actions"><button type="submit">Registrar venta</button></div>
+      </form>
+      <div class="card">
+        <h2>Últimas ventas</h2>
+        <table>
+          <thead><tr><th>Fecha</th><th>Sucursal</th><th>Vendedor</th><th>Producto</th><th class="num">Cant.</th><th class="num">Total</th><th></th></tr></thead>
+          <tbody id="tabla-ventas"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJETIVOS -->
+  <section id="tab-objetivos" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-objetivo" class="card">
+        <h2>Definir objetivo mensual</h2>
+        <label>Sucursal <select id="objetivo-sucursal" required></select></label>
+        <label>Período <input type="month" id="objetivo-periodo" required /></label>
+        <label>Monto objetivo ($) <input type="number" id="objetivo-monto" min="0" step="1" required /></label>
+        <div class="form-actions"><button type="submit">Guardar objetivo</button></div>
+      </form>
+      <div class="card">
+        <h2>Objetivos cargados</h2>
+        <table>
+          <thead><tr><th>Sucursal</th><th>Período</th><th class="num">Objetivo</th><th></th></tr></thead>
+          <tbody id="tabla-objetivos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

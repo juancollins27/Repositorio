@@ -1,0 +1,14 @@
+{
+  "sucursales": [],
+  "vendedores": [],
+  "productos": [],
+  "ventas": [],
+  "objetivos": [],
+  "nextId": {
+    "sucursales": 1,
+    "vendedores": 1,
+    "productos": 1,
+    "ventas": 1,
+    "objetivos": 1
+  }
+}
