@@ -1,0 +1,14 @@
+{
+  "name": "clases-matematica",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Panel de gestion para una profesora de matematica particular: alumnos, horarios, turnos y facturacion.",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

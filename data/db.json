@@ -1,0 +1,12 @@
+{
+  "alumnos": [],
+  "horarios": [],
+  "turnos": [],
+  "facturas": [],
+  "nextId": {
+    "alumnos": 1,
+    "horarios": 1,
+    "turnos": 1,
+    "facturas": 1
+  }
+}

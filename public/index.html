@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clases de Matemática · Panel de gestión</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <h1>Clases de Matemática</h1>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="alumnos">Alumnos</button>
+    <button class="tab-btn" data-tab="horarios">Horarios</button>
+    <button class="tab-btn" data-tab="turnos">Turnos</button>
+    <button class="tab-btn" data-tab="facturacion">Facturación</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ALUMNOS -->
+  <section id="tab-alumnos" class="tab-panel active">
+    <div class="panel-grid">
+      <form id="form-alumno" class="card">
+        <h2>Nuevo alumno</h2>
+        <input type="hidden" id="alumno-id" />
+        <label>Nombre <input type="text" id="alumno-nombre" required /></label>
+        <label>Apellido <input type="text" id="alumno-apellido" required /></label>
+        <label>Teléfono <input type="text" id="alumno-telefono" /></label>
+        <label>Email <input type="email" id="alumno-email" /></label>
+        <label>Tarifa por hora ($) <input type="number" id="alumno-tarifa" min="0" step="1" /></label>
+        <label>Notas <textarea id="alumno-notas" rows="2"></textarea></label>
+        <div class="form-actions">
+          <button type="submit" id="alumno-submit">Agregar alumno</button>
+          <button type="button" id="alumno-cancelar" class="secondary hidden">Cancelar edición</button>
+        </div>
+      </form>
+
+      <div class="card">
+        <h2>Listado de alumnos</h2>
+        <table>
+          <thead>
+            <tr><th>Nombre</th><th>Contacto</th><th>Tarifa/h</th><th></th></tr>
+          </thead>
+          <tbody id="tabla-alumnos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- HORARIOS -->
+  <section id="tab-horarios" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-horario" class="card">
+        <h2>Agregar franja horaria</h2>
+        <label>Día de la semana
+          <select id="horario-dia">
+            <option value="lunes">Lunes</option>
+            <option value="martes">Martes</option>
+            <option value="miercoles">Miércoles</option>
+            <option value="jueves">Jueves</option>
+            <option value="viernes">Viernes</option>
+            <option value="sabado">Sábado</option>
+            <option value="domingo">Domingo</option>
+          </select>
+        </label>
+        <label>Desde <input type="time" id="horario-inicio" required /></label>
+        <label>Hasta <input type="time" id="horario-fin" required /></label>
+        <div class="form-actions">
+          <button type="submit">Agregar franja</button>
+        </div>
+      </form>
+
+      <div class="card">
+        <h2>Disponibilidad semanal</h2>
+        <div id="grilla-horarios" class="grilla-dias"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURNOS -->
+  <section id="tab-turnos" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-turno" class="card">
+        <h2>Nuevo turno</h2>
+        <label>Alumno
+          <select id="turno-alumno" required></select>
+        </label>
+        <label>Fecha <input type="date" id="turno-fecha" required /></label>
+        <label>Desde <input type="time" id="turno-inicio" required /></label>
+        <label>Hasta <input type="time" id="turno-fin" required /></label>
+        <label>Precio ($) <input type="number" id="turno-precio" min="0" step="1" /></label>
+        <label>Notas <textarea id="turno-notas" rows="2"></textarea></label>
+        <div class="form-actions">
+          <button type="submit">Agendar turno</button>
+        </div>
+      </form>
+
+      <div class="card">
+        <h2>Turnos agendados</h2>
+        <table>
+          <thead>
+            <tr><th>Fecha</th><th>Horario</th><th>Alumno</th><th>Precio</th><th>Estado</th><th></th></tr>
+          </thead>
+          <tbody id="tabla-turnos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTURACIÓN -->
+  <section id="tab-facturacion" class="tab-panel">
+    <div class="panel-grid">
+      <form id="form-factura" class="card">
+        <h2>Generar factura</h2>
+        <label>Alumno
+          <select id="factura-alumno" required></select>
+        </label>
+        <label>Período <input type="month" id="factura-periodo" required /></label>
+        <p class="hint">Se facturan los turnos marcados como "completado" en ese mes que aún no tengan factura.</p>
+        <div class="form-actions">
+          <button type="submit">Generar factura</button>
+        </div>
+      </form>
+
+      <div class="card">
+        <h2>Facturas</h2>
+        <table>
+          <thead>
+            <tr><th>Alumno</th><th>Período</th><th>Total</th><th>Estado</th><th></th></tr>
+          </thead>
+          <tbody id="tabla-facturas"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
