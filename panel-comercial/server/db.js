@@ -12,7 +12,18 @@ const DB_INICIAL = {
   productos: [],
   ventas: [],
   objetivos: [],
-  nextId: { sucursales: 1, vendedores: 1, productos: 1, ventas: 1, objetivos: 1 }
+  productividadMensual: [],
+  productividadExtra: [],
+  quiebresAnalisis: [],
+  nextId: {
+    sucursales: 1,
+    vendedores: 1,
+    productos: 1,
+    ventas: 1,
+    objetivos: 1,
+    productividadMensual: 1,
+    quiebresAnalisis: 1
+  }
 };
 
 function asegurarDB() {
@@ -32,7 +43,7 @@ export function guardarDB(db) {
 }
 
 export function nuevoId(db, coleccion) {
-  const id = db.nextId[coleccion];
+  const id = db.nextId[coleccion] || 1;
   db.nextId[coleccion] = id + 1;
   return id;
 }

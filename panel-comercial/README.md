@@ -38,6 +38,18 @@ Abrí `http://localhost:3000`.
   y las brechas por formato). El período a analizar y contra qué comparar
   (empresa o formato) se elige con los controles de arriba de la pestaña.
 
+- **Quiebres de Stock**: subís un export de ventas por SKU y sucursal (misma
+  estructura que la hoja "Matriz completa": SKU, Departamento, Rubro,
+  Familia, Marca, Descripción, Tam, y una columna de unidades por cada
+  sucursal) y el sistema detecta automáticamente qué SKU "core" (vendidos en
+  10 o más sucursales) tuvieron 0 unidades en 1 o 2 sucursales puntuales —
+  posible quiebre de stock, **sin necesitar cargar stock mínimo por
+  producto**. Muestra ranking de brechas por departamento y por sucursal, y
+  el detalle de cada una. **Viene con un análisis real ya cargado** (el de
+  Kilbel del 1 al 14/09/2026): reproduce exactamente el mismo resultado
+  (916 brechas, mismo ranking por departamento y por sucursal) que el
+  archivo Excel original que hacía este cálculo a mano.
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -97,6 +109,9 @@ indicándole que la raíz del código es esta carpeta:
 | GET/POST | `/api/productividad` | listar / cargar un mes de productividad de una sucursal |
 | DELETE | `/api/productividad/:id` | eliminar un mes cargado |
 | GET | `/api/productividad/resumen?anio=&mesDesde=&mesHasta=` | métricas calculadas, promedio empresa/formato, rankings y brechas |
+| GET | `/api/quiebres` | listar análisis de quiebres importados |
+| POST | `/api/quiebres/importar` | subir un .xlsx (campo `archivo`) y analizarlo |
+| GET/DELETE | `/api/quiebres/:id` | ver / eliminar un análisis guardado |
 
 ## Ideas para seguir extendiendo
 

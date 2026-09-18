@@ -17,6 +17,7 @@
     <button class="tab-btn" data-tab="ventas">Ventas</button>
     <button class="tab-btn" data-tab="objetivos">Objetivos</button>
     <button class="tab-btn" data-tab="productividad">Productividad</button>
+    <button class="tab-btn" data-tab="quiebres">Quiebres de Stock</button>
   </nav>
 </header>
 
@@ -251,6 +252,60 @@
         <table>
           <thead><tr><th>Sucursal</th><th>Período</th><th class="num">Artículos</th><th class="num">Tickets</th><th class="num">Colab.</th><th class="num">Horas</th><th></th></tr></thead>
           <tbody id="tabla-productividad-cargas"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIEBRES DE STOCK -->
+  <section id="tab-quiebres" class="tab-panel">
+    <div class="panel-grid">
+      <div class="card">
+        <h2>Importar análisis</h2>
+        <p class="hint">
+          Subí un export de ventas por SKU y sucursal con la misma estructura que la hoja
+          "Matriz completa" (columnas: SKU (Id), Departamento, Rubro, Familia, Marca, Descripción,
+          Tam, y una columna de unidades por cada sucursal, con el nombre de sucursal igual al
+          cargado en la pestaña Sucursales). El sistema detecta automáticamente qué SKU "core"
+          (vendidos en 10 o más sucursales) tuvieron 0 unidades en 1 o 2 sucursales puntuales —
+          posible quiebre de stock.
+        </p>
+        <form id="form-quiebres-importar">
+          <label>Archivo (.xlsx) <input type="file" id="quiebres-archivo" accept=".xlsx" required /></label>
+          <div class="form-actions"><button type="submit">Analizar archivo</button></div>
+        </form>
+        <p class="hint" id="quiebres-import-estado"></p>
+      </div>
+      <div class="card">
+        <h2>Análisis guardados</h2>
+        <table>
+          <thead><tr><th>Fecha</th><th>Archivo</th><th class="num">SKU</th><th class="num">Brechas</th><th></th></tr></thead>
+          <tbody id="tabla-quiebres-historial"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="quiebres-resultado" class="hidden">
+      <div class="stat-grid" id="quiebres-stat-tiles"></div>
+
+      <div class="chart-grid">
+        <div class="card">
+          <h2>Brechas por departamento</h2>
+          <div id="quiebres-chart-departamentos" class="chart-wrap"></div>
+        </div>
+        <div class="card">
+          <h2>Brechas por sucursal</h2>
+          <div id="quiebres-chart-sucursales" class="chart-wrap"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Detalle de brechas (top 100)</h2>
+        <table>
+          <thead>
+            <tr><th>SKU</th><th>Departamento</th><th>Rubro</th><th>Marca</th><th>Descripción</th><th>Sucursales sin venta</th></tr>
+          </thead>
+          <tbody id="tabla-quiebres-detalle"></tbody>
         </table>
       </div>
     </div>

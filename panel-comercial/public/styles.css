@@ -191,6 +191,8 @@ th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .gridline { stroke: var(--gridline); stroke-width: 1; }
 .baseline { stroke: var(--baseline); stroke-width: 1; }
 
+.hidden { display: none; }
+
 .icono-alerta { color: var(--status-warning); }
 tr.fila-alerta td { color: var(--status-critical); font-weight: 600; }
 

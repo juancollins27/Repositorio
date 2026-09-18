@@ -715,6 +715,158 @@ document.getElementById('form-productividad').addEventListener('submit', async (
   }
 });
 
+// ---------- quiebres de stock ----------
+
+async function cargarHistorialQuiebres() {
+  const historial = await api('/api/quiebres');
+  const tbody = document.getElementById('tabla-quiebres-historial');
+  tbody.innerHTML = historial.length
+    ? historial
+        .map(
+          (a) => `<tr>
+            <td>${new Date(a.fechaImportacion).toLocaleString('es-AR')}</td>
+            <td>${a.nombreArchivo}</td>
+            <td class="num">${a.totalSkusAnalizados}</td>
+            <td class="num">${a.totalBrechas}</td>
+            <td>
+              <button class="link" data-ver-quiebres="${a.id}">Ver</button>
+              <button class="link" data-borrar-quiebres="${a.id}">Eliminar</button>
+            </td>
+          </tr>`
+        )
+        .join('')
+    : '<tr><td colspan="5" class="hint">Todavía no importaste ningún análisis.</td></tr>';
+
+  tbody.querySelectorAll('[data-ver-quiebres]').forEach((btn) => {
+    btn.addEventListener('click', () => mostrarAnalisisQuiebres(btn.dataset.verQuiebres));
+  });
+  tbody.querySelectorAll('[data-borrar-quiebres]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('¿Eliminar este análisis?')) return;
+      await api(`/api/quiebres/${btn.dataset.borrarQuiebres}`, { method: 'DELETE' });
+      await cargarHistorialQuiebres();
+    });
+  });
+
+  if (historial.length) mostrarAnalisisQuiebres(historial[0].id);
+}
+
+async function mostrarAnalisisQuiebres(id) {
+  const a = await api(`/api/quiebres/${id}`);
+  document.getElementById('quiebres-resultado').classList.remove('hidden');
+
+  document.getElementById('quiebres-stat-tiles').innerHTML = `
+    <div class="stat-tile">
+      <div class="label">SKU analizados</div>
+      <div class="value">${a.totalSkusAnalizados.toLocaleString('es-AR')}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Sucursales detectadas</div>
+      <div class="value">${a.totalSucursalesDetectadas}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Brechas core detectadas</div>
+      <div class="value delta-critical">${a.totalBrechas}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Fecha del análisis</div>
+      <div class="value" style="font-size:1.1rem">${new Date(a.fechaImportacion).toLocaleDateString('es-AR')}</div>
+    </div>
+  `;
+
+  renderBarraSimple('quiebres-chart-departamentos', a.rankingDepartamentos.slice(0, 10), 'departamento', 'cantidad');
+  renderBarraSimple('quiebres-chart-sucursales', a.rankingSucursales, 'nombre', 'brechas');
+
+  document.getElementById('tabla-quiebres-detalle').innerHTML = a.brechas
+    .slice(0, 100)
+    .map(
+      (b) => `<tr>
+        <td>${b.sku}</td><td>${b.departamento}</td><td>${b.rubro}</td><td>${b.marca}</td>
+        <td>${b.descripcion} ${b.tam || ''}</td>
+        <td>${b.sucursalesSinVenta.join(', ')}</td>
+      </tr>`
+    )
+    .join('');
+}
+
+function renderBarraSimple(contenedorId, datos, campoNombre, campoValor) {
+  const cont = document.getElementById(contenedorId);
+  if (!datos.length) {
+    cont.innerHTML = '<p class="hint">Sin datos.</p>';
+    return;
+  }
+
+  const ancho = 520, alto = 260;
+  const margen = { top: 24, right: 16, bottom: 70, left: 46 };
+  const w = ancho - margen.left - margen.right;
+  const h = alto - margen.top - margen.bottom;
+
+  const maxValor = Math.max(...datos.map((d) => d[campoValor]), 1);
+  const niveles = ejeYNiveles(maxValor);
+  const maxEje = niveles[niveles.length - 1];
+  const y = (v) => h - (v / maxEje) * h;
+
+  const bandas = w / datos.length;
+  const anchoBarra = Math.min(24, bandas * 0.6);
+
+  const gridlines = niveles
+    .map(
+      (n) => `
+      <line class="gridline" x1="0" y1="${y(n)}" x2="${w}" y2="${y(n)}" />
+      <text class="eje-texto" x="-8" y="${y(n) + 4}" text-anchor="end">${Math.round(n)}</text>`
+    )
+    .join('');
+
+  const barras = datos
+    .map((d, i) => {
+      const cx = bandas * i + bandas / 2;
+      const barX = cx - anchoBarra / 2;
+      const barY = y(d[campoValor]);
+      const barH = h - barY;
+      const nombreCorto = d[campoNombre].length > 14 ? d[campoNombre].slice(0, 13) + '…' : d[campoNombre];
+      return `
+        <rect x="${barX}" y="${barY}" width="${anchoBarra}" height="${Math.max(barH, 0)}" rx="4" fill="var(--series-1)" />
+        <text class="valor-texto" x="${cx}" y="${barY - 6}" text-anchor="middle">${d[campoValor]}</text>
+        <text class="eje-texto" x="${cx}" y="${h + 16}" text-anchor="end" transform="rotate(-40 ${cx} ${h + 16})">${nombreCorto}</text>
+      `;
+    })
+    .join('');
+
+  cont.innerHTML = `
+    <svg viewBox="0 0 ${ancho} ${alto}" width="100%" style="overflow: visible" role="img" aria-label="Ranking">
+      <g transform="translate(${margen.left},${margen.top})">
+        ${gridlines}
+        <line class="baseline" x1="0" y1="${h}" x2="${w}" y2="${h}" />
+        ${barras}
+      </g>
+    </svg>
+  `;
+}
+
+document.getElementById('form-quiebres-importar').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const archivoInput = document.getElementById('quiebres-archivo');
+  const estado = document.getElementById('quiebres-import-estado');
+  if (!archivoInput.files.length) return;
+
+  const formData = new FormData();
+  formData.append('archivo', archivoInput.files[0]);
+
+  estado.textContent = 'Analizando archivo…';
+  try {
+    const res = await fetch('/api/quiebres/importar', { method: 'POST', body: formData });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'error al analizar el archivo');
+    }
+    estado.textContent = '';
+    archivoInput.value = '';
+    await cargarHistorialQuiebres();
+  } catch (err) {
+    estado.textContent = err.message;
+  }
+});
+
 // ---------- inicio ----------
 
 async function iniciar() {
@@ -723,6 +875,7 @@ async function iniciar() {
   await cargarMaestros();
   await cargarDashboard();
   await cargarProductividad();
+  await cargarHistorialQuiebres();
 }
 
 iniciar();

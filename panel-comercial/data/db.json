@@ -1319,6 +1319,6156 @@
     "productos": 1,
     "ventas": 1,
     "objetivos": 1,
-    "productividadMensual": 113
-  }
+    "productividadMensual": 113,
+    "quiebresAnalisis": 3
+  },
+  "quiebresAnalisis": [
+    {
+      "id": 2,
+      "fechaImportacion": "2026-09-18T23:24:51.598Z",
+      "nombreArchivo": "9096e23a-Venta_0_al_14.09.26.xlsx",
+      "totalSkusAnalizados": 7695,
+      "totalSucursalesDetectadas": 12,
+      "totalBrechas": 916,
+      "umbralCore": 10,
+      "rankingDepartamentos": [
+        {
+          "departamento": "Almacen",
+          "cantidad": 315
+        },
+        {
+          "departamento": "Bebidas",
+          "cantidad": 143
+        },
+        {
+          "departamento": "Perfumeria",
+          "cantidad": 140
+        },
+        {
+          "departamento": "Limpieza",
+          "cantidad": 107
+        },
+        {
+          "departamento": "Lacteos",
+          "cantidad": 80
+        },
+        {
+          "departamento": "Congelados",
+          "cantidad": 33
+        },
+        {
+          "departamento": "Carniceria",
+          "cantidad": 22
+        },
+        {
+          "departamento": "Fiambres",
+          "cantidad": 15
+        },
+        {
+          "departamento": "Panificados",
+          "cantidad": 15
+        },
+        {
+          "departamento": "Verduleria",
+          "cantidad": 15
+        },
+        {
+          "departamento": "Pastas",
+          "cantidad": 11
+        },
+        {
+          "departamento": "Pescaderia",
+          "cantidad": 6
+        },
+        {
+          "departamento": "Pollos",
+          "cantidad": 6
+        },
+        {
+          "departamento": "Ferreteria",
+          "cantidad": 5
+        },
+        {
+          "departamento": "Bazar",
+          "cantidad": 3
+        }
+      ],
+      "rankingSucursales": [
+        {
+          "sucursalId": 1,
+          "nombre": "Lopez y Planes",
+          "brechas": 212,
+          "skusVendidos": 4202
+        },
+        {
+          "sucursalId": 11,
+          "nombre": "Juan de Garay",
+          "brechas": 166,
+          "skusVendidos": 3217
+        },
+        {
+          "sucursalId": 6,
+          "nombre": "Uruguay",
+          "brechas": 152,
+          "skusVendidos": 3849
+        },
+        {
+          "sucursalId": 2,
+          "nombre": "Facundo Zuviria",
+          "brechas": 151,
+          "skusVendidos": 3977
+        },
+        {
+          "sucursalId": 9,
+          "nombre": "Javier de la Rosa",
+          "brechas": 133,
+          "skusVendidos": 3300
+        },
+        {
+          "sucursalId": 12,
+          "nombre": "Puerto Plaza",
+          "brechas": 111,
+          "skusVendidos": 3787
+        },
+        {
+          "sucursalId": 7,
+          "nombre": "Gral. Paz",
+          "brechas": 71,
+          "skusVendidos": 5131
+        },
+        {
+          "sucursalId": 5,
+          "nombre": "La Rioja",
+          "brechas": 70,
+          "skusVendidos": 5207
+        },
+        {
+          "sucursalId": 3,
+          "nombre": "Mercado Norte",
+          "brechas": 61,
+          "skusVendidos": 4614
+        },
+        {
+          "sucursalId": 10,
+          "nombre": "Balcarce",
+          "brechas": 57,
+          "skusVendidos": 3643
+        },
+        {
+          "sucursalId": 8,
+          "nombre": "Colastiné",
+          "brechas": 50,
+          "skusVendidos": 6224
+        },
+        {
+          "sucursalId": 4,
+          "nombre": "Corrientes",
+          "brechas": 12,
+          "skusVendidos": 6701
+        }
+      ],
+      "brechas": [
+        {
+          "sku": 30528,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Cereal Mix",
+          "descripcion": "Barra Cereal Mix Light Frutill",
+          "tam": "26 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 40749,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Cereal Mix",
+          "descripcion": "Barra Cereal Mix Frut./choc.",
+          "tam": "26 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 35294,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Julicroc",
+          "descripcion": "Papa Frita S.cr./cib.s/tacc",
+          "tam": "70 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 39657,
+          "departamento": "Almacen",
+          "rubro": "Fideos ",
+          "marca": "Terrabusi",
+          "descripcion": "Fideos L.tallarin",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 36715,
+          "departamento": "Almacen",
+          "rubro": "Gall.arroz Saladas ",
+          "marca": "Molinos Ala",
+          "descripcion": "Tostaditas De Arroz Clasicas",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45128,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Melba",
+          "descripcion": "Galletita Rellena Petit",
+          "tam": "65.5 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 45861,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Cofler",
+          "descripcion": "Galletita Rell.s.bon O Bon",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 46409,
+          "departamento": "Almacen",
+          "rubro": "Harinas ",
+          "marca": "La Ideal",
+          "descripcion": "Harina Trigo 000",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 38428,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "San Ignacio",
+          "descripcion": "Dulce De Leche Repostero",
+          "tam": "410 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 34459,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Julicroc",
+          "descripcion": "Palito Salado",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 2631,
+          "departamento": "Almacen",
+          "rubro": "Vinagres ",
+          "marca": "Halconero",
+          "descripcion": "Vinagre De Alcohol - Pvc",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 17375,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Melba",
+          "descripcion": "Galletita Rellena",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 28459,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Exquisita",
+          "descripcion": "Gelatina Frutilla",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 29272,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Chocoarroz",
+          "descripcion": "Alfajor Arroz Limon",
+          "tam": "22 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 34432,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Julicroc",
+          "descripcion": "Papa Frita Pay S/tacc",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 7310,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Rhodesia",
+          "descripcion": "Obleas C/chocolate Agrup.",
+          "tam": "4 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43465,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Lucchetti",
+          "descripcion": "Arroz Vaporizado - Bolsa",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 34431,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Julicroc",
+          "descripcion": "Papa Frita S/tacc",
+          "tam": "160 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 39550,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "J L",
+          "descripcion": "Mani Salado S/piel",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 43819,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Pescado ",
+          "marca": "Bahia",
+          "descripcion": "Atun Al Natural Bajo Sodio",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 45289,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Chocoarroz",
+          "descripcion": "Alfajor Arroz Pistacho",
+          "tam": "28 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 18642,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Terrabusi",
+          "descripcion": "Alfajor Triple Torta",
+          "tam": "70 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 18771,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Alicante",
+          "descripcion": "Sabor En Polvo Albahaca/ajo",
+          "tam": "30 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 42669,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Oblita",
+          "descripcion": "Obleas Frutilla",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 45193,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Mafalda",
+          "descripcion": "Galletita Triangulito",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45882,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Nestle",
+          "descripcion": "Chocolate C/leche Sve.y Cremos",
+          "tam": "80 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 6037,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Tita",
+          "descripcion": "Obleas C/chocolate Agrup.",
+          "tam": "5 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 7521,
+          "departamento": "Almacen",
+          "rubro": "Sales ",
+          "marca": "Tresal",
+          "descripcion": "Salero Fina Yodada",
+          "tam": "250 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 31737,
+          "departamento": "Almacen",
+          "rubro": "Fideos ",
+          "marca": "San Agustin",
+          "descripcion": "Fideos L.spaguetti",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 29214,
+          "departamento": "Almacen",
+          "rubro": "Fideos ",
+          "marca": "Lucchetti",
+          "descripcion": "Fideos L.tallarin",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 20877,
+          "departamento": "Almacen",
+          "rubro": "Harinas ",
+          "marca": "Lopani",
+          "descripcion": "Harina Maiz Comun",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 40952,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Pescado ",
+          "marca": "Pennisi",
+          "descripcion": "Sardinas En Aceite",
+          "tam": "160 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 24710,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Crackers ",
+          "marca": "Paseo",
+          "descripcion": "Galletitas C/salvado",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 25077,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Vegetales ",
+          "marca": "Bahia",
+          "descripcion": "Champignones En Trozos - Lata",
+          "tam": "184 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 1579,
+          "departamento": "Almacen",
+          "rubro": "Fideos ",
+          "marca": "Galletti",
+          "descripcion": "Fideos N.con Espinaca",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 24878,
+          "departamento": "Almacen",
+          "rubro": "Panificados ",
+          "marca": "El Abasto",
+          "descripcion": "Marineras 5 Cereales",
+          "tam": "140 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 46245,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Takis",
+          "descripcion": "Snack De Maiz Buckin Ranch",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 46697,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Cerealitas",
+          "descripcion": "Galletita Avena/cacao",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 42668,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Oblita",
+          "descripcion": "Obleas Chocolate",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 28458,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Exquisita",
+          "descripcion": "Gelatina Cereza",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43771,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Julicroc",
+          "descripcion": "Papa Frita S.ketchup",
+          "tam": "70 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 29406,
+          "departamento": "Almacen",
+          "rubro": "Harinas ",
+          "marca": "Padoan",
+          "descripcion": "Premezcla S/tacc Pan/pizza",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 42670,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Oblita",
+          "descripcion": "Obleas Vainilla",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 41205,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Pedigree",
+          "descripcion": "Al.perro Adul.razas Peq.carne",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 20718,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Granix-frutigran",
+          "descripcion": "Galletita Tropical",
+          "tam": "250 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 27268,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Pedigree",
+          "descripcion": "Al.perro Adul.razas Peq.pollo",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 43041,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Winka",
+          "descripcion": "Cookies Integ.nja.y Chocolate",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 2077,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Carne ",
+          "marca": "Swift",
+          "descripcion": "Jamon Del Diablo",
+          "tam": "88 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 46022,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Nestle",
+          "descripcion": "Chocolate C/almendras",
+          "tam": "90 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 20716,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Crackers ",
+          "marca": "Granix",
+          "descripcion": "Galletita Salvado S/sal",
+          "tam": "230 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 43021,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "El Talar",
+          "descripcion": "Garbanzos",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 37742,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "San Lucas",
+          "descripcion": "Mix Europeo",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 19252,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Granix",
+          "descripcion": "Cereal Baloncito Chocolate",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 27963,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Vegetales ",
+          "marca": "Bahia",
+          "descripcion": "Champignones Enteros - Lata",
+          "tam": "184 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 46498,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Zafran",
+          "descripcion": "Barra Cereal Caju/sal Marina",
+          "tam": "49 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 39969,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Raza",
+          "descripcion": "Al.gato Adul.carne/pescado/arr",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 26180,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Exquisita",
+          "descripcion": "Helado Chocolate",
+          "tam": "55 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 43822,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Julicroc",
+          "descripcion": "Papa Frita S.provenzal",
+          "tam": "70 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 42925,
+          "departamento": "Almacen",
+          "rubro": "Panificados ",
+          "marca": "Colonia Dorada",
+          "descripcion": "Palitos Integrales",
+          "tam": "140 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 27142,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Pedigree",
+          "descripcion": "Al.perro Adul.carne",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 36158,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Deubel",
+          "descripcion": "Alfajores De Chocolate",
+          "tam": "12 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38272,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Tomates ",
+          "marca": "Arcor",
+          "descripcion": "Salsa Portuguesa - Q.pack",
+          "tam": "340 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 1341,
+          "departamento": "Almacen",
+          "rubro": "Aderezos Y Salsas ",
+          "marca": "Alicante",
+          "descripcion": "Salsa Blanca - Sobre",
+          "tam": "40 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 28612,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Mamina",
+          "descripcion": "Mermelada Light Zapallo - Fco",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 13167,
+          "departamento": "Almacen",
+          "rubro": "Sales ",
+          "marca": "Tresal",
+          "descripcion": "Sal Fina - Est.",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 38219,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Gallo",
+          "descripcion": "Arroz Mix Vegetales - D.pack",
+          "tam": "240 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 17442,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Melba",
+          "descripcion": "Galletita Rellena",
+          "tam": "360 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 42154,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "Zummy",
+          "descripcion": "Pure Mix Frutal - Pouch",
+          "tam": "110 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 37430,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Dolca",
+          "descripcion": "Pr. Cafe Inst.suave + Taza",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 45194,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Mafalda",
+          "descripcion": "Galletita Mini Triangulito",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 44881,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Takis",
+          "descripcion": "Snack De Maiz S.original",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 8863,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Virginia",
+          "descripcion": "Cafe Inst.tor. - Fco.",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 935,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Sopa Crema Arvejas C/chile",
+          "tam": "64 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 16973,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Alicante",
+          "descripcion": "Sopa De La Huerta C/fideos/veg",
+          "tam": "72 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 29422,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Virginia",
+          "descripcion": "Inf.tilo/mznilla/cedron - Saq.",
+          "tam": "25 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 38379,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Orieta",
+          "descripcion": "Mermelada Naranja - Pote",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 41252,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Gold Mundo",
+          "descripcion": "Galletita C/chips Colores",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 42324,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Doritos",
+          "descripcion": "Snack Flaminhot",
+          "tam": "82 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 37353,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Deubel",
+          "descripcion": "Alfajores De Maizena",
+          "tam": "12 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 10343,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Sopa Quick Choclo",
+          "tam": "63 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 37884,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "San Lucas",
+          "descripcion": "Ciruelas Dagen S/carozo",
+          "tam": "130 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 44225,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Virginia",
+          "descripcion": "Cafe Inst.tor.suave - Pouch",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 43038,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Winka",
+          "descripcion": "Cookies Integ.muesli",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 9589,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Vegetales ",
+          "marca": "Cumana",
+          "descripcion": "Palmitos Enteros",
+          "tam": "396 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 31415,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Lays",
+          "descripcion": "Papa Frita Clasica",
+          "tam": "134 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43170,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Caldo Cero Sodio Verdura Cubo",
+          "tam": "6 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 39968,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Raza",
+          "descripcion": "Al.gato Adul.carne/pescado/arr",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 943,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Sopa Crema Choclo C/puerro",
+          "tam": "70 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 23945,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Carne ",
+          "marca": "Swift",
+          "descripcion": "Pate De Jamon Ahumado",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 46215,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Pescado ",
+          "marca": "Bahia",
+          "descripcion": "Caballa Desm.al Natural",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 11845,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Sopa Quick Light Vegetales",
+          "tam": "50 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 42998,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Nestle",
+          "descripcion": "Chocobiscuit Cookies & Cream",
+          "tam": "90 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38220,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Gallo",
+          "descripcion": "Arroz S.queso - D.pack",
+          "tam": "240 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43320,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Cumana",
+          "descripcion": "Semillas Chia - D.pack",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 42315,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Planta Cafe",
+          "descripcion": "Cafe Inst.suave - D.pack",
+          "tam": "160 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 33354,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Mamina",
+          "descripcion": "Mermelada Light Arandanos - Fc",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 809,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Morenita",
+          "descripcion": "Cafe Mol.tor. - Bolsa",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45196,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Mafalda",
+          "descripcion": "Galletita Pastelito Membrillo",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 43793,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Nescafe",
+          "descripcion": "Cafe Espresso - D.pack",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 17603,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Terrabusi",
+          "descripcion": "Galletita Variedad Chocolate",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 45603,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Pescado ",
+          "marca": "Caracas",
+          "descripcion": "Caballa Al Natural",
+          "tam": "425 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 21939,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "Canale",
+          "descripcion": "Duraznos Mitades Light - Lata",
+          "tam": "800 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 909,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Maggi",
+          "descripcion": "Caldo Gallina Cubo",
+          "tam": "6 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 2502,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Virginia",
+          "descripcion": "Inf.menta/peperina - Saq.",
+          "tam": "25 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 10264,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Bonafide",
+          "descripcion": "Cafe Mol.tor.suave - Bolsa",
+          "tam": "250 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 43000,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Nestle",
+          "descripcion": "Chocobiscuit Chocolate",
+          "tam": "90 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38274,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Tomates ",
+          "marca": "Arcor",
+          "descripcion": "Salsa Italiana - Q.pack",
+          "tam": "340 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 26910,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Tomates ",
+          "marca": "Knorr",
+          "descripcion": "Salsa Filetto - Q.pack",
+          "tam": "340 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 45000,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "San Lucas",
+          "descripcion": "Mix Semillas",
+          "tam": "165 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 23535,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Ferrero Rocher",
+          "descripcion": "Bombones T8",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 41611,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Molinos Ala",
+          "descripcion": "Arroz Carnaroli - Caja",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 32756,
+          "departamento": "Almacen",
+          "rubro": "Endulzantes ",
+          "marca": "Hileret",
+          "descripcion": "Edulc.f.clasico Liq. - Bot",
+          "tam": "250 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 34735,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Virginia",
+          "descripcion": "Cafe Nesp.intenso Capsulas",
+          "tam": "52 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 44242,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Nescafe",
+          "descripcion": "Cafe D.g.cortado Capsulas",
+          "tam": "63 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 38277,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Tomates ",
+          "marca": "Arcor",
+          "descripcion": "Salsa Tuco - Q.pack",
+          "tam": "340 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 36780,
+          "departamento": "Almacen",
+          "rubro": "Fideos ",
+          "marca": "Matarazzo",
+          "descripcion": "Fideos G.penne Rigate S/gluten",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 37738,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "San Lucas",
+          "descripcion": "Semillas De Girasol Pelado",
+          "tam": "165 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 27011,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Alicante",
+          "descripcion": "Sopa Campestre C/fideos/veget.",
+          "tam": "68 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 44437,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Cabrales",
+          "descripcion": "Cafe D.g.cortado Capsulas",
+          "tam": "63 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 26213,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Whiskas",
+          "descripcion": "Al.gato Adul.carne",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 31353,
+          "departamento": "Almacen",
+          "rubro": "Aceites Y Grasas ",
+          "marca": "Mazola",
+          "descripcion": "Aceite Maiz",
+          "tam": "900 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 14260,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "Alco",
+          "descripcion": "Coctel 4 Frutas - Lata",
+          "tam": "820 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 34374,
+          "departamento": "Almacen",
+          "rubro": "Gall.arroz Dulces ",
+          "marca": "Molinos Del Bosque",
+          "descripcion": "Gallet. Arroz Dulces",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 38612,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Gallo",
+          "descripcion": "Chips Arroz S.queso",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43877,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Albahaca",
+          "tam": "20 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 37903,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Baked Chips",
+          "descripcion": "Snack Arroz S.jamon Serrano",
+          "tam": "50 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 7019,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Nestle",
+          "descripcion": "Cereal Trix - Caja",
+          "tam": "230 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 46703,
+          "departamento": "Almacen",
+          "rubro": "Estacional Navidad ",
+          "marca": "Bauducco",
+          "descripcion": "Panettone C/chips Choc.mini -",
+          "tam": "80 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 20334,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "La Virginia",
+          "descripcion": "Te Verde Citrus Enso. - Saq.",
+          "tam": "20 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 43533,
+          "departamento": "Almacen",
+          "rubro": "Encurtidos ",
+          "marca": "Marvavic",
+          "descripcion": "Lupinos En Salmuera - Bja.",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43520,
+          "departamento": "Almacen",
+          "rubro": "Encurtidos ",
+          "marca": "Marvavic",
+          "descripcion": "Pepinillos En Vinagre - Fco.",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 2461,
+          "departamento": "Almacen",
+          "rubro": "Complementos Reposteria ",
+          "marca": "Riili",
+          "descripcion": "Vainilla Esencia",
+          "tam": "100 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 44186,
+          "departamento": "Almacen",
+          "rubro": "Panificados ",
+          "marca": "Sachetto",
+          "descripcion": "Grisincitos Multicereales",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 24956,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Exquisita",
+          "descripcion": "Postre Light Chocolate",
+          "tam": "65 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 46216,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Pescado ",
+          "marca": "Bahia",
+          "descripcion": "Caballa Desm.en Aceite",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 42308,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Maggi",
+          "descripcion": "Caldo P/saborizar Carne",
+          "tam": "35 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 38907,
+          "departamento": "Almacen",
+          "rubro": "Galletitas S/tacc ",
+          "marca": "Smams",
+          "descripcion": "Galletitas Crackers C/sem.s/ta",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 39903,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Vizzio",
+          "descripcion": "Chocolate C/leche Y Mani",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 43962,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Barbara",
+          "descripcion": "Gelatina Sin Sabor",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 37444,
+          "departamento": "Almacen",
+          "rubro": "Panificados ",
+          "marca": "Don Satur",
+          "descripcion": "Talitas Mix De Semillas",
+          "tam": "140 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 26365,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Cond.p/milanesas/supremas",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 24957,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Exquisita",
+          "descripcion": "Postre Light D.leche",
+          "tam": "60 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 38613,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Gallo",
+          "descripcion": "Chips Arroz S.pizza",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 46376,
+          "departamento": "Almacen",
+          "rubro": "Aderezos Y Salsas ",
+          "marca": "Kansas",
+          "descripcion": "Salsa Q.chedar Sauce",
+          "tam": "265 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 43460,
+          "departamento": "Almacen",
+          "rubro": "Fideos ",
+          "marca": "Wakas",
+          "descripcion": "Fideos M.fusilli Kale",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 17538,
+          "departamento": "Almacen",
+          "rubro": "Endulzantes ",
+          "marca": "Equalsweet",
+          "descripcion": "Edulcorante Polvo Sobre - Caja",
+          "tam": "100 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 40823,
+          "departamento": "Almacen",
+          "rubro": "Copetin/snack ",
+          "marca": "Via Vita",
+          "descripcion": "Chalitas Clasicas S/tacc",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 38468,
+          "departamento": "Almacen",
+          "rubro": "Harinas ",
+          "marca": "Barbara",
+          "descripcion": "Premezcla P/pizza",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 42688,
+          "departamento": "Almacen",
+          "rubro": "Panificados ",
+          "marca": "Colonia Dorada",
+          "descripcion": "Palitos Cheddar",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 34715,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Gallo",
+          "descripcion": "Arroz 4 Quesos - Caja",
+          "tam": "240 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 6962,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Gallo",
+          "descripcion": "Arroz A La Espanola - Caja",
+          "tam": "240 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 44626,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Orieta",
+          "descripcion": "Mermelada Damasco - Pote",
+          "tam": "420 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 29245,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Bon O Bon",
+          "descripcion": "Bombones Choc.surtidos - Est.",
+          "tam": "255 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 29507,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Vitina",
+          "descripcion": "Alimento C/semola Plus",
+          "tam": "250 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 13297,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Sopa Quick Light Zapallo",
+          "tam": "46 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 37887,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "San Lucas",
+          "descripcion": "Duraznos Enteros S/carozo",
+          "tam": "130 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 2019,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "La Campagnola",
+          "descripcion": "Mermelada Ciruela - Fco.",
+          "tam": "454 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 43514,
+          "departamento": "Almacen",
+          "rubro": "Encurtidos ",
+          "marca": "Marvavic",
+          "descripcion": "Aceitunas Verdes N° 1 - Fco.",
+          "tam": "420 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 29405,
+          "departamento": "Almacen",
+          "rubro": "Harinas ",
+          "marca": "Padoan",
+          "descripcion": "Harina De Arroz S/tacc",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 32757,
+          "departamento": "Almacen",
+          "rubro": "Endulzantes ",
+          "marca": "Hileret",
+          "descripcion": "Edulc.f.clasico Polvo",
+          "tam": "50 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 36176,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Cond.carne Barbacoa",
+          "tam": "27 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 2065,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Carne ",
+          "marca": "Swift",
+          "descripcion": "Pate C/pimienta Verde",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 6979,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Gallo",
+          "descripcion": "Arroz Primavera - Caja",
+          "tam": "240 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 44251,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Caldo Para Saborizar Hongos",
+          "tam": "24 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 38903,
+          "departamento": "Almacen",
+          "rubro": "Galletitas S/tacc ",
+          "marca": "Smams",
+          "descripcion": "Galletita Rell.frutilla S/tacc",
+          "tam": "105 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 16824,
+          "departamento": "Almacen",
+          "rubro": "Galletitas Dulces ",
+          "marca": "Terrabusi",
+          "descripcion": "Galletita Boca De Dama",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 34990,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Pedigree",
+          "descripcion": "Al.perro Adul.razas Peq.",
+          "tam": "1.5 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 43278,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Morenita",
+          "descripcion": "Cafe Inst.tor.- Fco.",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 43900,
+          "departamento": "Almacen",
+          "rubro": "Reposteria ",
+          "marca": "Exquisita",
+          "descripcion": "Mousse Cr.chocolate",
+          "tam": "95 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 42400,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Pipore",
+          "descripcion": "Yerba Mate Despalada",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 27267,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Pedigree",
+          "descripcion": "Al.perro Cach.carne",
+          "tam": "85 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 33684,
+          "departamento": "Almacen",
+          "rubro": "Vinagres ",
+          "marca": "Dino Gourmet",
+          "descripcion": "Aceto Del Litoral - Bot.pl.",
+          "tam": "250 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 30492,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Cond.pollo F.hierbas",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 43020,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "El Talar",
+          "descripcion": "Porotos Alubia",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 27195,
+          "departamento": "Almacen",
+          "rubro": "Endulzantes ",
+          "marca": "Chango",
+          "descripcion": "Azucar - Sobre",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 28611,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Mamina",
+          "descripcion": "Mermelada Light Higos - Fco",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Corrientes"
+          ]
+        },
+        {
+          "sku": 42449,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Aleluya",
+          "descripcion": "Miel Liquida - Pote",
+          "tam": "190 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 37282,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Morenita",
+          "descripcion": "Cafe Nesp.colombia Capsulas",
+          "tam": "52 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 1028,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Vitina",
+          "descripcion": "Alimento Fort.c/semola Plus",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 16559,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Arcor",
+          "descripcion": "Mermelada Red.cal.frutilla - F",
+          "tam": "390 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 37541,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Arcor",
+          "descripcion": "Seleccion De Bombones - Est.",
+          "tam": "228.6 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 42599,
+          "departamento": "Almacen",
+          "rubro": "Lacteos ",
+          "marca": "Svelty",
+          "descripcion": "L.polvo Inst.move Ex.calcio -",
+          "tam": "750 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 38221,
+          "departamento": "Almacen",
+          "rubro": "Arroz ",
+          "marca": "Gallo",
+          "descripcion": "Arroz S.verdeo - D.pack",
+          "tam": "240 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 17367,
+          "departamento": "Almacen",
+          "rubro": "Caldos Y Sopas ",
+          "marca": "Knorr",
+          "descripcion": "Caldo P/saborizar Carne",
+          "tam": "24 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 880,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Kalma",
+          "descripcion": "Cafe Descaf. - Fco.",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 43878,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Mix Curry",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 28613,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Singluko",
+          "descripcion": "Merm.sin Azucar Higos - Frasco",
+          "tam": "360 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 17374,
+          "departamento": "Almacen",
+          "rubro": "Sales ",
+          "marca": "Genser",
+          "descripcion": "Salero Clasica",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 29478,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Knorr",
+          "descripcion": "Cond.pollo Criollo",
+          "tam": "21 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 20434,
+          "departamento": "Almacen",
+          "rubro": "Conservas De Vegetales ",
+          "marca": "Gentleman",
+          "descripcion": "Corazon Alcaucil - Lata",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38373,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Orieta",
+          "descripcion": "Mermelada Light Frutilla - Pot",
+          "tam": "420 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 40690,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Mix Picante",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 43319,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Cumana",
+          "descripcion": "Mix Desayuno - D.pack",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 43950,
+          "departamento": "Almacen",
+          "rubro": "Harinas ",
+          "marca": "Cumana",
+          "descripcion": "Harina De Almendras - D.pack",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 2016,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "La Campagnola",
+          "descripcion": "Mermelada Bc Ciruela - Fco.",
+          "tam": "390 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 30027,
+          "departamento": "Almacen",
+          "rubro": "Lacteos ",
+          "marca": "Nido",
+          "descripcion": "Leche Polvo Forti Grow",
+          "tam": "750 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 38359,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Dolca",
+          "descripcion": "Pr. Cafe Inst.tor.suave+50gr",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38906,
+          "departamento": "Almacen",
+          "rubro": "Galletitas S/tacc ",
+          "marca": "Smams",
+          "descripcion": "Galletitas Crackers S/tacc",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 41207,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Whiskas",
+          "descripcion": "Al.gato Adul.carne",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 42318,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Taragui",
+          "descripcion": "Te Comun - Saq.",
+          "tam": "100 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 32728,
+          "departamento": "Almacen",
+          "rubro": "Aceites Y Grasas ",
+          "marca": "Olivi",
+          "descripcion": "Aceite Uva - Bot",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 39973,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Raza",
+          "descripcion": "Al.perro Cach.carne/leche/cere",
+          "tam": "1.5 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 36813,
+          "departamento": "Almacen",
+          "rubro": "Complementos Reposteria ",
+          "marca": "Nutella",
+          "descripcion": "Crema De Avellanas - Fco",
+          "tam": "350 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 34327,
+          "departamento": "Almacen",
+          "rubro": "Condimentos Y Especias ",
+          "marca": "Alicante",
+          "descripcion": "Mix Crocante P/carnes",
+          "tam": "50 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 21528,
+          "departamento": "Almacen",
+          "rubro": "Complementos Reposteria ",
+          "marca": "Nutella",
+          "descripcion": "Crema De Avellanas - Fco",
+          "tam": "140 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 35200,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Pedigree",
+          "descripcion": "Al.perro Adul.fibras Naturales",
+          "tam": "1.5 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 46375,
+          "departamento": "Almacen",
+          "rubro": "Aderezos Y Salsas ",
+          "marca": "Kansas",
+          "descripcion": "Salsa Alioli Sauce",
+          "tam": "265 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 38901,
+          "departamento": "Almacen",
+          "rubro": "Galletitas S/tacc ",
+          "marca": "Smams",
+          "descripcion": "Galletita Rell.vainilla S/tacc",
+          "tam": "105 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 40507,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Dogui",
+          "descripcion": "Al.perro Adul.car/pol/cer/veg.",
+          "tam": "1.5 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 43315,
+          "departamento": "Almacen",
+          "rubro": "Cereales Y Vegetales S. ",
+          "marca": "Cumana",
+          "descripcion": "Semillas Girasol - D.pack",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 38022,
+          "departamento": "Almacen",
+          "rubro": "Golosinas ",
+          "marca": "Ferrero Rocher",
+          "descripcion": "Bombones T12",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 42726,
+          "departamento": "Almacen",
+          "rubro": "Alimentos Mascotas ",
+          "marca": "Rubicat",
+          "descripcion": "Arena Sanitaria Classic",
+          "tam": "5.3 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 44439,
+          "departamento": "Almacen",
+          "rubro": "Infusiones ",
+          "marca": "Cabrales",
+          "descripcion": "Cafe D.g.latte Capsulas",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 40163,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Singluko",
+          "descripcion": "Merm.diet Arandano C/stevia -",
+          "tam": "360 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 44937,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "El Cosaco",
+          "descripcion": "Anana En Trozos - Lata",
+          "tam": "850 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 43897,
+          "departamento": "Almacen",
+          "rubro": "Vinagres ",
+          "marca": "Cocinero",
+          "descripcion": "Aderezo Clasico P/ensaladas",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 1774,
+          "departamento": "Almacen",
+          "rubro": "Frutas ",
+          "marca": "Gentleman",
+          "descripcion": "Ananas Rodajas - Lata",
+          "tam": "820 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 40453,
+          "departamento": "Almacen",
+          "rubro": "Dulces Y Mermeladas ",
+          "marca": "Serra",
+          "descripcion": "Postre D.d.leche C/choc. P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 30461,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "La Campagnola",
+          "descripcion": "Jugo Bc Nja.dulce - Sobre",
+          "tam": "9.5 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 45477,
+          "departamento": "Bebidas",
+          "rubro": "Aguas Y Sodas ",
+          "marca": "Estambul",
+          "descripcion": "Soda Des.- Bot.",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 46354,
+          "departamento": "Bebidas",
+          "rubro": "Gaseosas ",
+          "marca": "7 Up",
+          "descripcion": "Gaseosa L.limon Des.- Pet",
+          "tam": "2 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 45372,
+          "departamento": "Bebidas",
+          "rubro": "Gaseosas ",
+          "marca": "Pepsi",
+          "descripcion": "Gaseosa Cola Black Des.- Pet",
+          "tam": "3 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 45188,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Quilmes B.cero",
+          "descripcion": "Cerveza - Lata",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45925,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Colon Selecto",
+          "descripcion": "Vino Durazno Fresco",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 24193,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Corona",
+          "descripcion": "Cerveza Rubia - Bot.",
+          "tam": "710 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 42621,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Stella Artois",
+          "descripcion": "Cerveza Rubia S/alcohol - Lata",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 41129,
+          "departamento": "Bebidas",
+          "rubro": "Espumantes ",
+          "marca": "Mumm",
+          "descripcion": "Vino Espumante Ex.brut - Lata",
+          "tam": "269 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 45234,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Clight",
+          "descripcion": "Jugo Pom.hibiscus S/azuc.- Sob",
+          "tam": "8 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 40684,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Baggio Pronto",
+          "descripcion": "Jugo Mix Frutal - Tetra",
+          "tam": "200 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 42816,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Blue Moon",
+          "descripcion": "Cerveza Rubia - Lata",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43734,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Oveja Black",
+          "descripcion": "Vino Chardonnay",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 293,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Baggio Pronto",
+          "descripcion": "Jugo Multifruta - Tetra",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 40554,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Imperial",
+          "descripcion": "Cerveza Rubia Golden - Lata",
+          "tam": "710 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 235,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Santa Fe",
+          "descripcion": "Cerveza Ret.rubia",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 33965,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Los Cardos",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 39447,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Quilmes",
+          "descripcion": "Cerveza Rubia 0% Lata X473 Pac",
+          "tam": "6 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 22619,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Portillo",
+          "descripcion": "Vino Sauvignon Blanc",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 140,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Mocoreta",
+          "descripcion": "Jugo Pomelo - Pet",
+          "tam": "1.5 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 21218,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Septima",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 38123,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "La Campagnola",
+          "descripcion": "Jugo Bc Pomelo Rosado - Sobre",
+          "tam": "9.5 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 41130,
+          "departamento": "Bebidas",
+          "rubro": "Espumantes ",
+          "marca": "Mumm",
+          "descripcion": "Vino Espumante L.spritz - Lata",
+          "tam": "269 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 45889,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Estrella Galicia",
+          "descripcion": "Cerveza Lager - Lata",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 287,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Baggio Pronto",
+          "descripcion": "Jugo Naranja - Tetra",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 36843,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Warsteiner",
+          "descripcion": "Cerveza Rubia Lata X473 Pack",
+          "tam": "6 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 40041,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Stella Artois",
+          "descripcion": "Cerveza Rubia S/alcohol - Bot.",
+          "tam": "330 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 27494,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "San Felipe",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 39454,
+          "departamento": "Bebidas",
+          "rubro": "Gaseosas ",
+          "marca": "Paso/toros",
+          "descripcion": "Gaseosa Tonica - Lata",
+          "tam": "269 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 37776,
+          "departamento": "Bebidas",
+          "rubro": "Isotonicas/energizantes ",
+          "marca": "Speed",
+          "descripcion": "Beb.energ.gas. - Lata",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45321,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Sin Palabras",
+          "descripcion": "Vino Cabernet Sauvignon",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 42517,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Profugo",
+          "descripcion": "Vino Chenin Dulce",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 9359,
+          "departamento": "Bebidas",
+          "rubro": "Espumantes ",
+          "marca": "1888",
+          "descripcion": "Sidra",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 22802,
+          "departamento": "Bebidas",
+          "rubro": "Amargos ",
+          "marca": "Fund. Favaloro",
+          "descripcion": "Amargo C/limon 0% Azucar",
+          "tam": "1.5 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 45300,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Corona",
+          "descripcion": "Cerveza Rubia - Lata",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 18900,
+          "departamento": "Bebidas",
+          "rubro": "Aguas Y Sodas ",
+          "marca": "Villa Del Sur",
+          "descripcion": "Agua S.pomelo - Pet",
+          "tam": "1.5 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 148,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Frescor",
+          "descripcion": "Jugo Pomelo Azuc. - Pet",
+          "tam": "980 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 33136,
+          "departamento": "Bebidas",
+          "rubro": "Amargos ",
+          "marca": "Cormillot",
+          "descripcion": "Amargo C/citrus 0% Azucar",
+          "tam": "1.5 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 43369,
+          "departamento": "Bebidas",
+          "rubro": "Gaseosas ",
+          "marca": "Pepsi",
+          "descripcion": "Gaseosa Cola Black Des.- Pet",
+          "tam": "500 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 18472,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Benjamin",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 20991,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Santa Julia",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 44634,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Tang",
+          "descripcion": "Jugo Mandarina - Sobre",
+          "tam": "15 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 33558,
+          "departamento": "Bebidas",
+          "rubro": "Espumantes ",
+          "marca": "Salentein",
+          "descripcion": "Vino Espumante B.nature",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 33958,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Los Cardos",
+          "descripcion": "Vino Chardonnay",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 105,
+          "departamento": "Bebidas",
+          "rubro": "Gaseosas ",
+          "marca": "7 Up",
+          "descripcion": "Gaseosa L.limon Des.- Lata",
+          "tam": "354 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 27466,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Citric",
+          "descripcion": "Jugo Naranja C/pulpa - Tetra",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 45438,
+          "departamento": "Bebidas",
+          "rubro": "Aperitivos ",
+          "marca": "Gancia",
+          "descripcion": "Americano S/alc. Lata X473 Pac",
+          "tam": "6 U ",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 38893,
+          "departamento": "Bebidas",
+          "rubro": "Isotonicas/energizantes ",
+          "marca": "Monster",
+          "descripcion": "Beb.energ.gas.ultra.s/az.- Lat",
+          "tam": "473 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 35807,
+          "departamento": "Bebidas",
+          "rubro": "Espumantes ",
+          "marca": "Maria Codorniu",
+          "descripcion": "Vino Espumante B.nature",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 458,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Etchart Privado",
+          "descripcion": "Vino Torrontes",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 44053,
+          "departamento": "Bebidas",
+          "rubro": "Gaseosas ",
+          "marca": "7 Up",
+          "descripcion": "Gaseosa L.limon Des.s/az.- Pet",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 33111,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Finca Flichman",
+          "descripcion": "Vino Malbec Reserva",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 34869,
+          "departamento": "Bebidas",
+          "rubro": "Isotonicas/energizantes ",
+          "marca": "Gatorade",
+          "descripcion": "Beb.isot.fruta Tropical - Pet",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38259,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Tang",
+          "descripcion": "Jugo Uva - Sobre",
+          "tam": "18 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 28105,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Tang",
+          "descripcion": "Jugo Pera - Sobre",
+          "tam": "18 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 39381,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Arcor",
+          "descripcion": "Jugo Frutilla - Sobre",
+          "tam": "15 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 42738,
+          "departamento": "Bebidas",
+          "rubro": "Cervezas ",
+          "marca": "Michelob",
+          "descripcion": "Cerveza Rubia Light S/tacc Lat",
+          "tam": "6 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 27230,
+          "departamento": "Bebidas",
+          "rubro": "Isotonicas/energizantes ",
+          "marca": "Gatorade",
+          "descripcion": "Beb.isot.naranja - Pet",
+          "tam": "1.25 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 15872,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Latitud 33",
+          "descripcion": "Vino Chardonnay",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 33479,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Estancia Mendoza",
+          "descripcion": "Vino Dulce Chenin-chardonnay",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 45142,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Big C",
+          "descripcion": "Jugo Multifrutal - Tetra",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 42782,
+          "departamento": "Bebidas",
+          "rubro": "Aguas Y Sodas ",
+          "marca": "Sierra De Los Padres",
+          "descripcion": "Agua S. Naranja - Pet",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 292,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Baggio Pronto",
+          "descripcion": "Jugo Durazno - Tetra",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 45578,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Safari",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 26270,
+          "departamento": "Bebidas",
+          "rubro": "Aguas Y Sodas ",
+          "marca": "Villa Del Sur",
+          "descripcion": "Agua S.pera - Pet",
+          "tam": "1.5 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 26932,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Valderrobles",
+          "descripcion": "Vino Tinto Magnum",
+          "tam": "1125 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 43155,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Oveja Black",
+          "descripcion": "Vino Red Blend",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 41201,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Callia",
+          "descripcion": "Vino Sauvignon Blanc",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 25813,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Elementos",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 19236,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Frescor",
+          "descripcion": "Jugo Mandarina Azuc. -  Pet",
+          "tam": "980 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 289,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Baggio Pronto",
+          "descripcion": "Jugo Manzana Roja - Tetra",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 25445,
+          "departamento": "Bebidas",
+          "rubro": "Aperitivos ",
+          "marca": "Campari",
+          "descripcion": "Aperitivo",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 17746,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Latitud 33",
+          "descripcion": "Vino Sauvignon Blanc",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 21662,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Estancia Mendoza",
+          "descripcion": "Vino Cabernet-malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 27001,
+          "departamento": "Bebidas",
+          "rubro": "Isotonicas/energizantes ",
+          "marca": "Powerade",
+          "descripcion": "Beb.isot.f.tropicales - Pet",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 33336,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Familia Gascon",
+          "descripcion": "Vino Chardonnay",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 28525,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Tang",
+          "descripcion": "Jugo Anana - Sobre",
+          "tam": "18 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 31444,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Dilema",
+          "descripcion": "Vino Rosado Dulce Natural",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 35913,
+          "departamento": "Bebidas",
+          "rubro": "Aperitivos ",
+          "marca": "Branca",
+          "descripcion": "Fernet",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 37897,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "Tratenfu",
+          "descripcion": "Alim.almendras Original - Tetr",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 31198,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Los Pasos",
+          "descripcion": "Vino Malbec",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 42454,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Septima",
+          "descripcion": "Vino Malbec",
+          "tam": "375 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 23918,
+          "departamento": "Bebidas",
+          "rubro": "Isotonicas/energizantes ",
+          "marca": "Powerade",
+          "descripcion": "Beb.isot.m.blast- Pet",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 38365,
+          "departamento": "Bebidas",
+          "rubro": "Vinos Finos-selec-reserva ",
+          "marca": "Partridge",
+          "descripcion": "Vino Red Blend",
+          "tam": "750 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 42540,
+          "departamento": "Bebidas",
+          "rubro": "Aperitivos ",
+          "marca": "Ramazzotti",
+          "descripcion": "Aperitivo Rosato",
+          "tam": "700 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 23487,
+          "departamento": "Bebidas",
+          "rubro": "Jugos Y Concentrados ",
+          "marca": "La Campagnola",
+          "descripcion": "Jugo Naranja Bc - Tetra",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 36390,
+          "departamento": "Carniceria",
+          "rubro": "Carnes De Cerdo ",
+          "marca": "Cerdo",
+          "descripcion": "Alita De Pecho",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 36391,
+          "departamento": "Carniceria",
+          "rubro": "Carnes De Cerdo ",
+          "marca": "Cerdo",
+          "descripcion": "Alita De Pecho P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 21621,
+          "departamento": "Carniceria",
+          "rubro": "Carnes De Cerdo ",
+          "marca": "Cerdo",
+          "descripcion": "Lomo",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 8531,
+          "departamento": "Carniceria",
+          "rubro": "Preparados ",
+          "marca": "Kilbel",
+          "descripcion": "Milanesa De Carne S/sal P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 3161,
+          "departamento": "Carniceria",
+          "rubro": "Achuras ",
+          "marca": ".",
+          "descripcion": "Quijada",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 3229,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Donzelli",
+          "descripcion": "Salchicha Snack P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 4574,
+          "departamento": "Carniceria",
+          "rubro": "Preparados ",
+          "marca": "Kilbel",
+          "descripcion": "Brochettes Mixtos P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 3231,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Kilbel",
+          "descripcion": "Salchicha Criolla P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 3166,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Kilbel",
+          "descripcion": "Chorizo Especial P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 15414,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Piccioni",
+          "descripcion": "Morcilla Parrillera P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 3170,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Piccioni",
+          "descripcion": "Chorizo Colorado",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 35057,
+          "departamento": "Carniceria",
+          "rubro": "Achuras ",
+          "marca": ".",
+          "descripcion": "Molleja. Congelada P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 3236,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Donzelli",
+          "descripcion": "Pate",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 3237,
+          "departamento": "Carniceria",
+          "rubro": "Chacinados ",
+          "marca": "Donzelli",
+          "descripcion": "Pate P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Corrientes"
+          ]
+        },
+        {
+          "sku": 44674,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Franui",
+          "descripcion": "Frambuesas Ban.ch.c/leche/bco.",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 44673,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Franui",
+          "descripcion": "Frambuesas Ban.ch.amargo/bco.",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 34851,
+          "departamento": "Congelados",
+          "rubro": "De Pollo ",
+          "marca": "Paladini",
+          "descripcion": "Medallones De Pollo Esp.y Ques",
+          "tam": "170 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 31038,
+          "departamento": "Congelados",
+          "rubro": "De Verdura ",
+          "marca": "Lucchetti",
+          "descripcion": "Milanesa Soja X 4",
+          "tam": "290 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 40819,
+          "departamento": "Congelados",
+          "rubro": "De Carne Vacuna ",
+          "marca": "Paty",
+          "descripcion": "Hamburguesas X 4 Und",
+          "tam": "288 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 31718,
+          "departamento": "Congelados",
+          "rubro": "De Verdura ",
+          "marca": "Granja Del Sol",
+          "descripcion": "Arveja",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 26678,
+          "departamento": "Congelados",
+          "rubro": "De Verdura ",
+          "marca": "Vida Sana",
+          "descripcion": "Milanesa Soja Espinaca X4",
+          "tam": "250 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 45460,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Franui",
+          "descripcion": "Frambuesas Ban.free",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 36570,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Cool Cream",
+          "descripcion": "Helado 2 Gustos Premium - Pote",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 21660,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Veneto",
+          "descripcion": "Palito Bombon 8x50gr",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 28334,
+          "departamento": "Congelados",
+          "rubro": "De Verdura ",
+          "marca": "Granja Del Sol",
+          "descripcion": "Milanesas De Soja Caseras",
+          "tam": "330 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 38596,
+          "departamento": "Congelados",
+          "rubro": "De Verdura ",
+          "marca": "Granja Del Sol",
+          "descripcion": "Medallon Quinoa/espinaca",
+          "tam": "420 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 37341,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Veneto",
+          "descripcion": "Palitos Frutales 10x70gr",
+          "tam": "700 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 38597,
+          "departamento": "Congelados",
+          "rubro": "De Verdura ",
+          "marca": "Granja Del Sol",
+          "descripcion": "Medallon Garbanzos/calabaza",
+          "tam": "420 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 34925,
+          "departamento": "Congelados",
+          "rubro": "Helados ",
+          "marca": "Cool Cream",
+          "descripcion": "Helado 4 Gustos Clasicos - Pot",
+          "tam": "1500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 25061,
+          "departamento": "Ferreteria",
+          "rubro": "Pilas ",
+          "marca": "Energizer",
+          "descripcion": "Pilas Chicas Aa",
+          "tam": "2 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 9151,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Feteados ",
+          "marca": "Paladini",
+          "descripcion": "Jamon Cocido Feteado",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 21969,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Feteados ",
+          "marca": "Lario",
+          "descripcion": "Jamon Cocido Feteado",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 1539,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Familiares ",
+          "marca": "Lario",
+          "descripcion": "Salchichon C/jamon Fliar",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 35278,
+          "departamento": "Fiambres",
+          "rubro": "Embutidos Secos ",
+          "marca": "Linea Rafaela",
+          "descripcion": "Salame Chacra P.grueso",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 35580,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Familiares ",
+          "marca": "Paladini",
+          "descripcion": "Mortadela Familiar C/queso",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 14405,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Por Pieza ",
+          "marca": "Recreo",
+          "descripcion": "Pastron P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 3354,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Por Pieza ",
+          "marca": "Recreo",
+          "descripcion": "Jamon Crudo P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 39859,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Por Pieza ",
+          "marca": "Paladini",
+          "descripcion": "Arrollado De Pollo P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 18892,
+          "departamento": "Fiambres",
+          "rubro": "Embutidos Secos ",
+          "marca": "Ataliva",
+          "descripcion": "Salame Colono P.gr.e.vacio",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 1449,
+          "departamento": "Fiambres",
+          "rubro": "Fiambres Por Pieza ",
+          "marca": "Recreo",
+          "descripcion": "Salame Colono Por Metro P.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 136,
+          "departamento": "Lacteos",
+          "rubro": "Mantecas ",
+          "marca": "Milkaut",
+          "descripcion": "Manteca Pan Alum.cal.ex. - Paq",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 45610,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur Cr.natural - Pote",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 40635,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Ilolay Kids",
+          "descripcion": "Flan Vain.c/caram.y Ddl - Pote",
+          "tam": "110 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 35100,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Tregar",
+          "descripcion": "Yogur Sab.ent.dce.leche - P",
+          "tam": "125 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38946,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur Cr.ent.vain.- Pote",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 43951,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "La Quesera",
+          "descripcion": "Queso Unt.c/jamon",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 45611,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur Cr.natural Balance - Pot",
+          "tam": "300 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 11607,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Tregar",
+          "descripcion": "Arroz Leche Des.- Pote",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 43275,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur Cremoso Vain. - Pack",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 9357,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "Tregar",
+          "descripcion": "Queso Unt.descremado",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 45525,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Beb.ent.frut.n.act.- Sac",
+          "tam": "900 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 45560,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Batido Des.vain.n.act.-",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 45557,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur C/rocklets S.nat.n.act.",
+          "tam": "164 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45566,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Firme Ent.frut.n.act.- P",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 43276,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur Cremoso Frut. - Pack",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 39066,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur C/cereal Ent.vain.- Pote",
+          "tam": "155 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 35646,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "Crematto",
+          "descripcion": "Queso Unt.crema Clasico",
+          "tam": "285 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 37300,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur C/fruta Ent.dzno. - Pack",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 45521,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Firme Ent.vain.n.act.- P",
+          "tam": "190 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 46778,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ser",
+          "descripcion": "Yogur Beb.pro+ Banana",
+          "tam": "190 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 17828,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Milkaut",
+          "descripcion": "Yogur C/fruta 0% Frut.- Pote",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 45562,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Batido Ent.dzno.n.act.-",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 45564,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Batido Ent.frut.n.act.-",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 43731,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Tregar",
+          "descripcion": "Yogur Batido Ent.c/cafe",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 37299,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur C/fruta 0% Frut. - Pack",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 45523,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "La Serenisima",
+          "descripcion": "Yogur Beb.ent.dzno.n.act.- Sac",
+          "tam": "900 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 31858,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Danonino",
+          "descripcion": "Alim.lacteo.beb.frut. - Bot.",
+          "tam": "185 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 35669,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Danette",
+          "descripcion": "Postre C/crema+choc.- Pote",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 37167,
+          "departamento": "Lacteos",
+          "rubro": "Cremas De Leche ",
+          "marca": "La Serenisima",
+          "descripcion": "Crema De Leche P/batir - T.pac",
+          "tam": "200 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 7954,
+          "departamento": "Lacteos",
+          "rubro": "Quesos Pasta Descremada ",
+          "marca": "Tregar",
+          "descripcion": "Queso Por Salut S/sal Trz.",
+          "tam": "1 KG",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 37222,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur Beb Ent.frut. - Bot.",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 37223,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur Beb Ent.vain. - Bot.",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 37298,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur C/fruta 0% Dzno. - Pack",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 37225,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur Beb Des.frut. - Bot.",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 19863,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Danette",
+          "descripcion": "Postre Cr.amer.2x95 - Pack",
+          "tam": "190 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 19358,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "Milkaut",
+          "descripcion": "Queso Unt.light Clasico",
+          "tam": "190 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 46227,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Danette",
+          "descripcion": "Postre Pistacho 2x95 - Pack",
+          "tam": "190 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 35670,
+          "departamento": "Lacteos",
+          "rubro": "Postres Lacteos ",
+          "marca": "Danette",
+          "descripcion": "Postre C/crema+dce.leche - Pot",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 37226,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur Beb Des.vain. - Bot.",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 39921,
+          "departamento": "Lacteos",
+          "rubro": "Mantecas ",
+          "marca": "La Serenisima",
+          "descripcion": "Manteca Pan Light - Paq.",
+          "tam": "200 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 46026,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay Kids",
+          "descripcion": "Yogur Beb.vain.peppa Pig",
+          "tam": "185 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 20634,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay Kids",
+          "descripcion": "Yogur C/cereal Ent. - Pote",
+          "tam": "160 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 37224,
+          "departamento": "Lacteos",
+          "rubro": "Yogurt ",
+          "marca": "Ilolay",
+          "descripcion": "Yogur Beb Ent.dzno. - Bot.",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 39461,
+          "departamento": "Lacteos",
+          "rubro": "Quesos Pasta Especiales ",
+          "marca": "Bavaria",
+          "descripcion": "Queso Azul Trozado",
+          "tam": "125 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 9354,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "Tregar",
+          "descripcion": "Queso Unt.c/jamon",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 13727,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "Tregar",
+          "descripcion": "Queso Unt.c/salame",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 22845,
+          "departamento": "Lacteos",
+          "rubro": "Untables Y Fundidos ",
+          "marca": "Adler",
+          "descripcion": "Queso .gruyere",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 46439,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Esencial",
+          "descripcion": "Limpiador Liq.fr.de Mar",
+          "tam": "900 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 2961,
+          "departamento": "Limpieza",
+          "rubro": "Lavandinas ",
+          "marca": "Dingo",
+          "descripcion": "Lavandina Tradicional - Bot.pl",
+          "tam": "2 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 27373,
+          "departamento": "Limpieza",
+          "rubro": "Detergentes Lavavajillas ",
+          "marca": "Magistral",
+          "descripcion": "Deterg. Liq.ultra Limon",
+          "tam": "300 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 37641,
+          "departamento": "Limpieza",
+          "rubro": "Papel Higienico ",
+          "marca": "Vual",
+          "descripcion": "Papel Higienico D.hoja 4x20mt",
+          "tam": "4 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 46438,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Esencial",
+          "descripcion": "Limpiador Liq.d.de Bebe",
+          "tam": "900 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 30599,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Procenex",
+          "descripcion": "Limpiador Liq.jazmin",
+          "tam": "900 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 3925,
+          "departamento": "Limpieza",
+          "rubro": "Bolsas ",
+          "marca": "Super",
+          "descripcion": "Bolsas Residuos 40x50cm",
+          "tam": "30 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 42966,
+          "departamento": "Limpieza",
+          "rubro": "Limpiadores ",
+          "marca": "Cif",
+          "descripcion": "Limp. Liq.bano Expert - D.pack",
+          "tam": "450 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 31119,
+          "departamento": "Limpieza",
+          "rubro": "Jabon Para Ropa ",
+          "marca": "Zorro",
+          "descripcion": "J.liquido Lav.aut.c/bic.- D.pa",
+          "tam": "800 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 39434,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Poett",
+          "descripcion": "Limp. Liq.desinf.s.algodon - B",
+          "tam": "900 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 46205,
+          "departamento": "Limpieza",
+          "rubro": "Jabon Para Ropa ",
+          "marca": "Granby Matic",
+          "descripcion": "J.liquido Lav.aut.rosas P/dilu",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 3926,
+          "departamento": "Limpieza",
+          "rubro": "Bolsas ",
+          "marca": "Super",
+          "descripcion": "Bolsas Residuos 45x55cm",
+          "tam": "30 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 43192,
+          "departamento": "Limpieza",
+          "rubro": "Lavandinas ",
+          "marca": "Vim",
+          "descripcion": "Lavandina Gel Original",
+          "tam": "700 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 29645,
+          "departamento": "Limpieza",
+          "rubro": "Insecticidas ",
+          "marca": "Fuyi",
+          "descripcion": "Tabletas - Caja",
+          "tam": "24 U ",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 31807,
+          "departamento": "Limpieza",
+          "rubro": "Jabones Para Ropa ",
+          "marca": "G. Federal",
+          "descripcion": "Jabon Pan Ropa Fina/delicada",
+          "tam": "150 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 10938,
+          "departamento": "Limpieza",
+          "rubro": "Insecticidas ",
+          "marca": "Sectisol-77",
+          "descripcion": "Insect. Liq.b.acuosa - Bot.pl.",
+          "tam": "1 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45712,
+          "departamento": "Limpieza",
+          "rubro": "Lamparas ",
+          "marca": "Bellalux",
+          "descripcion": "Bujia Led B.c.14w",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43376,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Pato",
+          "descripcion": "Desod. Inod.past.citrus",
+          "tam": "25 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 41501,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Glade",
+          "descripcion": "Aromat. Amb.aer.vainilla",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 34860,
+          "departamento": "Limpieza",
+          "rubro": "Lavandinas ",
+          "marca": "Ayudin",
+          "descripcion": "Lavandina Gel Lavanda",
+          "tam": "700 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 38532,
+          "departamento": "Limpieza",
+          "rubro": "Complementos Para Ropa ",
+          "marca": "Ayudin",
+          "descripcion": "Quitamanchas Ropa Col. - D.pac",
+          "tam": "400 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 2776,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Glade",
+          "descripcion": "Aromat. Amb.aer.camp.lavanda",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 44644,
+          "departamento": "Limpieza",
+          "rubro": "Jabon Para Ropa ",
+          "marca": "Skip",
+          "descripcion": "J.liq.conc.limpieza Act.- D.pa",
+          "tam": "800 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 29270,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Sectisol",
+          "descripcion": "Limp.liquido Lavanda/limon",
+          "tam": "4 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 18952,
+          "departamento": "Limpieza",
+          "rubro": "Bolsas ",
+          "marca": "Limpitas",
+          "descripcion": "Bolsas Freezer 30x40cm",
+          "tam": "30 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 2534,
+          "departamento": "Limpieza",
+          "rubro": "Papel Higienico ",
+          "marca": "Elite",
+          "descripcion": "Papel Higienico 6x30mt",
+          "tam": "6 U ",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 41803,
+          "departamento": "Limpieza",
+          "rubro": "Esponjas ",
+          "marca": "Mortimer",
+          "descripcion": "Esponja Fibra Cuidadosa",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 19352,
+          "departamento": "Limpieza",
+          "rubro": "Fosforos - Velas ",
+          "marca": "Golondrina",
+          "descripcion": "Velas Blancas - Paq.",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 42930,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Cif",
+          "descripcion": "Desinf. Amb.aer.original",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 20728,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Lysoform",
+          "descripcion": "Desinf. Amb.aer.citrica",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 25660,
+          "departamento": "Limpieza",
+          "rubro": "Esponjas ",
+          "marca": "Mortimer",
+          "descripcion": "Esponja Fibra Antibacterias",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 42403,
+          "departamento": "Limpieza",
+          "rubro": "Jabon Para Ropa ",
+          "marca": "Granby Matic",
+          "descripcion": "J.liquido Lav.aut.rosas - D.pa",
+          "tam": "3 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 37120,
+          "departamento": "Limpieza",
+          "rubro": "Lamparas ",
+          "marca": "Osram/ledvance",
+          "descripcion": "Bujia Led B.c Value 5w - E27",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 45324,
+          "departamento": "Limpieza",
+          "rubro": "Complementos Para Ropa ",
+          "marca": "Heroe",
+          "descripcion": "Suavizante Fl.frutales - D.pac",
+          "tam": "3 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 33008,
+          "departamento": "Limpieza",
+          "rubro": "Escobas - Varios ",
+          "marca": "Salzano",
+          "descripcion": "Escobillon Tigre",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 32358,
+          "departamento": "Limpieza",
+          "rubro": "Bolsas ",
+          "marca": "Separata",
+          "descripcion": "Film Adherente X30mt",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 10571,
+          "departamento": "Limpieza",
+          "rubro": "Jabon Para Ropa ",
+          "marca": "Ala Camellito",
+          "descripcion": "J.liq.lav.mano R.fina - D.pack",
+          "tam": "450 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 45711,
+          "departamento": "Limpieza",
+          "rubro": "Lamparas ",
+          "marca": "Bellalux",
+          "descripcion": "Bujia Led B.c.12w",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 27499,
+          "departamento": "Limpieza",
+          "rubro": "Detergentes Lavavajillas ",
+          "marca": "Magistral",
+          "descripcion": "Deterg. Liq.ultra Marina",
+          "tam": "300 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 23939,
+          "departamento": "Limpieza",
+          "rubro": "Pisos ",
+          "marca": "Suiza",
+          "descripcion": "Acondic. Piso - D.pack",
+          "tam": "400 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 43346,
+          "departamento": "Limpieza",
+          "rubro": "Limpiadores ",
+          "marca": "Cif",
+          "descripcion": "Limp. Liq.antigr.expert - Gat.",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 32544,
+          "departamento": "Limpieza",
+          "rubro": "Insecticidas ",
+          "marca": "Raid",
+          "descripcion": "Espirales Country Fresh - Caja",
+          "tam": "12 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 37948,
+          "departamento": "Limpieza",
+          "rubro": "Lamparas ",
+          "marca": "Osram/ledvance",
+          "descripcion": "Bujia Led B.c Value 9w - E27",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 45708,
+          "departamento": "Limpieza",
+          "rubro": "Lamparas ",
+          "marca": "Bellalux",
+          "descripcion": "Bujia Led B.c.9w",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 16728,
+          "departamento": "Limpieza",
+          "rubro": "Limpiadores ",
+          "marca": "Mr Musculo",
+          "descripcion": "Limp. Liq.antigr.ex.power - D.",
+          "tam": "450 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 29871,
+          "departamento": "Limpieza",
+          "rubro": "Insecticidas ",
+          "marca": "Raid",
+          "descripcion": "Espirales - Caja",
+          "tam": "12 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 33080,
+          "departamento": "Limpieza",
+          "rubro": "Cepillos ",
+          "marca": "Salzano",
+          "descripcion": "Cepillo Lavajean",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 37755,
+          "departamento": "Limpieza",
+          "rubro": "Secadores - Varios ",
+          "marca": "Pro-goma",
+          "descripcion": "Secador Goma N28 Negro",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 23316,
+          "departamento": "Limpieza",
+          "rubro": "Lustramuebles ",
+          "marca": "Blem",
+          "descripcion": "Lustra Muebles Lvda. - Aer",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 42927,
+          "departamento": "Limpieza",
+          "rubro": "Limpiadores ",
+          "marca": "Cif",
+          "descripcion": "Limp. Gel Desinfectante",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 22522,
+          "departamento": "Limpieza",
+          "rubro": "Escobas - Varios ",
+          "marca": "Salzano",
+          "descripcion": "Escobilla Wc C/deposito",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 22787,
+          "departamento": "Limpieza",
+          "rubro": "Secadores - Varios ",
+          "marca": "Nazar",
+          "descripcion": "Sopapa Goma 4",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 2907,
+          "departamento": "Limpieza",
+          "rubro": "Guantes ",
+          "marca": "Plastilatex",
+          "descripcion": "Guantes Mediano 8 - 8 1/2",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 22782,
+          "departamento": "Limpieza",
+          "rubro": "Pisos ",
+          "marca": "Suiza",
+          "descripcion": "Cera Liq.roble Oscuro - Bot.",
+          "tam": "850 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43487,
+          "departamento": "Limpieza",
+          "rubro": "Limpiadores ",
+          "marca": "Cif",
+          "descripcion": "Limp. Liq.bano Expert - Gat.",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 27304,
+          "departamento": "Limpieza",
+          "rubro": "Insecticidas ",
+          "marca": "Raid",
+          "descripcion": "Insect. Mmym S/olor - Aer.",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 35956,
+          "departamento": "Limpieza",
+          "rubro": "Guantes ",
+          "marca": "Mapa",
+          "descripcion": "Guantes Plisse Xl-9 1/2 - 10",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 26405,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Procenex",
+          "descripcion": "Limpiador Liq.blanco",
+          "tam": "1.8 LT",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 46480,
+          "departamento": "Limpieza",
+          "rubro": "Lamparas ",
+          "marca": "Osram/ledvance",
+          "descripcion": "Bujia Led B.f Value 3x9w - E27",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 30646,
+          "departamento": "Limpieza",
+          "rubro": "Escobas - Varios ",
+          "marca": "Salzano",
+          "descripcion": "Escoba America",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 24336,
+          "departamento": "Limpieza",
+          "rubro": "Guantes ",
+          "marca": "Mapa",
+          "descripcion": "Guantes Plisse S-6 1/2 - 7",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 2884,
+          "departamento": "Limpieza",
+          "rubro": "Escobas - Varios ",
+          "marca": "Samantha",
+          "descripcion": "Escobillon Reina",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 2803,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Glade Toque",
+          "descripcion": "Aromat. Amb.rep.lavanda",
+          "tam": "12 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 37630,
+          "departamento": "Limpieza",
+          "rubro": "Detergentes Lavavajillas ",
+          "marca": "Magistral",
+          "descripcion": "Deterg. Crem.ultra Limon",
+          "tam": "300 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 41506,
+          "departamento": "Limpieza",
+          "rubro": "Jabon Para Ropa ",
+          "marca": "Zorro",
+          "descripcion": "J.liq.lav.aut.evol.p/diluir Re",
+          "tam": "500 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 20467,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Glade Toque",
+          "descripcion": "Aromat. Amb.rep.c.lvda.2x12cc",
+          "tam": "24 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 9680,
+          "departamento": "Limpieza",
+          "rubro": "Secadores - Varios ",
+          "marca": "Samantha",
+          "descripcion": "Secador Plastico Twin 43cm",
+          "tam": "1 U ",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "La Rioja"
+          ]
+        },
+        {
+          "sku": 39507,
+          "departamento": "Limpieza",
+          "rubro": "Pisos ",
+          "marca": "Ceramicol",
+          "descripcion": "Autobrillo Rojo - Bot.",
+          "tam": "750 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 22520,
+          "departamento": "Limpieza",
+          "rubro": "Limpieza Calzado ",
+          "marca": "Salzano",
+          "descripcion": "Cepillo Pomada C.blanca",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 33270,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Poett",
+          "descripcion": "Desod. Inod.canasta Surtido",
+          "tam": "27.5 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 2906,
+          "departamento": "Limpieza",
+          "rubro": "Guantes ",
+          "marca": "Plastilatex",
+          "descripcion": "Guantes Chico 7 - 7 1/2",
+          "tam": "1 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 15317,
+          "departamento": "Limpieza",
+          "rubro": "Desod. - Desinfectantes ",
+          "marca": "Poett",
+          "descripcion": "Desod. Amb.bebe - Aer.",
+          "tam": "360 CM3",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 38674,
+          "departamento": "Limpieza",
+          "rubro": "Complementos Para Ropa ",
+          "marca": "Poett",
+          "descripcion": "Perfum.p/ropa S.algodon - D.pa",
+          "tam": "250 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 43007,
+          "departamento": "Panificados",
+          "rubro": "Panif. Propia/terceros ",
+          "marca": ".",
+          "descripcion": "Donut Rell.ban.rosa C/granas",
+          "tam": "1 U ",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 34512,
+          "departamento": "Panificados",
+          "rubro": "Panif. Industrial ",
+          "marca": "Gaona",
+          "descripcion": "Magdalenas C/chips Chocolate",
+          "tam": "180 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 39613,
+          "departamento": "Panificados",
+          "rubro": "Panif. Propia/terceros ",
+          "marca": ".",
+          "descripcion": "Donut Rell.ban.choc.c/granas",
+          "tam": "1 U ",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 43567,
+          "departamento": "Panificados",
+          "rubro": "Panif. Industrial ",
+          "marca": "La Francia",
+          "descripcion": "Pan Rustico Tradicional",
+          "tam": "560 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 41841,
+          "departamento": "Panificados",
+          "rubro": "Panif. Industrial ",
+          "marca": "Bimbo",
+          "descripcion": "Pan M.artesano Original",
+          "tam": "500 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 44066,
+          "departamento": "Panificados",
+          "rubro": "Panif. Industrial ",
+          "marca": "Preferido",
+          "descripcion": "Rebozador S/gluten",
+          "tam": "350 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 39950,
+          "departamento": "Panificados",
+          "rubro": "Panif. Industrial ",
+          "marca": "Fichis",
+          "descripcion": "Pan Sandwich X6 Clasico",
+          "tam": "270 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 1817,
+          "departamento": "Pastas",
+          "rubro": "Tapas ",
+          "marca": "Tio P",
+          "descripcion": "Tapas Empanadas Horno",
+          "tam": "350 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 9812,
+          "departamento": "Pastas",
+          "rubro": "Tapas ",
+          "marca": "Tio P",
+          "descripcion": "Tapas Tartas Pascualina",
+          "tam": "430 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Javier de la Rosa"
+          ]
+        },
+        {
+          "sku": 30872,
+          "departamento": "Pastas",
+          "rubro": "Tapas ",
+          "marca": "La Saltena",
+          "descripcion": "Tapas Tartas Balance",
+          "tam": "400 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 30496,
+          "departamento": "Pastas",
+          "rubro": "Tapas ",
+          "marca": "Bimbo",
+          "descripcion": "Panqueque Rapiditas Light",
+          "tam": "275 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 36839,
+          "departamento": "Pastas",
+          "rubro": "Tapas ",
+          "marca": "Tapas",
+          "descripcion": "Tortillas Light (10un)",
+          "tam": "320 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 44876,
+          "departamento": "Pastas",
+          "rubro": "Tapas ",
+          "marca": "Bimbo",
+          "descripcion": "Panqueque Rapiditas Integrales",
+          "tam": "275 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Balcarce"
+          ]
+        },
+        {
+          "sku": 4431,
+          "departamento": "Perfumeria",
+          "rubro": "Desodorantes ",
+          "marca": "Rexona",
+          "descripcion": "Polvo Pedico Antib.original",
+          "tam": "100 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 39890,
+          "departamento": "Perfumeria",
+          "rubro": "Jabon De Tocador ",
+          "marca": "St. Tropez",
+          "descripcion": "J.tocador Fl.en Tu Piel 3x120g",
+          "tam": "375 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 44003,
+          "departamento": "Perfumeria",
+          "rubro": "Cuidado De La Barba ",
+          "marca": "Gillette",
+          "descripcion": "Maq.prestobarba 3 Carbono",
+          "tam": "2 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 11542,
+          "departamento": "Perfumeria",
+          "rubro": "Desodorantes ",
+          "marca": "Dove",
+          "descripcion": "Deo.ant.roll-on",
+          "tam": "50 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Colastiné"
+          ]
+        },
+        {
+          "sku": 4425,
+          "departamento": "Perfumeria",
+          "rubro": "Cuidado De La Piel ",
+          "marca": "Estrella",
+          "descripcion": "Disco De Belleza",
+          "tam": "80 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 31579,
+          "departamento": "Perfumeria",
+          "rubro": "Desodorantes ",
+          "marca": "Rexona",
+          "descripcion": "Deo.ant.aer.fanatics",
+          "tam": "89 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 30073,
+          "departamento": "Perfumeria",
+          "rubro": "Jabon De Tocador ",
+          "marca": "Veritas",
+          "descripcion": "J.tocador Glicerina Neutro",
+          "tam": "360 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 35315,
+          "departamento": "Perfumeria",
+          "rubro": "Higiene Bucal ",
+          "marca": "Colgate",
+          "descripcion": "Gel Dental Kids Frutilla",
+          "tam": "50 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Gral. Paz"
+          ]
+        },
+        {
+          "sku": 15751,
+          "departamento": "Perfumeria",
+          "rubro": "Cuidado De La Barba ",
+          "marca": "Gillette",
+          "descripcion": "Cartucho Mach3",
+          "tam": "2 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 32795,
+          "departamento": "Perfumeria",
+          "rubro": "Jabon De Tocador ",
+          "marca": "Spa",
+          "descripcion": "J.liquido P/manos Hidratante",
+          "tam": "320 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 23510,
+          "departamento": "Perfumeria",
+          "rubro": "Cuidado De La Barba ",
+          "marca": "Gillette",
+          "descripcion": "Maq.prestobarba 3",
+          "tam": "2 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 18002,
+          "departamento": "Perfumeria",
+          "rubro": "Desodorantes ",
+          "marca": "Rexona",
+          "descripcion": "Deo.ant.aer.sensitive",
+          "tam": "89 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 21054,
+          "departamento": "Perfumeria",
+          "rubro": "Higiene Femenina ",
+          "marca": "Siempre Libre",
+          "descripcion": "Toallas Fem.c/alas Especial",
+          "tam": "16 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 32062,
+          "departamento": "Perfumeria",
+          "rubro": "Higiene Bucal ",
+          "marca": "Plax",
+          "descripcion": "Enjuague Bucal Fresh Mint",
+          "tam": "250 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 36799,
+          "departamento": "Perfumeria",
+          "rubro": "Jabon De Tocador ",
+          "marca": "Plusbelle",
+          "descripcion": "J.tocador Radiante",
+          "tam": "120 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 28779,
+          "departamento": "Perfumeria",
+          "rubro": "Desodorantes ",
+          "marca": "Rexona",
+          "descripcion": "Deo.ant.aer.xtra Cool",
+          "tam": "89 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Mercado Norte"
+          ]
+        },
+        {
+          "sku": 21845,
+          "departamento": "Perfumeria",
+          "rubro": "Farmacia ",
+          "marca": "Nonisec",
+          "descripcion": "Apositos Incontinencia Leve",
+          "tam": "10 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Facundo Zuviria"
+          ]
+        },
+        {
+          "sku": 41136,
+          "departamento": "Perfumeria",
+          "rubro": "Higiene Femenina ",
+          "marca": "Nosotras",
+          "descripcion": "Prot. Diarios Normal",
+          "tam": "20 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Juan de Garay"
+          ]
+        },
+        {
+          "sku": 37414,
+          "departamento": "Perfumeria",
+          "rubro": "Jabon De Tocador ",
+          "marca": "Rexona",
+          "descripcion": "J.tocador Glicerina Neutro",
+          "tam": "90 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Puerto Plaza"
+          ]
+        },
+        {
+          "sku": 18793,
+          "departamento": "Perfumeria",
+          "rubro": "Higiene Femenina ",
+          "marca": "Ladysoft",
+          "descripcion": "Toallas Fem.c/alas Seca Ultra.",
+          "tam": "8 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Lopez y Planes"
+          ]
+        },
+        {
+          "sku": 28758,
+          "departamento": "Perfumeria",
+          "rubro": "Cuidado Del Cabello ",
+          "marca": "Dove",
+          "descripcion": "Shampoo Nut.tri-oleos",
+          "tam": "400 ML",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 31599,
+          "departamento": "Perfumeria",
+          "rubro": "Cuidado De La Barba ",
+          "marca": "Gillette",
+          "descripcion": "Crema Afeitar Foamy Sensitive",
+          "tam": "175 GR",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Uruguay"
+          ]
+        },
+        {
+          "sku": 43483,
+          "departamento": "Perfumeria",
+          "rubro": "Higiene Femenina ",
+          "marca": "Ladysoft",
+          "descripcion": "Toallas Fem.c/a.noct.normal Su",
+          "tam": "8 U",
+          "sucursalesConVenta": 11,
+          "sucursalesSinVenta": [
+            "Corrientes"
+          ]
+        }
+      ]
+    }
+  ]
 }

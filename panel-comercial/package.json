@@ -9,6 +9,8 @@
     "dev": "node --watch server/index.js"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "multer": "^2.0.0",
+    "xlsx": "^0.18.5"
   }
 }
