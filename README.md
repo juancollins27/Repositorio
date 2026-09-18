@@ -103,6 +103,39 @@ recargar la página.
   VPS; `npm start` ya deja el servidor listo para producción con pequeños
   ajustes (variable `PORT`, proceso administrado con `pm2`).
 
+## Publicarla en internet con Railway
+
+Railway detecta automáticamente que es un proyecto Node.js (lee `package.json`
+y corre `npm install` y luego `npm start`), así que no hace falta configurar
+nada especial de build.
+
+1. Entrá a [railway.app](https://railway.app) y creá una cuenta (podés
+   registrarte con tu cuenta de GitHub, es lo más simple).
+2. Click en **New Project → Deploy from GitHub repo**.
+3. Autorizá a Railway a acceder a tu repositorio `juancollins27/Repositorio`
+   y seleccionalo.
+4. Elegí la rama a desplegar (por ejemplo `claude/eloquent-mendel-qr91zc`, o
+   `main` si ya se fusionó ahí).
+5. Railway va a buildear y arrancar la app sola. Cuando termine, andá a la
+   pestaña **Settings → Networking** del servicio y click en **Generate
+   Domain** para obtener una URL pública (algo como
+   `tuapp.up.railway.app`).
+
+### Importante: persistencia de datos
+
+Esta app guarda todo en un archivo (`data/db.json`). En muchas plataformas
+cloud, incluido Railway sin configurar nada, el disco del contenedor **no es
+permanente**: si se reinicia o redesplegás la app, se puede perder lo
+guardado. Para evitarlo:
+
+1. En el servicio dentro de Railway, andá a **Settings → Volumes** y creá un
+   volumen.
+2. Montalo, por ejemplo, en la ruta `/data`.
+3. En **Settings → Variables**, agregá la variable de entorno
+   `DATA_DIR` = `/data`.
+4. Redeploy. A partir de ahí, `data/db.json` se guarda dentro del volumen y
+   sobrevive a reinicios y redespliegues.
+
 ## Endpoints de la API
 
 | Método | Ruta | Descripción |
