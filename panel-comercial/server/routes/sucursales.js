@@ -8,11 +8,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { nombre, ciudad } = req.body;
+  const { nombre, ciudad, formato } = req.body;
   if (!nombre) return res.status(400).json({ error: 'nombre es obligatorio' });
 
   const db = leerDB();
-  const sucursal = { id: nuevoId(db, 'sucursales'), nombre, ciudad: ciudad || '' };
+  const sucursal = { id: nuevoId(db, 'sucursales'), nombre, ciudad: ciudad || '', formato: formato || '' };
   db.sucursales.push(sucursal);
   guardarDB(db);
   res.status(201).json(sucursal);

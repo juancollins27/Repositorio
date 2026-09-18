@@ -16,6 +16,7 @@
     <button class="tab-btn" data-tab="productos">Productos</button>
     <button class="tab-btn" data-tab="ventas">Ventas</button>
     <button class="tab-btn" data-tab="objetivos">Objetivos</button>
+    <button class="tab-btn" data-tab="productividad">Productividad</button>
   </nav>
 </header>
 
@@ -76,12 +77,19 @@
         <h2>Nueva sucursal</h2>
         <label>Nombre <input type="text" id="sucursal-nombre" required /></label>
         <label>Ciudad <input type="text" id="sucursal-ciudad" /></label>
+        <label>Formato
+          <select id="sucursal-formato">
+            <option value="">Sin definir</option>
+            <option value="Market">Market</option>
+            <option value="Express">Express</option>
+          </select>
+        </label>
         <div class="form-actions"><button type="submit">Agregar sucursal</button></div>
       </form>
       <div class="card">
         <h2>Sucursales</h2>
         <table>
-          <thead><tr><th>Nombre</th><th>Ciudad</th><th></th></tr></thead>
+          <thead><tr><th>Nombre</th><th>Ciudad</th><th>Formato</th><th></th></tr></thead>
           <tbody id="tabla-sucursales"></tbody>
         </table>
       </div>
@@ -167,6 +175,82 @@
         <table>
           <thead><tr><th>Sucursal</th><th>Período</th><th class="num">Objetivo</th><th></th></tr></thead>
           <tbody id="tabla-objetivos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTIVIDAD -->
+  <section id="tab-productividad" class="tab-panel">
+    <div class="dashboard-header prod-controls">
+      <label class="periodo-label">Año
+        <input type="number" id="prod-anio" value="2026" step="1" />
+      </label>
+      <label class="periodo-label">Desde (mes N°)
+        <input type="number" id="prod-mes-desde" value="1" min="1" max="12" />
+      </label>
+      <label class="periodo-label">Hasta (mes N°)
+        <input type="number" id="prod-mes-hasta" value="8" min="1" max="12" />
+      </label>
+      <label class="periodo-label">Comparar sucursal contra
+        <select id="prod-comparar">
+          <option value="deltaEmpresa">Promedio empresa</option>
+          <option value="deltaFormato">Promedio de su formato</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="stat-grid" id="prod-kpis-empresa"></div>
+
+    <div class="chart-grid">
+      <div class="card">
+        <h2>Formato Market</h2>
+        <div id="prod-formato-market" class="formato-body"></div>
+      </div>
+      <div class="card">
+        <h2>Formato Express</h2>
+        <div id="prod-formato-express" class="formato-body"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.25rem">
+      <h2>Ranking — tickets por colaborador</h2>
+      <div id="prod-chart-ranking" class="chart-wrap"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:1.25rem">
+      <h2>Detalle por sucursal</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Sucursal</th><th>Formato</th>
+            <th class="num">Art/ticket</th><th class="num">Tickets/colab</th>
+            <th class="num">Art/colab</th><th class="num">Tickets/hora</th>
+            <th class="num">Art/hora</th><th class="num">Δ art/ticket</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-productividad"></tbody>
+      </table>
+    </div>
+
+    <div class="panel-grid">
+      <form id="form-productividad" class="card">
+        <h2>Cargar mes</h2>
+        <label>Sucursal <select id="pm-sucursal" required></select></label>
+        <label>Año <input type="number" id="pm-anio" value="2026" required /></label>
+        <label>Mes N° (1-12) <input type="number" id="pm-mes-nro" min="1" max="12" required /></label>
+        <label>Nombre del mes <input type="text" id="pm-mes-nombre" placeholder="Septiembre" required /></label>
+        <label>Cantidad artículos <input type="number" id="pm-articulos" min="0" required /></label>
+        <label>Cantidad tickets <input type="number" id="pm-tickets" min="0" required /></label>
+        <label>Colaboradores <input type="number" id="pm-colaboradores" min="0" step="0.5" required /></label>
+        <label>Horas-hombre totales <input type="number" id="pm-horas" min="0" required /></label>
+        <div class="form-actions"><button type="submit">Guardar mes</button></div>
+      </form>
+      <div class="card">
+        <h2>Meses cargados</h2>
+        <table>
+          <thead><tr><th>Sucursal</th><th>Período</th><th class="num">Artículos</th><th class="num">Tickets</th><th class="num">Colab.</th><th class="num">Horas</th><th></th></tr></thead>
+          <tbody id="tabla-productividad-cargas"></tbody>
         </table>
       </div>
     </div>

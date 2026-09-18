@@ -7,6 +7,7 @@ import productosRouter from './routes/productos.js';
 import ventasRouter from './routes/ventas.js';
 import objetivosRouter from './routes/objetivos.js';
 import dashboardRouter from './routes/dashboard.js';
+import productividadRouter from './routes/productividad.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/productos', productosRouter);
 app.use('/api/ventas', ventasRouter);
 app.use('/api/objetivos', objetivosRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/productividad', productividadRouter);
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 

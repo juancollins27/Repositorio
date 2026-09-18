@@ -89,6 +89,10 @@ function llenarSelects() {
 
   const primeraOpcion = document.getElementById('venta-producto').selectedOptions[0];
   if (primeraOpcion) document.getElementById('venta-precio').value = primeraOpcion.dataset.precio;
+
+  document.getElementById('pm-sucursal').innerHTML = sucursales
+    .map((s) => `<option value="${s.id}">${s.nombre} (${s.formato || 's/formato'})</option>`)
+    .join('');
 }
 
 // ---------- sucursales ----------
@@ -100,7 +104,8 @@ document.getElementById('form-sucursal').addEventListener('submit', async (e) =>
       method: 'POST',
       body: JSON.stringify({
         nombre: document.getElementById('sucursal-nombre').value,
-        ciudad: document.getElementById('sucursal-ciudad').value
+        ciudad: document.getElementById('sucursal-ciudad').value,
+        formato: document.getElementById('sucursal-formato').value
       })
     });
     e.target.reset();
@@ -116,6 +121,7 @@ function renderSucursales() {
     .map(
       (s) => `<tr>
         <td>${s.nombre}</td><td>${s.ciudad}</td>
+        <td>${s.formato ? `<span class="formato-badge ${s.formato.toLowerCase()}">${s.formato}</span>` : ''}</td>
         <td><button class="link" data-borrar-sucursal="${s.id}">Eliminar</button></td>
       </tr>`
     )
@@ -512,6 +518,203 @@ function renderStockBajo(lista) {
   hint.style.display = lista.length ? 'none' : 'block';
 }
 
+// ---------- productividad ----------
+
+const ETIQUETAS_METRICA = {
+  art_ticket: 'Artículos por ticket',
+  tick_colab: 'Tickets por colaborador',
+  art_colab: 'Artículos por colaborador',
+  tick_hora: 'Tickets por hora',
+  art_hora: 'Artículos por hora'
+};
+
+function formatoMetrica(valor, metrica) {
+  if (valor === null || valor === undefined) return '—';
+  const decimales = metrica === 'art_ticket' || metrica === 'tick_hora' || metrica === 'art_hora' ? 2 : 0;
+  return valor.toLocaleString('es-AR', { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
+}
+
+function formatoDelta(valor) {
+  if (valor === null || valor === undefined) return '—';
+  const signo = valor >= 0 ? '+' : '';
+  return signo + valor.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+}
+
+function leerControlesProductividad() {
+  return {
+    anio: Number(document.getElementById('prod-anio').value),
+    mesDesde: Number(document.getElementById('prod-mes-desde').value),
+    mesHasta: Number(document.getElementById('prod-mes-hasta').value),
+    comparar: document.getElementById('prod-comparar').value
+  };
+}
+
+async function cargarProductividad() {
+  const { anio, mesDesde, mesHasta, comparar } = leerControlesProductividad();
+  const resumen = await api(`/api/productividad/resumen?anio=${anio}&mesDesde=${mesDesde}&mesHasta=${mesHasta}`);
+
+  renderKpisEmpresa(resumen.empresa);
+  renderFormato('prod-formato-market', resumen.formatos.Market, 'Market');
+  renderFormato('prod-formato-express', resumen.formatos.Express, 'Express');
+  renderRankingProductividad(resumen.sucursales);
+  renderTablaProductividad(resumen.sucursales, comparar);
+
+  const registros = await api('/api/productividad');
+  renderCargasProductividad(registros);
+}
+
+function renderKpisEmpresa(empresa) {
+  document.getElementById('prod-kpis-empresa').innerHTML = Object.keys(ETIQUETAS_METRICA)
+    .map(
+      (m) => `
+      <div class="stat-tile">
+        <div class="label">${ETIQUETAS_METRICA[m]}</div>
+        <div class="value">${formatoMetrica(empresa[m], m)}</div>
+        <div class="delta">Promedio empresa</div>
+      </div>`
+    )
+    .join('');
+}
+
+function renderFormato(contenedorId, datos, nombre) {
+  const filas = Object.keys(ETIQUETAS_METRICA)
+    .map((m) => `<dt>${ETIQUETAS_METRICA[m]}</dt><dd>${formatoMetrica(datos[m], m)}</dd>`)
+    .join('');
+  document.getElementById(contenedorId).innerHTML = `<dl>${filas}</dl>`;
+}
+
+function renderRankingProductividad(lista) {
+  const cont = document.getElementById('prod-chart-ranking');
+  const ordenado = [...lista].filter((s) => s.tick_colab !== null).sort((a, b) => b.tick_colab - a.tick_colab);
+  if (!ordenado.length) {
+    cont.innerHTML = '<p class="hint">Sin datos cargados para este período.</p>';
+    return;
+  }
+
+  const ancho = 760, alto = 260;
+  const margen = { top: 24, right: 16, bottom: 60, left: 60 };
+  const w = ancho - margen.left - margen.right;
+  const h = alto - margen.top - margen.bottom;
+
+  const maxValor = Math.max(...ordenado.map((d) => d.tick_colab), 1);
+  const niveles = ejeYNiveles(maxValor);
+  const maxEje = niveles[niveles.length - 1];
+  const y = (v) => h - (v / maxEje) * h;
+
+  const bandas = w / ordenado.length;
+  const anchoBarra = Math.min(24, bandas * 0.6);
+
+  const gridlines = niveles
+    .map(
+      (n) => `
+      <line class="gridline" x1="0" y1="${y(n)}" x2="${w}" y2="${y(n)}" />
+      <text class="eje-texto" x="-8" y="${y(n) + 4}" text-anchor="end">${formatoMetrica(n, 'tick_colab')}</text>`
+    )
+    .join('');
+
+  const barras = ordenado
+    .map((d, i) => {
+      const cx = bandas * i + bandas / 2;
+      const barX = cx - anchoBarra / 2;
+      const barY = y(d.tick_colab);
+      const barH = h - barY;
+      const color = d.formato === 'Express' ? 'var(--series-2)' : 'var(--series-1)';
+      const nombreCorto = d.nombre.length > 14 ? d.nombre.slice(0, 13) + '…' : d.nombre;
+      return `
+        <rect x="${barX}" y="${barY}" width="${anchoBarra}" height="${Math.max(barH, 0)}" rx="4" fill="${color}" />
+        <text class="valor-texto" x="${cx}" y="${barY - 6}" text-anchor="middle">${formatoMetrica(d.tick_colab, 'tick_colab')}</text>
+        <text class="eje-texto" x="${cx}" y="${h + 16}" text-anchor="end" transform="rotate(-40 ${cx} ${h + 16})">${nombreCorto}</text>
+      `;
+    })
+    .join('');
+
+  cont.innerHTML = `
+    <svg viewBox="0 0 ${ancho} ${alto}" width="100%" style="overflow: visible" role="img" aria-label="Tickets por colaborador por sucursal">
+      <g transform="translate(${margen.left},${margen.top})">
+        ${gridlines}
+        <line class="baseline" x1="0" y1="${h}" x2="${w}" y2="${h}" />
+        ${barras}
+      </g>
+    </svg>
+    <div class="legend" style="display:flex; gap:1.2rem; margin-top:0.5rem; font-size:0.8rem; color:var(--text-secondary);">
+      <span><span style="display:inline-block;width:10px;height:10px;background:var(--series-1);border-radius:2px;margin-right:4px;"></span>Market</span>
+      <span><span style="display:inline-block;width:10px;height:10px;background:var(--series-2);border-radius:2px;margin-right:4px;"></span>Express</span>
+    </div>
+  `;
+}
+
+function renderTablaProductividad(lista, comparar) {
+  const ordenado = [...lista].sort((a, b) => (a.ranking.art_ticket || 99) - (b.ranking.art_ticket || 99));
+  document.getElementById('tabla-productividad').innerHTML = ordenado
+    .map((s) => {
+      const delta = s[comparar].art_ticket;
+      const claseDelta = delta === null ? '' : delta >= 0 ? 'pos' : 'neg';
+      return `<tr>
+        <td>${s.nombre}</td>
+        <td><span class="formato-badge ${s.formato.toLowerCase()}">${s.formato}</span></td>
+        <td class="num">${formatoMetrica(s.art_ticket, 'art_ticket')}</td>
+        <td class="num">${formatoMetrica(s.tick_colab, 'tick_colab')}</td>
+        <td class="num">${formatoMetrica(s.art_colab, 'art_colab')}</td>
+        <td class="num">${formatoMetrica(s.tick_hora, 'tick_hora')}</td>
+        <td class="num">${formatoMetrica(s.art_hora, 'art_hora')}</td>
+        <td class="num delta-cell ${claseDelta}">${formatoDelta(delta)}</td>
+      </tr>`;
+    })
+    .join('');
+}
+
+function renderCargasProductividad(registros) {
+  const ordenado = [...registros].sort((a, b) => nombreSucursal(a.sucursalId).localeCompare(nombreSucursal(b.sucursalId)) || a.mesNro - b.mesNro);
+  document.getElementById('tabla-productividad-cargas').innerHTML = ordenado
+    .map(
+      (r) => `<tr>
+        <td>${nombreSucursal(r.sucursalId)}</td>
+        <td>${r.mes} ${r.anio}</td>
+        <td class="num">${r.articulos.toLocaleString('es-AR')}</td>
+        <td class="num">${r.tickets.toLocaleString('es-AR')}</td>
+        <td class="num">${r.colaboradores}</td>
+        <td class="num">${r.horas.toLocaleString('es-AR')}</td>
+        <td><button class="link" data-borrar-productividad="${r.id}">Eliminar</button></td>
+      </tr>`
+    )
+    .join('');
+
+  document.querySelectorAll('[data-borrar-productividad]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('¿Eliminar este mes cargado?')) return;
+      await api(`/api/productividad/${btn.dataset.borrarProductividad}`, { method: 'DELETE' });
+      await cargarProductividad();
+    });
+  });
+}
+
+['prod-anio', 'prod-mes-desde', 'prod-mes-hasta', 'prod-comparar'].forEach((id) => {
+  document.getElementById(id).addEventListener('change', cargarProductividad);
+});
+
+document.getElementById('form-productividad').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    await api('/api/productividad', {
+      method: 'POST',
+      body: JSON.stringify({
+        sucursalId: document.getElementById('pm-sucursal').value,
+        anio: document.getElementById('pm-anio').value,
+        mesNro: document.getElementById('pm-mes-nro').value,
+        mes: document.getElementById('pm-mes-nombre').value,
+        articulos: document.getElementById('pm-articulos').value,
+        tickets: document.getElementById('pm-tickets').value,
+        colaboradores: document.getElementById('pm-colaboradores').value,
+        horas: document.getElementById('pm-horas').value
+      })
+    });
+    e.target.reset();
+    await cargarProductividad();
+  } catch (err) {
+    alert(err.message);
+  }
+});
+
 // ---------- inicio ----------
 
 async function iniciar() {
@@ -519,6 +722,7 @@ async function iniciar() {
   document.getElementById('objetivo-periodo').value = mesActual();
   await cargarMaestros();
   await cargarDashboard();
+  await cargarProductividad();
 }
 
 iniciar();

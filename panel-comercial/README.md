@@ -19,13 +19,24 @@ Abrí `http://localhost:3000`.
   ticket promedio, gráfico de tendencia de ventas por día, gráfico de ventas
   por sucursal, ranking de vendedores, ranking de productos más vendidos y
   alerta de productos con stock bajo.
-- **Sucursales / Vendedores / Productos**: catálogos maestros. Cada producto
-  tiene `stock` y `stockMinimo`; cuando el stock cae por debajo del mínimo,
-  aparece resaltado en rojo y se lista en el dashboard.
+- **Sucursales / Vendedores / Productos**: catálogos maestros. Cada sucursal
+  tiene un `formato` (Market/Express). Cada producto tiene `stock` y
+  `stockMinimo`; cuando el stock cae por debajo del mínimo, aparece resaltado
+  en rojo y se lista en el dashboard.
 - **Ventas**: registrar una venta descuenta stock del producto automáticamente
   y calcula el total (cantidad × precio unitario).
 - **Objetivos**: metas de venta mensuales por sucursal, usadas para calcular
   el % de cumplimiento en el dashboard.
+- **Productividad**: carga mensual de artículos, tickets, colaboradores y
+  horas-hombre por sucursal. Calcula artículos/ticket, tickets y artículos
+  por colaborador y por hora, compara cada sucursal contra el promedio de la
+  empresa o contra el promedio de su propio formato (Market/Express), y
+  arma un ranking. **Viene precargado con los datos reales de Kilbel
+  (Enero–Agosto 2026, 12 sucursales)** tomados de `Productividad Suc
+  2026.xlsx`, hoja "Carga mensual" — los números fueron validados contra el
+  Radar de Productividad existente (coinciden exactamente los promedios YTD
+  y las brechas por formato). El período a analizar y contra qué comparar
+  (empresa o formato) se elige con los controles de arriba de la pestaña.
 
 ## Arquitectura (igual patrón que el resto del repo)
 
@@ -83,6 +94,9 @@ indicándole que la raíz del código es esta carpeta:
 | GET/POST | `/api/objetivos` | listar (filtro `periodo`) / definir objetivo mensual |
 | DELETE | `/api/objetivos/:id` | eliminar objetivo |
 | GET | `/api/dashboard?periodo=YYYY-MM` | KPIs agregados del período |
+| GET/POST | `/api/productividad` | listar / cargar un mes de productividad de una sucursal |
+| DELETE | `/api/productividad/:id` | eliminar un mes cargado |
+| GET | `/api/productividad/resumen?anio=&mesDesde=&mesHasta=` | métricas calculadas, promedio empresa/formato, rankings y brechas |
 
 ## Ideas para seguir extendiendo
 

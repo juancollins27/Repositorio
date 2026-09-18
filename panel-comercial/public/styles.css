@@ -10,6 +10,8 @@
 
   --series-1: #2a78d6;
   --series-1-wash: rgba(42, 120, 214, 0.10);
+  --series-2: #eb6834;
+  --series-2-wash: rgba(235, 104, 52, 0.10);
 
   --status-good: #0ca30c;
   --status-warning: #fab219;
@@ -191,3 +193,26 @@ th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 .icono-alerta { color: var(--status-warning); }
 tr.fila-alerta td { color: var(--status-critical); font-weight: 600; }
+
+/* ---------- productividad ---------- */
+
+.prod-controls { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+
+.formato-badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.formato-badge.market { background: var(--series-1-wash); color: var(--series-1); }
+.formato-badge.express { background: var(--series-2-wash); color: var(--series-2); }
+
+.formato-body dl { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1rem; margin: 0; font-size: 0.9rem; }
+.formato-body dt { color: var(--text-secondary); }
+.formato-body dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.delta-cell { font-weight: 600; }
+.delta-cell.pos { color: var(--status-good); }
+.delta-cell.neg { color: var(--status-critical); }
