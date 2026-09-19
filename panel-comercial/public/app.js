@@ -324,11 +324,41 @@ inputPeriodo.addEventListener('change', cargarDashboard);
 async function cargarDashboard() {
   const datos = await api(`/api/dashboard?periodo=${inputPeriodo.value}`);
   renderStatTiles(datos);
+  renderInsightDashboard(datos);
   renderLineChart(datos.ventasPorDia);
   renderBarChart(datos.ventasPorSucursal);
   renderRankingVendedores(datos.rankingVendedores);
   renderRankingProductos(datos.rankingProductos);
   renderStockBajo(datos.productosStockBajo);
+}
+
+function renderInsightDashboard(d) {
+  const cont = document.getElementById('dashboard-insight');
+  if (!cont) return;
+  if (!d.cantidadVentas) {
+    cont.innerHTML = `<span class="marca">☞</span><span>Todavía no hay ventas cargadas para este período.</span>`;
+    return;
+  }
+
+  let frase = `Las ventas del período sumaron <strong>${formatoCompacto(d.totalVentas)}</strong>`;
+  if (d.cumplimiento !== null) {
+    const diff = Math.abs(d.cumplimiento - 100).toFixed(0);
+    frase += d.cumplimiento >= 100
+      ? `, un <strong>${diff}% por encima</strong> del objetivo (${formatoCompacto(d.objetivoTotal)}).`
+      : `, un <strong>${diff}% por debajo</strong> del objetivo (${formatoCompacto(d.objetivoTotal)}).`;
+  } else {
+    frase += ` sobre ${d.cantidadVentas} operaciones registradas.`;
+  }
+
+  if (d.rankingVendedores.length) {
+    const top = d.rankingVendedores[0];
+    frase += ` <strong>${top.nombre}</strong> lidera el ranking de vendedores con ${formatoCompacto(top.total)}.`;
+  }
+  if (d.productosStockBajo.length) {
+    frase += ` Hay <strong>${d.productosStockBajo.length} producto${d.productosStockBajo.length === 1 ? '' : 's'}</strong> con stock por debajo del mínimo.`;
+  }
+
+  cont.innerHTML = `<span class="marca">☞</span><span>${frase}</span>`;
 }
 
 function renderStatTiles(d) {
@@ -446,8 +476,8 @@ function renderBarChart(datos) {
     return;
   }
 
-  const ancho = 520, alto = 220;
-  const margen = { top: 24, right: 16, bottom: 30, left: 56 };
+  const ancho = 520, alto = 260;
+  const margen = { top: 24, right: 16, bottom: 70, left: 56 };
   const w = ancho - margen.left - margen.right;
   const h = alto - margen.top - margen.bottom;
 
@@ -473,17 +503,17 @@ function renderBarChart(datos) {
       const barX = cx - anchoBarra / 2;
       const barY = y(d.total);
       const barH = h - barY;
-      const nombreCorto = d.nombre.length > 18 ? d.nombre.slice(0, 17) + '…' : d.nombre;
+      const nombreCorto = d.nombre.length > 14 ? d.nombre.slice(0, 13) + '…' : d.nombre;
       return `
         <rect x="${barX}" y="${barY}" width="${anchoBarra}" height="${Math.max(barH, 0)}" rx="4" fill="var(--series-1)" />
         <text class="valor-texto" x="${cx}" y="${barY - 6}" text-anchor="middle">${formatoCompacto(d.total)}</text>
-        <text class="eje-texto" x="${cx}" y="${h + 18}" text-anchor="middle">${nombreCorto}</text>
+        <text class="eje-texto" x="${cx}" y="${h + 16}" text-anchor="end" transform="rotate(-40 ${cx} ${h + 16})">${nombreCorto}</text>
       `;
     })
     .join('');
 
   cont.innerHTML = `
-    <svg viewBox="0 0 ${ancho} ${alto}" width="100%" role="img" aria-label="Ventas por sucursal">
+    <svg viewBox="0 0 ${ancho} ${alto}" width="100%" style="overflow: visible" role="img" aria-label="Ventas por sucursal">
       <g transform="translate(${margen.left},${margen.top})">
         ${gridlines}
         <line class="baseline" x1="0" y1="${h}" x2="${w}" y2="${h}" />
@@ -558,9 +588,34 @@ async function cargarProductividad() {
   renderFormato('prod-formato-express', resumen.formatos.Express, 'Express');
   renderRankingProductividad(resumen.sucursales);
   renderTablaProductividad(resumen.sucursales, comparar);
+  renderInsightProductividad(resumen.sucursales, comparar);
 
   const registros = await api('/api/productividad');
   renderCargasProductividad(registros);
+}
+
+function renderInsightProductividad(lista, comparar) {
+  const cont = document.getElementById('prod-insight');
+  if (!cont) return;
+  const conDato = lista.filter((s) => s.tick_colab !== null);
+  if (!conDato.length) {
+    cont.innerHTML = `<span class="marca">☞</span><span>Todavía no hay meses cargados para este período.</span>`;
+    return;
+  }
+
+  const ordenado = [...conDato].sort((a, b) => b.tick_colab - a.tick_colab);
+  const mejor = ordenado[0];
+  const peor = ordenado[ordenado.length - 1];
+  const deltaMejor = mejor[comparar].tick_colab;
+  const deltaPeor = peor[comparar].tick_colab;
+  const contra = comparar === 'deltaFormato' ? 'el promedio de su formato' : 'el promedio de la empresa';
+
+  let frase = `<strong>${mejor.nombre}</strong> lidera tickets por colaborador con ${formatoMetrica(mejor.tick_colab, 'tick_colab')}`;
+  frase += deltaMejor !== null ? `, ${formatoDelta(deltaMejor)} sobre ${contra}.` : '.';
+  frase += ` <strong>${peor.nombre}</strong> es la más rezagada`;
+  frase += deltaPeor !== null ? `, ${formatoDelta(deltaPeor)}.` : '.';
+
+  cont.innerHTML = `<span class="marca">☞</span><span>${frase}</span>`;
 }
 
 function renderKpisEmpresa(empresa) {
@@ -776,6 +831,7 @@ async function mostrarAnalisisQuiebres(id) {
 
   renderBarraSimple('quiebres-chart-departamentos', a.rankingDepartamentos.slice(0, 10), 'departamento', 'cantidad');
   renderBarraSimple('quiebres-chart-sucursales', a.rankingSucursales, 'nombre', 'brechas');
+  renderInsightQuiebres(a);
 
   document.getElementById('tabla-quiebres-detalle').innerHTML = a.brechas
     .slice(0, 100)
@@ -787,6 +843,24 @@ async function mostrarAnalisisQuiebres(id) {
       </tr>`
     )
     .join('');
+}
+
+function renderInsightQuiebres(a) {
+  const cont = document.getElementById('quiebres-insight');
+  if (!cont) return;
+  if (!a.rankingDepartamentos.length) {
+    cont.innerHTML = `<span class="marca">☞</span><span>No se detectaron brechas de surtido en este análisis.</span>`;
+    return;
+  }
+
+  const topDepto = a.rankingDepartamentos[0];
+  const pctDepto = ((topDepto.cantidad / a.totalBrechas) * 100).toFixed(0);
+  const topSuc = a.rankingSucursales[0];
+
+  const frase = `<strong>${topDepto.departamento}</strong> concentra el <strong>${pctDepto}%</strong> de las ${a.totalBrechas} brechas detectadas (${topDepto.cantidad} SKU). ` +
+    `<strong>${topSuc.nombre}</strong> es la sucursal con más faltantes puntuales (${topSuc.brechas} de sus ${topSuc.skusVendidos.toLocaleString('es-AR')} SKU vendidos).`;
+
+  cont.innerHTML = `<span class="marca">☞</span><span>${frase}</span>`;
 }
 
 function renderBarraSimple(contenedorId, datos, campoNombre, campoValor) {

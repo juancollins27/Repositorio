@@ -3,12 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Panel Comercial · Retail</title>
+<title>Panel Comercial · Kilbel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <header class="topbar">
-  <h1>Panel Comercial</h1>
+  <div class="topbar-brand">
+    <span class="eyebrow">Gte. Comercial · Kilbel</span>
+    <h1>Panel Comercial</h1>
+  </div>
   <nav class="tabs">
     <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
     <button class="tab-btn" data-tab="sucursales">Sucursales</button>
@@ -25,6 +31,10 @@
 
   <!-- DASHBOARD -->
   <section id="tab-dashboard" class="tab-panel active">
+    <div class="seccion-titulo">
+      <span class="eyebrow">Resumen ejecutivo</span>
+      <h2>Dashboard comercial</h2>
+    </div>
     <div class="dashboard-header">
       <label class="periodo-label">Período
         <input type="month" id="dashboard-periodo" />
@@ -32,6 +42,7 @@
     </div>
 
     <div class="stat-grid" id="stat-tiles"></div>
+    <div class="insight" id="dashboard-insight"></div>
 
     <div class="chart-grid">
       <div class="card">
@@ -183,6 +194,10 @@
 
   <!-- PRODUCTIVIDAD -->
   <section id="tab-productividad" class="tab-panel">
+    <div class="seccion-titulo">
+      <span class="eyebrow">Colaboradores · Horas-hombre</span>
+      <h2>Productividad por sucursal</h2>
+    </div>
     <div class="dashboard-header prod-controls">
       <label class="periodo-label">Año
         <input type="number" id="prod-anio" value="2026" step="1" />
@@ -202,6 +217,7 @@
     </div>
 
     <div class="stat-grid" id="prod-kpis-empresa"></div>
+    <div class="insight" id="prod-insight"></div>
 
     <div class="chart-grid">
       <div class="card">
@@ -259,10 +275,14 @@
 
   <!-- QUIEBRES DE STOCK -->
   <section id="tab-quiebres" class="tab-panel">
+    <div class="seccion-titulo">
+      <span class="eyebrow">Surtido · Brechas de venta</span>
+      <h2>Quiebres de stock</h2>
+    </div>
     <div class="panel-grid">
       <div class="card">
         <h2>Importar análisis</h2>
-        <p class="hint">
+        <p class="card-nota">
           Subí un export de ventas por SKU y sucursal con la misma estructura que la hoja
           "Matriz completa" (columnas: SKU (Id), Departamento, Rubro, Familia, Marca, Descripción,
           Tam, y una columna de unidades por cada sucursal, con el nombre de sucursal igual al
@@ -287,6 +307,7 @@
 
     <div id="quiebres-resultado" class="hidden">
       <div class="stat-grid" id="quiebres-stat-tiles"></div>
+      <div class="insight" id="quiebres-insight"></div>
 
       <div class="chart-grid">
         <div class="card">
