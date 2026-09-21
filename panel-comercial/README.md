@@ -76,6 +76,12 @@ Abrí `http://localhost:3000`.
   "ejecutar acorde a la venta": decidir en el momento, parado en la góndola,
   si a ese producto le sobra o le falta espacio.
 
+  Todos los relevamientos de espacio cargados (de cualquier producto y
+  sucursal) alimentan un **ranking de oportunidades** en la parte de arriba
+  de la pestaña: ordena los productos por qué tan lejos está su espacio de
+  lo que realmente venden, para saber dónde actuar primero sin tener que
+  revisar producto por producto. Se puede filtrar por sucursal y período.
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -146,6 +152,7 @@ indicándole que la raíz del código es esta carpeta:
 | POST | `/api/reconocimiento/identificar` | subir una foto (campo `foto`) e identificar candidatos del catálogo |
 | GET | `/api/reconocimiento/ficha?productoId=&sucursalId=&periodo=YYYY-MM` | participación de ventas, estrategia de precios e índice espacio-venta de un producto en una sucursal |
 | POST | `/api/reconocimiento/espacio` | guardar un relevamiento de frentes (producto y sector) en una sucursal |
+| GET | `/api/reconocimiento/oportunidades?sucursalId=&periodo=YYYY-MM` | ranking de todos los productos relevados por índice espacio-venta |
 
 ## Ideas para seguir extendiendo
 

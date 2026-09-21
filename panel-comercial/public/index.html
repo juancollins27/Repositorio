@@ -339,6 +339,38 @@
       <span class="eyebrow">Foto de góndola · Participación y precio</span>
       <h2>Reconocimiento de producto</h2>
     </div>
+
+    <div class="card" style="margin-bottom:1.25rem">
+      <h2>Oportunidades de espacio-venta</h2>
+      <p class="card-nota">
+        Ranking de todos los productos relevados (en cualquier sucursal), ordenados por qué tan
+        lejos está su espacio de góndola de lo que realmente venden dentro de su categoría —
+        para saber dónde actuar primero sin ir producto por producto.
+      </p>
+      <div class="dashboard-header prod-controls">
+        <label class="periodo-label">Sucursal
+          <select id="oport-sucursal">
+            <option value="">Todas</option>
+          </select>
+        </label>
+        <label class="periodo-label">Período
+          <input type="month" id="oport-periodo" />
+        </label>
+      </div>
+      <div class="stat-grid" id="oport-stat-tiles"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th><th>Sucursal</th><th>Categoría</th>
+            <th class="num">% Espacio</th><th class="num">% Venta cat.</th>
+            <th>Diagnóstico</th><th>Sugerencia</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-oportunidades"></tbody>
+      </table>
+      <p class="hint" id="oport-sin-datos">Todavía no hay relevamientos de espacio cargados.</p>
+    </div>
+
     <div class="panel-grid">
       <form id="form-reconocimiento" class="card">
         <h2>Subir foto</h2>

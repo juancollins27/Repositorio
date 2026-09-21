@@ -161,14 +161,7 @@ router.get('/ficha', (req, res) => {
   const ordenRanking = Object.entries(porProductoEnSucursal).sort((a, b) => b[1] - a[1]);
   const posicion = ordenRanking.findIndex(([id]) => Number(id) === productoId);
 
-  let participacionCategoria = null;
-  if (producto.categoria) {
-    const idsCategoria = new Set(db.productos.filter((p) => p.categoria === producto.categoria).map((p) => p.id));
-    const totalCategoriaEnSucursal = ventasSucursal
-      .filter((v) => idsCategoria.has(v.productoId))
-      .reduce((s, v) => s + v.total, 0);
-    participacionCategoria = totalCategoriaEnSucursal > 0 ? (totalVentasProducto / totalCategoriaEnSucursal) * 100 : null;
-  }
+  const participacionCategoria = participacionVentasCategoriaDe(db, producto, ventasSucursal);
 
   const participacion = {
     totalVentasProducto,
@@ -240,38 +233,56 @@ router.get('/ficha', (req, res) => {
 // Compara el espacio físico ocupado por el producto en la góndola (frentes)
 // contra su participación real en las ventas de la categoría, para decidir
 // si conviene darle más o menos lugar ("ejecutar acorde a la venta").
-function calcularEspacioVenta(db, productoId, sucursalId, participacionVentasCategoria) {
-  const relevamientos = (db.relevamientosEspacio || [])
-    .filter((r) => r.productoId === productoId && r.sucursalId === sucursalId)
-    .sort((a, b) => b.fecha.localeCompare(a.fecha));
-  const ultimo = relevamientos[0];
-  if (!ultimo) return { registrado: false };
-
-  const participacionEspacio = (ultimo.frentesProducto / ultimo.frentesTotalesSector) * 100;
+function diagnosticarEspacio(relevamiento, participacionVentasCategoria) {
+  const participacionEspacio = (relevamiento.frentesProducto / relevamiento.frentesTotalesSector) * 100;
 
   let indice = null;
   let diagnostico = 'sin_datos_venta';
   let frentesSugeridos = null;
   if (participacionVentasCategoria !== null && participacionEspacio > 0) {
     indice = participacionVentasCategoria / participacionEspacio;
-    frentesSugeridos = Math.max(1, Math.round((ultimo.frentesTotalesSector * participacionVentasCategoria) / 100));
+    frentesSugeridos = Math.max(1, Math.round((relevamiento.frentesTotalesSector * participacionVentasCategoria) / 100));
     if (indice > 1.15) diagnostico = 'sub_espaciado';
     else if (indice < 0.85) diagnostico = 'sobre_espaciado';
     else diagnostico = 'equilibrado';
   }
 
   return {
-    registrado: true,
-    fecha: ultimo.fecha,
-    frentesProducto: ultimo.frentesProducto,
-    frentesTotalesSector: ultimo.frentesTotalesSector,
+    fecha: relevamiento.fecha,
+    frentesProducto: relevamiento.frentesProducto,
+    frentesTotalesSector: relevamiento.frentesTotalesSector,
     participacionEspacio,
     participacionVentasCategoria,
     indice,
     frentesSugeridos,
-    delta: frentesSugeridos !== null ? frentesSugeridos - ultimo.frentesProducto : null,
+    delta: frentesSugeridos !== null ? frentesSugeridos - relevamiento.frentesProducto : null,
     diagnostico
   };
+}
+
+function ultimoRelevamiento(db, productoId, sucursalId) {
+  return (db.relevamientosEspacio || [])
+    .filter((r) => r.productoId === productoId && r.sucursalId === sucursalId)
+    .sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
+}
+
+function calcularEspacioVenta(db, productoId, sucursalId, participacionVentasCategoria) {
+  const ultimo = ultimoRelevamiento(db, productoId, sucursalId);
+  if (!ultimo) return { registrado: false };
+  return { registrado: true, ...diagnosticarEspacio(ultimo, participacionVentasCategoria) };
+}
+
+function participacionVentasCategoriaDe(db, producto, ventasSucursal) {
+  if (!producto.categoria) return null;
+  const idsCategoria = new Set(db.productos.filter((p) => p.categoria === producto.categoria).map((p) => p.id));
+  const totalCategoriaEnSucursal = ventasSucursal
+    .filter((v) => idsCategoria.has(v.productoId))
+    .reduce((s, v) => s + v.total, 0);
+  if (totalCategoriaEnSucursal <= 0) return null;
+  const totalProductoEnSucursal = ventasSucursal
+    .filter((v) => v.productoId === producto.id)
+    .reduce((s, v) => s + v.total, 0);
+  return (totalProductoEnSucursal / totalCategoriaEnSucursal) * 100;
 }
 
 router.post('/espacio', (req, res) => {
@@ -310,6 +321,56 @@ router.post('/espacio', (req, res) => {
   db.relevamientosEspacio.push(relevamiento);
   guardarDB(db);
   res.status(201).json(relevamiento);
+});
+
+// Ranking de todos los productos relevados (espacio + venta), para priorizar
+// dónde actuar primero en vez de mirar producto por producto.
+router.get('/oportunidades', (req, res) => {
+  const sucursalId = req.query.sucursalId ? Number(req.query.sucursalId) : null;
+  const periodo = req.query.periodo || periodoActual();
+
+  const db = leerDB();
+  const ventasPeriodo = db.ventas.filter((v) => v.fecha.startsWith(periodo));
+
+  const ultimosPorPar = new Map();
+  (db.relevamientosEspacio || []).forEach((r) => {
+    const clave = `${r.productoId}-${r.sucursalId}`;
+    const actual = ultimosPorPar.get(clave);
+    if (!actual || r.fecha > actual.fecha) ultimosPorPar.set(clave, r);
+  });
+
+  const oportunidades = [];
+  ultimosPorPar.forEach((r) => {
+    if (sucursalId && r.sucursalId !== sucursalId) return;
+    const producto = db.productos.find((p) => p.id === r.productoId);
+    const sucursal = db.sucursales.find((s) => s.id === r.sucursalId);
+    if (!producto || !sucursal) return;
+
+    const ventasSucursal = ventasPeriodo.filter((v) => v.sucursalId === r.sucursalId);
+    const participacionVentasCategoria = participacionVentasCategoriaDe(db, producto, ventasSucursal);
+    const espacio = diagnosticarEspacio(r, participacionVentasCategoria);
+
+    oportunidades.push({
+      productoId: producto.id,
+      productoNombre: producto.nombre,
+      categoria: producto.categoria || '',
+      sucursalId: sucursal.id,
+      sucursalNombre: sucursal.nombre,
+      ...espacio
+    });
+  });
+
+  const severidad = (o) => (o.indice === null ? -1 : Math.abs(o.indice - 1));
+  oportunidades.sort((a, b) => severidad(b) - severidad(a));
+
+  res.json({
+    periodo,
+    total: oportunidades.length,
+    subEspaciados: oportunidades.filter((o) => o.diagnostico === 'sub_espaciado').length,
+    sobreEspaciados: oportunidades.filter((o) => o.diagnostico === 'sobre_espaciado').length,
+    equilibrados: oportunidades.filter((o) => o.diagnostico === 'equilibrado').length,
+    oportunidades
+  });
 });
 
 export default router;

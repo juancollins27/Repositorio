@@ -95,6 +95,7 @@ function llenarSelects() {
     .join('');
 
   document.getElementById('reco-sucursal').innerHTML = opcionesSucursal;
+  document.getElementById('oport-sucursal').innerHTML = '<option value="">Todas</option>' + opcionesSucursal;
 }
 
 // ---------- sucursales ----------
@@ -946,9 +947,77 @@ document.getElementById('form-quiebres-importar').addEventListener('submit', asy
 // ---------- reconocimiento de producto ----------
 
 document.getElementById('reco-periodo').value = mesActual();
+document.getElementById('oport-periodo').value = mesActual();
 
 let recoDetectado = null;
 let recoActual = null; // { productoId, sucursalId, periodo }
+
+const ETIQUETAS_DIAGNOSTICO_CORTO = {
+  sub_espaciado: { texto: 'Sub-espaciado', clase: 'delta-warning' },
+  sobre_espaciado: { texto: 'Sobre-espaciado', clase: 'delta-critical' },
+  equilibrado: { texto: 'Equilibrado', clase: 'delta-good' },
+  sin_datos_venta: { texto: 'Sin datos de venta', clase: '' }
+};
+
+async function cargarOportunidades() {
+  const sucursalId = document.getElementById('oport-sucursal').value;
+  const periodo = document.getElementById('oport-periodo').value || mesActual();
+
+  const params = new URLSearchParams({ periodo });
+  if (sucursalId) params.set('sucursalId', sucursalId);
+
+  const datos = await api(`/api/reconocimiento/oportunidades?${params.toString()}`);
+
+  document.getElementById('oport-stat-tiles').innerHTML = `
+    <div class="stat-tile">
+      <div class="label">Productos relevados</div>
+      <div class="value">${datos.total}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Sub-espaciados</div>
+      <div class="value delta-warning">${datos.subEspaciados}</div>
+      <div class="delta">venden más de lo que ocupan</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Sobre-espaciados</div>
+      <div class="value delta-critical">${datos.sobreEspaciados}</div>
+      <div class="delta">ocupan más de lo que venden</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Equilibrados</div>
+      <div class="value delta-good">${datos.equilibrados}</div>
+    </div>
+  `;
+
+  const tbody = document.getElementById('tabla-oportunidades');
+  const sinDatos = document.getElementById('oport-sin-datos');
+  if (!datos.oportunidades.length) {
+    tbody.innerHTML = '';
+    sinDatos.style.display = 'block';
+    return;
+  }
+  sinDatos.style.display = 'none';
+
+  tbody.innerHTML = datos.oportunidades
+    .map((o) => {
+      const diag = ETIQUETAS_DIAGNOSTICO_CORTO[o.diagnostico] || ETIQUETAS_DIAGNOSTICO_CORTO.sin_datos_venta;
+      const sugerencia = o.delta === null ? '—' : o.delta === 0 ? 'sin cambios' : `${o.delta > 0 ? '+' : ''}${o.delta} frentes`;
+      return `<tr>
+        <td>${o.productoNombre}</td>
+        <td>${o.sucursalNombre}</td>
+        <td>${o.categoria || 's/categoría'}</td>
+        <td class="num">${o.participacionEspacio.toFixed(1)}%</td>
+        <td class="num">${o.participacionVentasCategoria === null ? '—' : o.participacionVentasCategoria.toFixed(1) + '%'}</td>
+        <td><span class="${diag.clase}">${diag.texto}</span></td>
+        <td>${sugerencia}</td>
+      </tr>`;
+    })
+    .join('');
+}
+
+['oport-sucursal', 'oport-periodo'].forEach((id) => {
+  document.getElementById(id).addEventListener('change', cargarOportunidades);
+});
 
 document.getElementById('form-reconocimiento').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -1098,6 +1167,7 @@ document.getElementById('form-espacio').addEventListener('submit', async (e) => 
       })
     });
     await cargarFichaReconocimiento(recoActual.productoId);
+    await cargarOportunidades();
   } catch (err) {
     alert(err.message);
   }
@@ -1325,6 +1395,7 @@ async function iniciar() {
   await cargarDashboard();
   await cargarProductividad();
   await cargarHistorialQuiebres();
+  await cargarOportunidades();
 }
 
 iniciar();
