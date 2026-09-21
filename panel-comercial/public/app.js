@@ -93,6 +93,8 @@ function llenarSelects() {
   document.getElementById('pm-sucursal').innerHTML = sucursales
     .map((s) => `<option value="${s.id}">${s.nombre} (${s.formato || 's/formato'})</option>`)
     .join('');
+
+  document.getElementById('reco-sucursal').innerHTML = opcionesSucursal;
 }
 
 // ---------- sucursales ----------
@@ -940,6 +942,294 @@ document.getElementById('form-quiebres-importar').addEventListener('submit', asy
     estado.textContent = err.message;
   }
 });
+
+// ---------- reconocimiento de producto ----------
+
+document.getElementById('reco-periodo').value = mesActual();
+
+document.getElementById('form-reconocimiento').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const archivoInput = document.getElementById('reco-foto');
+  const estado = document.getElementById('reco-estado');
+  if (!archivoInput.files.length) return;
+
+  document.getElementById('reco-ficha').classList.add('hidden');
+  document.getElementById('reco-candidatos').innerHTML = '';
+  document.getElementById('reco-detectado').textContent = '';
+
+  const formData = new FormData();
+  formData.append('foto', archivoInput.files[0]);
+
+  estado.textContent = 'Analizando la foto…';
+  try {
+    const res = await fetch('/api/reconocimiento/identificar', { method: 'POST', body: formData });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || 'error al identificar la foto');
+    }
+    const { detectado, candidatos } = await res.json();
+    estado.textContent = '';
+    renderDetectado(detectado);
+    renderCandidatos(candidatos);
+  } catch (err) {
+    estado.textContent = err.message;
+  }
+});
+
+function renderDetectado(d) {
+  const cont = document.getElementById('reco-detectado');
+  const partes = [d.nombre, d.marca, d.variante].filter(Boolean).join(' · ');
+  cont.textContent = partes
+    ? `La IA leyó: ${partes}${d.categoria ? ` (${d.categoria})` : ''}`
+    : 'La IA no pudo leer con claridad el producto de la foto. Buscalo manualmente abajo.';
+}
+
+function renderCandidatos(lista) {
+  const cont = document.getElementById('reco-candidatos');
+  if (!lista.length) {
+    cont.innerHTML = '<li class="hint">Sin coincidencias en el catálogo. Buscá manualmente abajo.</li>';
+    return;
+  }
+  cont.innerHTML = lista
+    .map(
+      (p) => `<li>
+        <span class="candidato-info">
+          <span>${p.nombre}</span>
+          <span class="candidato-score">${p.categoria || 's/categoría'} · coincidencia ${(p.score * 100).toFixed(0)}%</span>
+        </span>
+        <button type="button" data-elegir-producto="${p.id}">Elegir</button>
+      </li>`
+    )
+    .join('');
+
+  cont.querySelectorAll('[data-elegir-producto]').forEach((btn) => {
+    btn.addEventListener('click', () => cargarFichaReconocimiento(Number(btn.dataset.elegirProducto)));
+  });
+}
+
+document.getElementById('reco-buscar').addEventListener('input', (e) => {
+  const termino = normalizarBusqueda(e.target.value);
+  const cont = document.getElementById('reco-busqueda-resultados');
+  if (!termino) {
+    cont.innerHTML = '';
+    return;
+  }
+  const resultados = productos.filter((p) => normalizarBusqueda(p.nombre).includes(termino)).slice(0, 8);
+  cont.innerHTML = resultados
+    .map(
+      (p) => `<li>
+        <span class="candidato-info">
+          <span>${p.nombre}</span>
+          <span class="candidato-score">${p.categoria || 's/categoría'}</span>
+        </span>
+        <button type="button" data-elegir-producto-manual="${p.id}">Elegir</button>
+      </li>`
+    )
+    .join('');
+
+  cont.querySelectorAll('[data-elegir-producto-manual]').forEach((btn) => {
+    btn.addEventListener('click', () => cargarFichaReconocimiento(Number(btn.dataset.elegirProductoManual)));
+  });
+});
+
+function normalizarBusqueda(texto) {
+  return String(texto || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+async function cargarFichaReconocimiento(productoId) {
+  const sucursalId = document.getElementById('reco-sucursal').value;
+  const periodo = document.getElementById('reco-periodo').value || mesActual();
+  if (!sucursalId) {
+    alert('Elegí una sucursal para contrastar el producto.');
+    return;
+  }
+
+  let ficha;
+  try {
+    ficha = await api(`/api/reconocimiento/ficha?productoId=${productoId}&sucursalId=${sucursalId}&periodo=${periodo}`);
+  } catch (err) {
+    alert(err.message);
+    return;
+  }
+
+  document.getElementById('reco-ficha').classList.remove('hidden');
+  document.getElementById('reco-ficha-sucursal').textContent = `${ficha.sucursal.nombre} · ${ficha.periodo}`;
+  document.getElementById('reco-ficha-producto').textContent = ficha.producto.nombre;
+
+  renderStatTilesReconocimiento(ficha);
+  renderInsightReconocimiento(ficha);
+  renderLineChart2(document.getElementById('reco-chart-tendencia'), ficha.tendencia, 'Ventas del producto');
+  renderPreciosPorSucursal(ficha.precio.porSucursal, ficha.sucursal.id);
+}
+
+function renderStatTilesReconocimiento(f) {
+  const p = f.participacion;
+  const pr = f.precio;
+
+  const claseParticipacion = p.porcentajeSucursal === null ? '' : p.porcentajeSucursal >= 5 ? 'delta-good' : '';
+  const claseDiferenciaPrecio =
+    pr.diferenciaPct === null ? '' : pr.diferenciaPct > 3 ? 'delta-warning' : pr.diferenciaPct < -3 ? 'delta-critical' : '';
+
+  document.getElementById('reco-stat-tiles').innerHTML = `
+    <div class="stat-tile">
+      <div class="label">Participación en ventas de la sucursal</div>
+      <div class="value ${claseParticipacion}">${p.porcentajeSucursal === null ? 'sin ventas' : p.porcentajeSucursal.toFixed(1) + '%'}</div>
+      <div class="delta">${formatoCompacto(p.totalVentasProducto)} de ${formatoCompacto(p.totalVentasSucursal)}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Ranking en la sucursal</div>
+      <div class="value">${p.ranking ? `#${p.ranking}` : '—'}</div>
+      <div class="delta">${p.ranking ? `de ${p.totalProductosConVenta} productos con venta` : 'sin ventas en el período'}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Participación en su categoría</div>
+      <div class="value">${p.porcentajeCategoria === null ? '—' : p.porcentajeCategoria.toFixed(1) + '%'}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Precio promedio en esta sucursal</div>
+      <div class="value">${pr.precioPromedioEnSucursal === null ? '—' : formatoMoneda(pr.precioPromedioEnSucursal)}</div>
+      <div class="delta">Precio de lista: ${formatoMoneda(pr.precioLista)}</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Vs. precio promedio en otras sucursales</div>
+      <div class="value ${claseDiferenciaPrecio}">${pr.diferenciaPct === null ? '—' : formatoDelta(pr.diferenciaPct)}</div>
+      <div class="delta">${pr.precioPromedioOtrasSucursales === null ? 'sin datos de otras sucursales' : formatoMoneda(pr.precioPromedioOtrasSucursales)}</div>
+    </div>
+  `;
+}
+
+function renderInsightReconocimiento(f) {
+  const cont = document.getElementById('reco-insight');
+  const p = f.participacion;
+  const pr = f.precio;
+
+  if (!p.totalVentasProducto) {
+    cont.innerHTML = `<span class="marca">☞</span><span><strong>${f.producto.nombre}</strong> no registra ventas en <strong>${f.sucursal.nombre}</strong> durante ${f.periodo}.</span>`;
+    return;
+  }
+
+  let frase = `<strong>${f.producto.nombre}</strong> representa el <strong>${p.porcentajeSucursal.toFixed(1)}%</strong> de las ventas de <strong>${f.sucursal.nombre}</strong> en ${f.periodo}`;
+  frase += p.ranking ? ` (puesto #${p.ranking} de ${p.totalProductosConVenta}).` : '.';
+
+  if (pr.diferenciaPct !== null) {
+    const abs = Math.abs(pr.diferenciaPct).toFixed(1);
+    frase += pr.diferenciaPct >= 0
+      ? ` Se vende <strong>${abs}% más caro</strong> acá que en el resto de las sucursales.`
+      : ` Se vende <strong>${abs}% más barato</strong> acá que en el resto de las sucursales.`;
+  }
+
+  cont.innerHTML = `<span class="marca">☞</span><span>${frase}</span>`;
+}
+
+function renderLineChart2(cont, datos, etiqueta) {
+  if (!datos.length) {
+    cont.innerHTML = '<p class="hint">Sin ventas de este producto en esta sucursal durante el período.</p>';
+    return;
+  }
+
+  const ancho = 520, alto = 220;
+  const margen = { top: 16, right: 16, bottom: 26, left: 56 };
+  const w = ancho - margen.left - margen.right;
+  const h = alto - margen.top - margen.bottom;
+
+  const maxValor = Math.max(...datos.map((d) => d.total));
+  const niveles = ejeYNiveles(maxValor);
+  const maxEje = niveles[niveles.length - 1];
+
+  const x = (i) => (datos.length > 1 ? (i / (datos.length - 1)) * w : w / 2);
+  const y = (v) => h - (v / maxEje) * h;
+
+  const gridlines = niveles
+    .map((n) => `
+      <line class="gridline" x1="0" y1="${y(n)}" x2="${w}" y2="${y(n)}" />
+      <text class="eje-texto" x="-8" y="${y(n) + 4}" text-anchor="end">${formatoCompacto(n)}</text>`)
+    .join('');
+
+  const paso = Math.max(1, Math.ceil(datos.length / 8));
+  const etiquetasX = datos
+    .map((d, i) => (i % paso === 0 || i === datos.length - 1 ? `<text class="eje-texto" x="${x(i)}" y="${h + 18}" text-anchor="middle">${d.fecha.slice(8)}</text>` : ''))
+    .join('');
+
+  const ultimo = datos[datos.length - 1];
+  let trazado = '';
+  if (datos.length > 1) {
+    const puntos = datos.map((d, i) => `${x(i)},${y(d.total)}`).join(' ');
+    const areaPuntos = `0,${h} ${puntos} ${w},${h}`;
+    trazado = `
+      <polygon points="${areaPuntos}" fill="var(--series-1-wash)" />
+      <polyline points="${puntos}" fill="none" stroke="var(--series-1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />`;
+  }
+
+  cont.innerHTML = `
+    <svg viewBox="0 0 ${ancho} ${alto}" width="100%" role="img" aria-label="${etiqueta}">
+      <g transform="translate(${margen.left},${margen.top})">
+        ${gridlines}
+        <line class="baseline" x1="0" y1="${h}" x2="${w}" y2="${h}" />
+        ${trazado}
+        <circle cx="${x(datos.length - 1)}" cy="${y(ultimo.total)}" r="4" fill="var(--series-1)" stroke="var(--surface)" stroke-width="2" />
+        <text class="valor-texto" x="${x(datos.length - 1)}" y="${y(ultimo.total) - 10}" text-anchor="${datos.length > 1 ? 'end' : 'middle'}">${formatoCompacto(ultimo.total)}</text>
+        ${etiquetasX}
+      </g>
+    </svg>
+  `;
+}
+
+function renderPreciosPorSucursal(lista, sucursalActualId) {
+  const cont = document.getElementById('reco-chart-precios');
+  if (!lista.length) {
+    cont.innerHTML = '<p class="hint">Sin ventas de este producto en ninguna sucursal durante el período.</p>';
+    return;
+  }
+
+  const ancho = 520, alto = 260;
+  const margen = { top: 24, right: 16, bottom: 70, left: 56 };
+  const w = ancho - margen.left - margen.right;
+  const h = alto - margen.top - margen.bottom;
+
+  const maxValor = Math.max(...lista.map((d) => d.precioPromedio), 1);
+  const niveles = ejeYNiveles(maxValor);
+  const maxEje = niveles[niveles.length - 1];
+  const y = (v) => h - (v / maxEje) * h;
+
+  const bandas = w / lista.length;
+  const anchoBarra = Math.min(24, bandas * 0.6);
+
+  const gridlines = niveles
+    .map((n) => `
+      <line class="gridline" x1="0" y1="${y(n)}" x2="${w}" y2="${y(n)}" />
+      <text class="eje-texto" x="-8" y="${y(n) + 4}" text-anchor="end">${formatoCompacto(n)}</text>`)
+    .join('');
+
+  const barras = lista
+    .map((d, i) => {
+      const cx = bandas * i + bandas / 2;
+      const barX = cx - anchoBarra / 2;
+      const barY = y(d.precioPromedio);
+      const barH = h - barY;
+      const nombreCorto = d.nombre.length > 14 ? d.nombre.slice(0, 13) + '…' : d.nombre;
+      const color = d.sucursalId === sucursalActualId ? 'var(--series-2)' : 'var(--series-1)';
+      return `
+        <rect x="${barX}" y="${barY}" width="${anchoBarra}" height="${Math.max(barH, 0)}" rx="4" fill="${color}" />
+        <text class="valor-texto" x="${cx}" y="${barY - 6}" text-anchor="middle">${formatoMoneda(d.precioPromedio)}</text>
+        <text class="eje-texto" x="${cx}" y="${h + 16}" text-anchor="end" transform="rotate(-40 ${cx} ${h + 16})">${nombreCorto}</text>
+      `;
+    })
+    .join('');
+
+  cont.innerHTML = `
+    <svg viewBox="0 0 ${ancho} ${alto}" width="100%" style="overflow: visible" role="img" aria-label="Precio promedio por sucursal">
+      <g transform="translate(${margen.left},${margen.top})">
+        ${gridlines}
+        <line class="baseline" x1="0" y1="${h}" x2="${w}" y2="${h}" />
+        ${barras}
+      </g>
+    </svg>
+  `;
+}
 
 // ---------- inicio ----------
 

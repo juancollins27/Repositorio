@@ -50,6 +50,21 @@ Abrí `http://localhost:3000`.
   (916 brechas, mismo ranking por departamento y por sucursal) que el
   archivo Excel original que hacía este cálculo a mano.
 
+- **Reconocimiento de producto**: sacás una foto de un producto (envase o
+  etiqueta) y elegís la sucursal contra la que querés contrastarlo. Una IA de
+  visión (Claude) "lee" la foto — nombre, marca, categoría y el texto del
+  envase — y el sistema busca en el catálogo los productos cuyo nombre y
+  categoría coincidan con lo detectado, mostrando los candidatos más
+  parecidos (también podés buscar manualmente si no hay match). Al confirmar
+  un producto, se arma su ficha en esa sucursal: **participación de ventas**
+  (% de las ventas de la sucursal y de su categoría que representa, y su
+  ranking), y **estrategia de precios** (precio promedio cobrado ahí vs. el
+  precio de lista y vs. el promedio del resto de las sucursales, con el
+  detalle por sucursal), además de la evolución de sus ventas en el período.
+  **Requiere** la variable de entorno `ANTHROPIC_API_KEY` para poder llamar al
+  servicio de visión (ver más abajo); sin ella, la identificación por foto
+  devuelve error pero el resto del panel sigue funcionando igual.
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -90,6 +105,11 @@ indicándole que la raíz del código es esta carpeta:
    Domain** para obtener la URL pública.
 4. Si querés persistencia real de datos: **Settings → Volumes** → crear
    volumen montado en `/data`, y en **Variables** agregar `DATA_DIR=/data`.
+5. Para que funcione la pestaña **Reconocimiento** (identificar productos por
+   foto), en **Settings → Variables** agregá `ANTHROPIC_API_KEY` con una API
+   key de [console.anthropic.com](https://console.anthropic.com). Opcionalmente
+   podés fijar `RECONOCIMIENTO_MODELO` (por defecto usa un modelo Claude
+   económico con visión) si querés usar un modelo más potente.
 
 ## Endpoints de la API
 
@@ -112,6 +132,8 @@ indicándole que la raíz del código es esta carpeta:
 | GET | `/api/quiebres` | listar análisis de quiebres importados |
 | POST | `/api/quiebres/importar` | subir un .xlsx (campo `archivo`) y analizarlo |
 | GET/DELETE | `/api/quiebres/:id` | ver / eliminar un análisis guardado |
+| POST | `/api/reconocimiento/identificar` | subir una foto (campo `foto`) e identificar candidatos del catálogo |
+| GET | `/api/reconocimiento/ficha?productoId=&sucursalId=&periodo=YYYY-MM` | participación de ventas y estrategia de precios de un producto en una sucursal |
 
 ## Ideas para seguir extendiendo
 

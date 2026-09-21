@@ -24,6 +24,7 @@
     <button class="tab-btn" data-tab="objetivos">Objetivos</button>
     <button class="tab-btn" data-tab="productividad">Productividad</button>
     <button class="tab-btn" data-tab="quiebres">Quiebres de Stock</button>
+    <button class="tab-btn" data-tab="reconocimiento">Reconocimiento</button>
   </nav>
 </header>
 
@@ -328,6 +329,58 @@
           </thead>
           <tbody id="tabla-quiebres-detalle"></tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECONOCIMIENTO DE PRODUCTO -->
+  <section id="tab-reconocimiento" class="tab-panel">
+    <div class="seccion-titulo">
+      <span class="eyebrow">Foto de góndola · Participación y precio</span>
+      <h2>Reconocimiento de producto</h2>
+    </div>
+    <div class="panel-grid">
+      <form id="form-reconocimiento" class="card">
+        <h2>Subir foto</h2>
+        <p class="card-nota">
+          Sacale una foto al producto (envase o etiqueta bien visible) y elegí la sucursal contra
+          la que querés contrastarlo. Una IA de visión lee la foto e identifica el producto; después
+          confirmás cuál es el del catálogo.
+        </p>
+        <label>Foto <input type="file" id="reco-foto" accept="image/*" capture="environment" required /></label>
+        <label>Sucursal <select id="reco-sucursal" required></select></label>
+        <label>Período <input type="month" id="reco-periodo" /></label>
+        <div class="form-actions"><button type="submit">Identificar producto</button></div>
+        <p class="hint" id="reco-estado"></p>
+      </form>
+      <div class="card">
+        <h2>Candidatos del catálogo</h2>
+        <p class="hint" id="reco-detectado"></p>
+        <ul id="reco-candidatos" class="lista-candidatos"></ul>
+        <label style="margin-top:0.75rem;display:block">Buscar manualmente en el catálogo
+          <input type="text" id="reco-buscar" placeholder="Nombre del producto…" />
+        </label>
+        <ul id="reco-busqueda-resultados" class="lista-candidatos"></ul>
+      </div>
+    </div>
+
+    <div id="reco-ficha" class="hidden">
+      <div class="seccion-titulo">
+        <span class="eyebrow" id="reco-ficha-sucursal"></span>
+        <h2 id="reco-ficha-producto"></h2>
+      </div>
+      <div class="stat-grid" id="reco-stat-tiles"></div>
+      <div class="insight" id="reco-insight"></div>
+
+      <div class="chart-grid">
+        <div class="card">
+          <h2>Ventas del producto en el período</h2>
+          <div id="reco-chart-tendencia" class="chart-wrap"></div>
+        </div>
+        <div class="card">
+          <h2>Precio promedio por sucursal</h2>
+          <div id="reco-chart-precios" class="chart-wrap"></div>
+        </div>
       </div>
     </div>
   </section>

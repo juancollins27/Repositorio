@@ -219,6 +219,22 @@ tbody tr:hover td { background: var(--surface-2); }
 
 .hint { font-size: 0.8rem; color: var(--muted); }
 
+/* ---------- reconocimiento de producto ---------- */
+
+.lista-candidatos { list-style: none; margin: 0.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.lista-candidatos li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.86rem;
+}
+.lista-candidatos .candidato-info { display: flex; flex-direction: column; }
+.lista-candidatos .candidato-score { font-size: 0.72rem; color: var(--muted); }
+
 /* ---------- dashboard ---------- */
 
 .dashboard-header { margin-bottom: 1rem; }

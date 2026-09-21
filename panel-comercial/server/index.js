@@ -9,6 +9,7 @@ import objetivosRouter from './routes/objetivos.js';
 import dashboardRouter from './routes/dashboard.js';
 import productividadRouter from './routes/productividad.js';
 import quiebresRouter from './routes/quiebres.js';
+import reconocimientoRouter from './routes/reconocimiento.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -24,6 +25,7 @@ app.use('/api/objetivos', objetivosRouter);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/productividad', productividadRouter);
 app.use('/api/quiebres', quiebresRouter);
+app.use('/api/reconocimiento', reconocimientoRouter);
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
