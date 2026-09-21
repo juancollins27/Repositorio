@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { leerDB } from '../db.js';
+import { leerDB, guardarDB, nuevoId } from '../db.js';
 
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 8 * 1024 * 1024 } });
@@ -49,13 +49,16 @@ async function identificarConIA(buffer, mimeType) {
 
   const prompt = `Sos un asistente que identifica productos de supermercado a partir de una foto de góndola o de un envase.
 Devolvé ÚNICAMENTE un JSON, sin texto adicional ni bloques de código, con este formato exacto:
-{"nombre": "", "marca": "", "categoria": "", "variante": "", "textoDetectado": ""}
+{"nombre": "", "marca": "", "categoria": "", "variante": "", "textoDetectado": "", "frentesVisibles": null}
 - "nombre": nombre genérico del producto (ej: "Yerba mate", "Aceite de girasol").
 - "marca": marca visible en el envase, si se distingue.
 - "categoria": categoría o rubro (ej: "Almacén", "Bebidas", "Limpieza").
 - "variante": tamaño/presentación si se ve (ej: "500g", "1L").
 - "textoDetectado": todo el texto legible del envase, tal cual aparece.
-Si no podés determinar un campo, dejalo como cadena vacía.`;
+- "frentesVisibles": si la foto muestra una góndola (no solo un envase de cerca), un número entero con la
+  cantidad de frentes/unidades de ESTE producto visibles en la góndola (contando columnas, no la profundidad).
+  Si la foto es de un envase solo o no se puede contar, dejalo en null.
+Si no podés determinar un campo de texto, dejalo como cadena vacía.`;
 
   const respuesta = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -93,12 +96,14 @@ Si no podés determinar un campo, dejalo como cadena vacía.`;
 
   try {
     const parseado = JSON.parse(textoJson);
+    const frentes = Number(parseado.frentesVisibles);
     return {
       nombre: parseado.nombre || '',
       marca: parseado.marca || '',
       categoria: parseado.categoria || '',
       variante: parseado.variante || '',
-      textoDetectado: parseado.textoDetectado || ''
+      textoDetectado: parseado.textoDetectado || '',
+      frentesVisibles: Number.isFinite(frentes) && frentes > 0 ? Math.round(frentes) : null
     };
   } catch {
     const err = new Error('no se pudo interpretar la respuesta del servicio de reconocimiento de imágenes');
@@ -219,14 +224,92 @@ router.get('/ficha', (req, res) => {
     .map(([fecha, datos]) => ({ fecha, ...datos }))
     .sort((a, b) => a.fecha.localeCompare(b.fecha));
 
+  const espacio = calcularEspacioVenta(db, productoId, sucursalId, participacion.porcentajeCategoria);
+
   res.json({
     periodo,
     producto,
     sucursal,
     participacion,
     precio,
-    tendencia
+    tendencia,
+    espacio
   });
+});
+
+// Compara el espacio físico ocupado por el producto en la góndola (frentes)
+// contra su participación real en las ventas de la categoría, para decidir
+// si conviene darle más o menos lugar ("ejecutar acorde a la venta").
+function calcularEspacioVenta(db, productoId, sucursalId, participacionVentasCategoria) {
+  const relevamientos = (db.relevamientosEspacio || [])
+    .filter((r) => r.productoId === productoId && r.sucursalId === sucursalId)
+    .sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const ultimo = relevamientos[0];
+  if (!ultimo) return { registrado: false };
+
+  const participacionEspacio = (ultimo.frentesProducto / ultimo.frentesTotalesSector) * 100;
+
+  let indice = null;
+  let diagnostico = 'sin_datos_venta';
+  let frentesSugeridos = null;
+  if (participacionVentasCategoria !== null && participacionEspacio > 0) {
+    indice = participacionVentasCategoria / participacionEspacio;
+    frentesSugeridos = Math.max(1, Math.round((ultimo.frentesTotalesSector * participacionVentasCategoria) / 100));
+    if (indice > 1.15) diagnostico = 'sub_espaciado';
+    else if (indice < 0.85) diagnostico = 'sobre_espaciado';
+    else diagnostico = 'equilibrado';
+  }
+
+  return {
+    registrado: true,
+    fecha: ultimo.fecha,
+    frentesProducto: ultimo.frentesProducto,
+    frentesTotalesSector: ultimo.frentesTotalesSector,
+    participacionEspacio,
+    participacionVentasCategoria,
+    indice,
+    frentesSugeridos,
+    delta: frentesSugeridos !== null ? frentesSugeridos - ultimo.frentesProducto : null,
+    diagnostico
+  };
+}
+
+router.post('/espacio', (req, res) => {
+  const { productoId, sucursalId, fecha, frentesProducto, frentesTotalesSector } = req.body;
+
+  if (!productoId || !sucursalId || !frentesProducto || !frentesTotalesSector) {
+    return res.status(400).json({
+      error: 'productoId, sucursalId, frentesProducto y frentesTotalesSector son obligatorios'
+    });
+  }
+
+  const frentesProd = Number(frentesProducto);
+  const frentesTotal = Number(frentesTotalesSector);
+  if (!(frentesProd > 0) || !(frentesTotal > 0) || frentesProd > frentesTotal) {
+    return res.status(400).json({
+      error: 'los frentes deben ser mayores a 0 y los frentes del producto no pueden superar a los del sector'
+    });
+  }
+
+  const db = leerDB();
+  const producto = db.productos.find((p) => p.id === Number(productoId));
+  if (!producto) return res.status(404).json({ error: 'producto no encontrado' });
+  if (!db.sucursales.find((s) => s.id === Number(sucursalId))) {
+    return res.status(404).json({ error: 'sucursal no encontrada' });
+  }
+
+  db.relevamientosEspacio = db.relevamientosEspacio || [];
+  const relevamiento = {
+    id: nuevoId(db, 'relevamientosEspacio'),
+    productoId: Number(productoId),
+    sucursalId: Number(sucursalId),
+    fecha: fecha || new Date().toISOString().slice(0, 10),
+    frentesProducto: frentesProd,
+    frentesTotalesSector: frentesTotal
+  };
+  db.relevamientosEspacio.push(relevamiento);
+  guardarDB(db);
+  res.status(201).json(relevamiento);
 });
 
 export default router;

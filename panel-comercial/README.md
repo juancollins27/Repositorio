@@ -65,6 +65,17 @@ Abrí `http://localhost:3000`.
   servicio de visión (ver más abajo); sin ella, la identificación por foto
   devuelve error pero el resto del panel sigue funcionando igual.
 
+  También incluye un **índice espacio-venta**: cargás cuántos "frentes"
+  (facings) tiene el producto en la góndola y cuántos frentes ocupa en total
+  el sector/rubro donde está, y el sistema lo compara contra la
+  participación real del producto en las ventas de su categoría. Si vende
+  mucho más de lo que su espacio actual sugeriría lo marca **sub-espaciado**
+  (con la cantidad de frentes sugerida para subir), si vende menos de lo que
+  ocupa lo marca **sobre-espaciado** (sugiriendo bajar frentes y liberar
+  lugar), y si están alineados lo marca **equilibrado**. Es la forma de
+  "ejecutar acorde a la venta": decidir en el momento, parado en la góndola,
+  si a ese producto le sobra o le falta espacio.
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -133,7 +144,8 @@ indicándole que la raíz del código es esta carpeta:
 | POST | `/api/quiebres/importar` | subir un .xlsx (campo `archivo`) y analizarlo |
 | GET/DELETE | `/api/quiebres/:id` | ver / eliminar un análisis guardado |
 | POST | `/api/reconocimiento/identificar` | subir una foto (campo `foto`) e identificar candidatos del catálogo |
-| GET | `/api/reconocimiento/ficha?productoId=&sucursalId=&periodo=YYYY-MM` | participación de ventas y estrategia de precios de un producto en una sucursal |
+| GET | `/api/reconocimiento/ficha?productoId=&sucursalId=&periodo=YYYY-MM` | participación de ventas, estrategia de precios e índice espacio-venta de un producto en una sucursal |
+| POST | `/api/reconocimiento/espacio` | guardar un relevamiento de frentes (producto y sector) en una sucursal |
 
 ## Ideas para seguir extendiendo
 

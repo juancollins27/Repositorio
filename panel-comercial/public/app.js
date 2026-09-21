@@ -947,6 +947,9 @@ document.getElementById('form-quiebres-importar').addEventListener('submit', asy
 
 document.getElementById('reco-periodo').value = mesActual();
 
+let recoDetectado = null;
+let recoActual = null; // { productoId, sucursalId, periodo }
+
 document.getElementById('form-reconocimiento').addEventListener('submit', async (e) => {
   e.preventDefault();
   const archivoInput = document.getElementById('reco-foto');
@@ -969,6 +972,7 @@ document.getElementById('form-reconocimiento').addEventListener('submit', async 
     }
     const { detectado, candidatos } = await res.json();
     estado.textContent = '';
+    recoDetectado = detectado;
     renderDetectado(detectado);
     renderCandidatos(candidatos);
   } catch (err) {
@@ -1056,6 +1060,8 @@ async function cargarFichaReconocimiento(productoId) {
     return;
   }
 
+  recoActual = { productoId: Number(productoId), sucursalId: Number(sucursalId), periodo };
+
   document.getElementById('reco-ficha').classList.remove('hidden');
   document.getElementById('reco-ficha-sucursal').textContent = `${ficha.sucursal.nombre} · ${ficha.periodo}`;
   document.getElementById('reco-ficha-producto').textContent = ficha.producto.nombre;
@@ -1064,6 +1070,85 @@ async function cargarFichaReconocimiento(productoId) {
   renderInsightReconocimiento(ficha);
   renderLineChart2(document.getElementById('reco-chart-tendencia'), ficha.tendencia, 'Ventas del producto');
   renderPreciosPorSucursal(ficha.precio.porSucursal, ficha.sucursal.id);
+
+  const inputFrentesProducto = document.getElementById('espacio-frentes-producto');
+  const inputFrentesSector = document.getElementById('espacio-frentes-sector');
+  if (ficha.espacio.registrado) {
+    inputFrentesProducto.value = ficha.espacio.frentesProducto;
+    inputFrentesSector.value = ficha.espacio.frentesTotalesSector;
+  } else {
+    inputFrentesProducto.value = recoDetectado && recoDetectado.frentesVisibles ? recoDetectado.frentesVisibles : '';
+    inputFrentesSector.value = '';
+  }
+  renderEspacioVenta(ficha.espacio);
+}
+
+document.getElementById('form-espacio').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!recoActual) return;
+
+  try {
+    await api('/api/reconocimiento/espacio', {
+      method: 'POST',
+      body: JSON.stringify({
+        productoId: recoActual.productoId,
+        sucursalId: recoActual.sucursalId,
+        frentesProducto: document.getElementById('espacio-frentes-producto').value,
+        frentesTotalesSector: document.getElementById('espacio-frentes-sector').value
+      })
+    });
+    await cargarFichaReconocimiento(recoActual.productoId);
+  } catch (err) {
+    alert(err.message);
+  }
+});
+
+const ETIQUETAS_DIAGNOSTICO = {
+  sub_espaciado: { texto: 'Sub-espaciado', clase: 'delta-warning' },
+  sobre_espaciado: { texto: 'Sobre-espaciado', clase: 'delta-critical' },
+  equilibrado: { texto: 'Equilibrado', clase: 'delta-good' },
+  sin_datos_venta: { texto: 'Sin ventas en la categoría', clase: '' }
+};
+
+function renderEspacioVenta(espacio) {
+  const cont = document.getElementById('reco-espacio-resultado');
+  if (!espacio.registrado) {
+    cont.innerHTML = '<p class="hint">Todavía no cargaste un relevamiento de espacio para este producto en esta sucursal.</p>';
+    return;
+  }
+
+  const diag = ETIQUETAS_DIAGNOSTICO[espacio.diagnostico] || ETIQUETAS_DIAGNOSTICO.sin_datos_venta;
+
+  let recomendacion;
+  if (espacio.diagnostico === 'sin_datos_venta') {
+    recomendacion = 'No hay ventas registradas en la categoría de este producto en el período, así que no se puede comparar el espacio contra la venta.';
+  } else if (espacio.diagnostico === 'equilibrado') {
+    recomendacion = `El espacio (${espacio.participacionEspacio.toFixed(1)}%) está acorde a lo que vende dentro de su categoría (${espacio.participacionVentasCategoria.toFixed(1)}%). No hace falta mover frentes.`;
+  } else if (espacio.diagnostico === 'sub_espaciado') {
+    recomendacion = `Vende <strong>${espacio.participacionVentasCategoria.toFixed(1)}%</strong> de su categoría pero solo ocupa <strong>${espacio.participacionEspacio.toFixed(1)}%</strong> del espacio. Convendría subir de ${espacio.frentesProducto} a <strong>${espacio.frentesSugeridos} frentes</strong> (+${espacio.delta}).`;
+  } else {
+    recomendacion = `Ocupa <strong>${espacio.participacionEspacio.toFixed(1)}%</strong> del espacio pero vende solo <strong>${espacio.participacionVentasCategoria.toFixed(1)}%</strong> de su categoría. Convendría bajar de ${espacio.frentesProducto} a <strong>${espacio.frentesSugeridos} frentes</strong> (${espacio.delta}) y liberar lugar para otro producto.`;
+  }
+
+  cont.innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-tile">
+        <div class="label">Participación en el espacio</div>
+        <div class="value">${espacio.participacionEspacio.toFixed(1)}%</div>
+        <div class="delta">${espacio.frentesProducto} de ${espacio.frentesTotalesSector} frentes</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Participación en ventas de la categoría</div>
+        <div class="value">${espacio.participacionVentasCategoria === null ? '—' : espacio.participacionVentasCategoria.toFixed(1) + '%'}</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">Diagnóstico</div>
+        <div class="value ${diag.clase}" style="font-size:1.1rem">${diag.texto}</div>
+        <div class="delta">Relevado el ${espacio.fecha}</div>
+      </div>
+    </div>
+    <div class="insight"><span class="marca">☞</span><span>${recomendacion}</span></div>
+  `;
 }
 
 function renderStatTilesReconocimiento(f) {

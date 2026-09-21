@@ -15,6 +15,7 @@ const DB_INICIAL = {
   productividadMensual: [],
   productividadExtra: [],
   quiebresAnalisis: [],
+  relevamientosEspacio: [],
   nextId: {
     sucursales: 1,
     vendedores: 1,
@@ -22,7 +23,8 @@ const DB_INICIAL = {
     ventas: 1,
     objetivos: 1,
     productividadMensual: 1,
-    quiebresAnalisis: 1
+    quiebresAnalisis: 1,
+    relevamientosEspacio: 1
   }
 };
 

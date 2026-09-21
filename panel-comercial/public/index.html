@@ -382,6 +382,24 @@
           <div id="reco-chart-precios" class="chart-wrap"></div>
         </div>
       </div>
+
+      <div class="panel-grid">
+        <form id="form-espacio" class="card">
+          <h2>Relevamiento de espacio en góndola</h2>
+          <p class="card-nota">
+            Contá cuántos frentes tiene este producto en la góndola y cuántos frentes ocupa en
+            total el rubro/sector donde está. Con eso calculamos si el espacio que tiene está
+            acorde a lo que realmente vende dentro de su categoría.
+          </p>
+          <label>Frentes de este producto <input type="number" id="espacio-frentes-producto" min="1" step="1" required /></label>
+          <label>Frentes totales del sector/rubro <input type="number" id="espacio-frentes-sector" min="1" step="1" required /></label>
+          <div class="form-actions"><button type="submit">Guardar relevamiento</button></div>
+        </form>
+        <div class="card">
+          <h2>Índice espacio-venta</h2>
+          <div id="reco-espacio-resultado"></div>
+        </div>
+      </div>
     </div>
   </section>
 
