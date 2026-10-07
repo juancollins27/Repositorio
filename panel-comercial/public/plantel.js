@@ -638,7 +638,10 @@ $('tab-plantel').addEventListener('click', async (e) => {
   else if (d.plSector) st.sector = d.plSector;
   else if (d.plCobdia !== undefined) st.cobDia = d.plCobdia;
   else if (d.plCobsector) st.cobSector = d.plCobsector;
-  else if (d.plEditar) return abrirDialogo(P.personas.find((p) => p.id === Number(d.plEditar)));
+  else if (d.plEditar) {
+    if (document.body.classList.contains('solo-lectura')) return;
+    return abrirDialogo(P.personas.find((p) => p.id === Number(d.plEditar)));
+  }
   else if (d.plNueva) return abrirDialogo(null, d.plNueva);
   else if (d.plUnificar) {
     await api(`/api/plantel/personas/${d.plUnificar}`, { method: 'PUT', body: JSON.stringify({ nombre: d.nombre }) });

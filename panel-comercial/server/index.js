@@ -10,12 +10,17 @@ import dashboardRouter from './routes/dashboard.js';
 import productividadRouter from './routes/productividad.js';
 import quiebresRouter from './routes/quiebres.js';
 import plantelRouter from './routes/plantel.js';
+import { controlDeAcceso, proteccionActiva } from './acceso.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Va primero: protege la API y también las páginas.
+app.use(controlDeAcceso);
 app.use(express.json());
+
+app.get('/api/sesion', (req, res) => res.json({ rol: req.rol || 'edicion', protegido: proteccionActiva() }));
 
 app.use('/api/sucursales', sucursalesRouter);
 app.use('/api/vendedores', vendedoresRouter);
@@ -37,4 +42,5 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.listen(PORT, () => {
   console.log(`Panel comercial corriendo en http://localhost:${PORT}`);
+  if (!proteccionActiva()) console.log('Atención: sin APP_PASSWORD el panel queda abierto a cualquiera que tenga la URL.');
 });

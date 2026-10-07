@@ -464,3 +464,14 @@ tr.fila-alerta td { color: var(--status-critical); font-weight: 600; }
 .pl-columnas { margin-top: 0.5rem; }
 .pl-columnas summary { cursor: pointer; }
 .pl-tenue { color: var(--muted); }
+
+/* ---------- usuario de sólo lectura ---------- */
+.solo-lectura form,
+.solo-lectura [data-borrar-objetivo], .solo-lectura [data-borrar-productividad], .solo-lectura [data-borrar-producto],
+.solo-lectura [data-borrar-quiebres], .solo-lectura [data-borrar-sucursal], .solo-lectura [data-borrar-vendedor],
+.solo-lectura [data-borrar-venta],
+.solo-lectura [data-pl-nueva], .solo-lectura [data-pl-unificar], .solo-lectura [data-pl-repintar],
+.solo-lectura [data-pl-min-agregar], .solo-lectura [data-pl-min-guardar], .solo-lectura [data-pl-min-borrar],
+.solo-lectura #pl-dias-semana { display: none; }
+.solo-lectura .pl-grow[data-pl-editar] { cursor: default; }
+.solo-lectura .panel-grid { grid-template-columns: 1fr; }

@@ -944,6 +944,9 @@ document.getElementById('form-quiebres-importar').addEventListener('submit', asy
 // ---------- inicio ----------
 
 async function iniciar() {
+  // Con un usuario de sólo lectura se esconden formularios y botones de edición.
+  const sesion = await api('/api/sesion').catch(() => ({ rol: 'edicion' }));
+  if (sesion.rol === 'lectura') document.body.classList.add('solo-lectura');
   document.getElementById('venta-fecha').valueAsDate = new Date();
   document.getElementById('objetivo-periodo').value = mesActual();
   await cargarMaestros();

@@ -136,14 +136,36 @@ Como este proyecto convive en el mismo repositorio que `clases-matematica/`,
 en Railway se agrega como **un servicio nuevo dentro del mismo proyecto**,
 indicándole que la raíz del código es esta carpeta:
 
-1. En tu proyecto de Railway, click **+ New → GitHub Repo** y elegí de nuevo
+1. En tu proyecto de Railway, click **+ New → GitHub Repo** y elegí
    `juancollins27/Repositorio`.
-2. Andá a **Settings** del nuevo servicio → sección **Source** → **Root
-   Directory** → poné `panel-comercial`.
-3. (Igual que con la otra app) en **Settings → Networking** → **Generate
-   Domain** para obtener la URL pública.
-4. Si querés persistencia real de datos: **Settings → Volumes** → crear
-   volumen montado en `/data`, y en **Variables** agregar `DATA_DIR=/data`.
+2. En **Settings → Source**: **Root Directory** = `panel-comercial`, y en
+   **Branch** la rama a publicar (la principal, una vez fusionados los cambios).
+3. **Settings → Volumes** → crear un volumen montado en `/data`. Ahí quedan
+   los datos que cargues (incluido el plantel), y sobreviven a reinicios y
+   redespliegues.
+4. **Variables**:
+
+   | Variable | Valor | Para qué |
+   |---|---|---|
+   | `DATA_DIR` | `/data` | guardar los datos en el volumen |
+   | `APP_PASSWORD` | una contraseña larga | acceso completo (ver y editar) |
+   | `APP_USUARIO` | opcional, por defecto `admin` | usuario del acceso completo |
+   | `APP_PASSWORD_LECTURA` | otra contraseña | opcional: acceso de sólo lectura para compartir |
+   | `APP_USUARIO_LECTURA` | opcional, por defecto `lectura` | usuario de sólo lectura |
+
+5. **Settings → Networking → Generate Domain** para obtener la URL pública.
+6. Entrá con el usuario de acceso completo y en **Plantel y Horarios →
+   Importar y configurar** subí los dos Excel.
+
+**No lo publiques sin `APP_PASSWORD`**: el plantel tiene nombres, partes
+médicos y ausencias, y sin contraseña cualquiera con la URL los ve y puede
+editarlos. Con la contraseña configurada el navegador la pide una vez al
+entrar. El usuario de sólo lectura ve todo pero no tiene formularios ni
+botones de edición, y la API le rechaza cualquier cambio.
+
+La primera vez que arranca con el volumen vacío, la app copia los datos que
+vienen en el repositorio (sucursales, Productividad y Quiebres de Kilbel),
+así no arranca en blanco.
 
 ## Endpoints de la API
 
