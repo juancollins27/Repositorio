@@ -50,6 +50,36 @@ Abrí `http://localhost:3000`.
   (916 brechas, mismo ranking por departamento y por sucursal) que el
   archivo Excel original que hacía este cálculo a mano.
 
+- **Plantel y Horarios**: la grilla de horarios y el plantel por posición de
+  las 12 sucursales + E-Commerce, ahora vivos y editables (antes era un
+  tablero estático). Se carga importando el HTML del artifact "Plantel y
+  Horarios 2026" (o su JSON) desde la sub-pestaña *Importar y configurar*.
+  Suma sobre lo que mostraba el tablero:
+  - **Cobertura por día real**: interpreta el franco de cada persona ("mierc
+    tard", "juev-ta", "MART/TA", "lunes manaña"…) y lo descuenta del día que
+    corresponde, en vez de mirar sólo la semana tipo.
+  - **Huecos contra mínimos configurables** (p. ej. "Cajas ≥ 2 de 9 a 21 hs"),
+    por sucursal o para todas, sólo en las horas en que la sucursal está abierta.
+  - **Plantel × Productividad**: horas programadas en la grilla (× 4,33
+    semanas) contra las horas-hombre y colaboradores cargados en Productividad
+    para el mismo mes. En agosto 2026 cuadra ±5% en varias sucursales y deja ver
+    brechas grandes donde la grilla no tiene cargada a toda la gente.
+  - **Calidad de datos con arreglo en un clic**: nombres casi iguales entre
+    plantel y horarios (comparación difusa: "IBARRECHE" ↔ "IBARRECHEA",
+    "PEREYRA J." ↔ "PEREYRA JULIAN") con botón *Unificar*; personas
+    cargadas en otra unidad; grillas pintadas distinto del horario escrito con
+    botón *Repintar según horario*; francos ilegibles; la misma persona en dos
+    filas; vacantes; y encabezados de la planilla pegados como si fueran
+    personas (se descartan al importar).
+  - **Edición**: alta, baja, traslado de unidad y cambio de horario; la grilla
+    se pinta sola a partir del horario escrito.
+  - Búsqueda en toda la red y **exportación a CSV** para Excel.
+
+  **Privacidad**: el plantel tiene nombres, partes médicos y ausencias, así
+  que se guarda en `plantel.json` (en `DATA_DIR`), separado de `db.json` y
+  excluido del repositorio con `.gitignore`. En Railway queda en el mismo
+  volumen que el resto de los datos.
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -63,7 +93,16 @@ server/
   routes/
     sucursales.js, vendedores.js, productos.js, ventas.js, objetivos.js
     dashboard.js   → agrega y calcula todos los KPIs del dashboard
+    plantel.js     → API del módulo Plantel y Horarios
+  plantel/
+    analisis.js    → lógica pura: horarios, francos, nombres, cobertura
+                     (la usa también el navegador, servida en /plantel-analisis.js)
+    importar.js    → convierte la planilla al modelo del módulo
+    store.js       → lee/guarda plantel.json
+test/
+  plantel.test.js  → npm test
 public/
+  plantel.js                         → pestaña Plantel y Horarios
   index.html, styles.css, app.js   → dibuja los gráficos con SVG a mano,
                                       sin librerías externas
 ```
@@ -112,6 +151,18 @@ indicándole que la raíz del código es esta carpeta:
 | GET | `/api/quiebres` | listar análisis de quiebres importados |
 | POST | `/api/quiebres/importar` | subir un .xlsx (campo `archivo`) y analizarlo |
 | GET/DELETE | `/api/quiebres/:id` | ver / eliminar un análisis guardado |
+| GET | `/api/plantel` | plantel completo: unidades, personas (con horas/semana y alertas), posiciones, mínimos |
+| GET | `/api/plantel/resumen` | KPIs por unidad y cobertura por hora y sector de toda la red |
+| GET | `/api/plantel/cobertura?dia=&sector=` | personas por hora y unidad (`dia` 0–5 = lunes–sábado, con francos) |
+| GET | `/api/plantel/huecos` | horas por debajo de los mínimos, por unidad, día y sector |
+| GET | `/api/plantel/calidad` | diferencias plantel/horarios y demás chequeos de datos |
+| GET | `/api/plantel/productividad?anio=&mes=` | horas programadas vs. horas-hombre reales del mes |
+| GET | `/api/plantel/export.csv` | grilla completa en CSV (separador `;`) |
+| POST | `/api/plantel/importar` | subir el HTML o JSON de la planilla (campo `archivo`) |
+| POST/PUT/DELETE | `/api/plantel/personas[/:id]` | alta / edición / baja de una fila de la grilla |
+| PUT | `/api/plantel/minimos` | reemplazar la lista de mínimos de cobertura |
+| PUT | `/api/plantel/config` | días trabajados por semana (5 o 6) |
+| PUT | `/api/plantel/unidades/:clave` | cajas declaradas / sucursal vinculada |
 
 ## Ideas para seguir extendiendo
 
