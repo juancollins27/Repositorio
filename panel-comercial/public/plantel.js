@@ -136,8 +136,8 @@ function graficoApilado(series, sectores) {
 function vVacio() {
   return `<div class="card pl-vacio">
     <h2>Todavía no hay plantel cargado</h2>
-    <p class="card-nota">Importá la planilla de plantel y horarios para ver la dotación de cada sucursal, la cobertura por hora,
-    los huecos contra los mínimos y el cruce con Productividad. Sirve el HTML del artifact "Plantel y Horarios 2026" tal cual, o su JSON.</p>
+    <p class="card-nota">Subí los dos Excel (HORARIOS DE SUC. y PLANTEL) para ver la dotación de cada sucursal, la cobertura por hora,
+    los huecos contra los mínimos y el cruce con Productividad.</p>
     <button type="button" data-pl-vista="config">Importar planilla</button>
   </div>`;
 }
@@ -407,7 +407,7 @@ function graficoDelta(filas) {
     const tx = adentro ? xa + 6 : neg ? xa - 6 : xa + largo + 6;
     return `<text class="pl-svg-label" x="${izq - 12}" y="${y0 + alto2 / 2 + 4}" text-anchor="end">${esc(d.nombre)}</text>
       <rect x="${xa}" y="${y0}" width="${Math.max(largo, 2)}" height="${alto2}" rx="3" fill="${color}"/>
-      <text class="valor-texto" x="${tx}" y="${y0 + alto2 / 2 + 4}" text-anchor="${adentro || !neg ? 'start' : 'end'}" ${adentro ? 'fill="#fff"' : ''}>${fmtPct(d.deltaHorasPct)}</text>`;
+      <text class="valor-texto" x="${tx}" y="${y0 + alto2 / 2 + 4}" text-anchor="${adentro || !neg ? 'start' : 'end'}" ${adentro ? 'style="fill:#fff"' : ''}>${fmtPct(d.deltaHorasPct)}</text>`;
   }).join('');
   return `<svg viewBox="0 0 ${ancho} ${alto}" width="100%" role="img" aria-label="Diferencia de horas por unidad">
     <line class="baseline" x1="${x(0)}" y1="0" x2="${x(0)}" y2="${alto - 22}"/>
@@ -446,12 +446,12 @@ async function vProductividad() {
     <div class="card pl-card"><h2>Detalle por unidad</h2>
       <div class="chart-wrap"><table class="pl-tabla">
         <thead><tr><th>Unidad</th><th class="num">En grilla</th><th class="num">Colaboradores</th><th class="num">Δ personas</th>
-          <th class="num">Horas/mes grilla</th><th class="num">Horas-hombre reales</th><th class="num">Δ horas</th>
+          <th class="num">Horas/mes grilla</th><th class="num" title="Columna de horas/mes de la propia planilla (horas por día × 26)">Según planilla</th><th class="num">Horas-hombre reales</th><th class="num">Δ horas</th>
           <th class="num">Tickets/hora real</th><th class="num">Tickets/hora grilla</th></tr></thead>
         <tbody>${filas.map((f) => `<tr class="pl-fila-click" data-pl-unidad="${f.clave}"><td><strong>${esc(f.nombre)}</strong>${f.formato ? ` <span class="formato-badge ${f.formato.toLowerCase()}">${f.formato}</span>` : ''}</td>
           <td class="num">${f.dotacionGrilla}</td><td class="num">${fmtNum(f.colaboradores)}</td>
           <td class="num delta-cell ${f.deltaDotacion < 0 ? 'neg' : ''}">${f.deltaDotacion === null ? '–' : (f.deltaDotacion > 0 ? '+' : '') + fmtNum(f.deltaDotacion)}</td>
-          <td class="num">${fmtNum(f.horasMesProg)}</td><td class="num">${fmtNum(f.horasReales)}</td>
+          <td class="num">${fmtNum(f.horasMesProg)}</td><td class="num pl-tenue">${fmtNum(f.horasMesPlanilla)}</td><td class="num">${fmtNum(f.horasReales)}</td>
           <td class="num delta-cell ${f.deltaHorasPct < -5 ? 'neg' : f.deltaHorasPct > 5 ? '' : 'pos'}">${fmtPct(f.deltaHorasPct)}</td>
           <td class="num">${fmtNum(f.ticketsPorHoraReal)}</td><td class="num">${fmtNum(f.ticketsPorHoraProg)}</td></tr>`).join('')}</tbody>
       </table></div>
@@ -467,12 +467,19 @@ function vConfig() {
     <div class="panel-grid">
       <div class="card">
         <h2>Importar planilla</h2>
-        <p class="card-nota">Subí el HTML del artifact "Plantel y Horarios 2026" (o su JSON). Reemplaza el plantel actual; los mínimos y la configuración se mantienen.</p>
+        <p class="card-nota">Subí las planillas tal cual: <strong>HORARIOS DE SUC.</strong> (una hoja por sucursal, con la grilla pintada)
+          y <strong>PLANTEL</strong> (hoja "prox planteles"). Podés subir las dos juntas o sólo una: con sólo el plantel se actualizan
+          las posiciones sobre la grilla que ya está cargada. Los mínimos y la configuración se mantienen.</p>
         <form id="pl-form-importar">
-          <label>Archivo (.html o .json) <input type="file" id="pl-archivo" accept=".html,.htm,.json" required /></label>
+          <label>Archivos (.xlsx; también acepta el HTML del artifact) <input type="file" id="pl-archivo" accept=".xlsx,.xlsm,.html,.htm,.json" multiple required /></label>
           <div class="form-actions"><button type="submit">Importar</button></div>
         </form>
-        <p class="hint" id="pl-import-estado">${imp ? `Última importación: ${esc(imp.archivo)}, ${new Date(imp.fecha).toLocaleString('es-AR')} · ${imp.personas} filas en ${imp.unidades} unidades · ${imp.descartadas} filas basura descartadas.` : ''}</p>
+        <p class="hint" id="pl-import-estado">${imp ? `Última importación: ${esc(imp.archivo)}, ${new Date(imp.fecha).toLocaleString('es-AR')} · ${imp.personas} filas de grilla en ${imp.unidades} unidades${imp.posiciones !== undefined ? ` · ${imp.posiciones} posiciones de plantel` : ''} · ${imp.descartadas} filas descartadas (ver Calidad de datos).` : ''}</p>
+        ${P.columnasPlantel.length ? `<details class="pl-columnas"><summary class="hint">Cómo se leyeron las columnas del plantel</summary>
+          <p class="hint">Cada columna numerada se asigna a la hoja de horarios con la que comparte más nombres.</p>
+          <ul class="pl-lista">${P.columnasPlantel.map((c) => `<li>Columna ${esc(c.columna)}<span>${esc(unidadNombre(c.unidad))}</span></li>`).join('')}</ul>
+          ${P.notasPlantel.length ? `<p class="hint">Anotaciones que no son personas: ${P.notasPlantel.map((x) => `"${esc(x.texto)}" (col. ${esc(x.columna)})`).join(', ')}.</p>` : ''}
+        </details>` : ''}
         <p class="hint">Los datos del plantel se guardan en <code>plantel.json</code>, aparte del resto del panel, y no se suben al repositorio.</p>
         ${P.vacio ? '' : '<p><a class="pl-boton-link" href="/api/plantel/export.csv" download>Descargar grilla en CSV (Excel)</a></p>'}
       </div>
@@ -687,7 +694,7 @@ $('tab-plantel').addEventListener('submit', async (e) => {
   const input = $('pl-archivo');
   if (!input.files.length) return;
   const fd = new FormData();
-  fd.append('archivo', input.files[0]);
+  [...input.files].forEach((f) => fd.append('archivo', f));
   $('pl-import-estado').textContent = 'Importando…';
   try {
     const res = await fetch('/api/plantel/importar', { method: 'POST', body: fd });

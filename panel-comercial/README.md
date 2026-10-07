@@ -52,8 +52,22 @@ Abrí `http://localhost:3000`.
 
 - **Plantel y Horarios**: la grilla de horarios y el plantel por posición de
   las 12 sucursales + E-Commerce, ahora vivos y editables (antes era un
-  tablero estático). Se carga importando el HTML del artifact "Plantel y
-  Horarios 2026" (o su JSON) desde la sub-pestaña *Importar y configurar*.
+  tablero estático). Se carga subiendo **las dos planillas de origen tal
+  cual** desde la sub-pestaña *Importar y configurar*:
+  - `HORARIOS DE SUC. ….xlsx`: una hoja por unidad (LP, FZ, …, ECOM). La
+    grilla se lee del **color de relleno** de las celdas de 7 a 21 hs (el
+    blanco no cuenta); también toma el horario escrito, el franco, el bloque
+    "PARTE MÉDICO PROLONGADO", la lista de part time de "TOTAL SUC." y la
+    hoja "Ausencias". Ignora totales, títulos repetidos y una segunda versión
+    de la grilla en la misma hoja (la propuesta que hay debajo en Balcarce).
+  - `PLANTEL 2026.xlsx` (hoja "prox planteles"): cada columna numerada se
+    asigna a la hoja de horarios con la que comparte más nombres, así que no
+    depende del orden de las columnas. Lee también "CANT CAJAS" y el bloque
+    de encargados y subs sin sucursal.
+
+  Se pueden subir juntas o por separado (con sólo el plantel se actualizan
+  las posiciones sobre la grilla ya cargada). También acepta el HTML del
+  artifact "Plantel y Horarios 2026".
   Suma sobre lo que mostraba el tablero:
   - **Cobertura por día real**: interpreta el franco de cada persona ("mierc
     tard", "juev-ta", "MART/TA", "lunes manaña"…) y lo descuenta del día que
@@ -62,8 +76,8 @@ Abrí `http://localhost:3000`.
     por sucursal o para todas, sólo en las horas en que la sucursal está abierta.
   - **Plantel × Productividad**: horas programadas en la grilla (× 4,33
     semanas) contra las horas-hombre y colaboradores cargados en Productividad
-    para el mismo mes. En agosto 2026 cuadra ±5% en varias sucursales y deja ver
-    brechas grandes donde la grilla no tiene cargada a toda la gente.
+    para el mismo mes, al lado de la columna de horas/mes que calcula la
+    propia planilla.
   - **Calidad de datos con arreglo en un clic**: nombres casi iguales entre
     plantel y horarios (comparación difusa: "IBARRECHE" ↔ "IBARRECHEA",
     "PEREYRA J." ↔ "PEREYRA JULIAN") con botón *Unificar*; personas
@@ -97,7 +111,8 @@ server/
   plantel/
     analisis.js    → lógica pura: horarios, francos, nombres, cobertura
                      (la usa también el navegador, servida en /plantel-analisis.js)
-    importar.js    → convierte la planilla al modelo del módulo
+    importarExcel.js → lee los Excel de horarios y de plantel
+    importar.js    → lee el HTML/JSON del artifact (formato anterior)
     store.js       → lee/guarda plantel.json
 test/
   plantel.test.js  → npm test
@@ -158,7 +173,7 @@ indicándole que la raíz del código es esta carpeta:
 | GET | `/api/plantel/calidad` | diferencias plantel/horarios y demás chequeos de datos |
 | GET | `/api/plantel/productividad?anio=&mes=` | horas programadas vs. horas-hombre reales del mes |
 | GET | `/api/plantel/export.csv` | grilla completa en CSV (separador `;`) |
-| POST | `/api/plantel/importar` | subir el HTML o JSON de la planilla (campo `archivo`) |
+| POST | `/api/plantel/importar` | subir los Excel de horarios y/o plantel, o el HTML/JSON del artifact (campo `archivo`, hasta 3) |
 | POST/PUT/DELETE | `/api/plantel/personas[/:id]` | alta / edición / baja de una fila de la grilla |
 | PUT | `/api/plantel/minimos` | reemplazar la lista de mínimos de cobertura |
 | PUT | `/api/plantel/config` | días trabajados por semana (5 o 6) |

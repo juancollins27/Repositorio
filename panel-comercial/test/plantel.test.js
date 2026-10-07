@@ -20,6 +20,12 @@ test('elige la variante "//" que coincide con la grilla pintada', () => {
   assert.equal(grillaCoincideConTexto({ horario: '08:00 a 12:00', bloques: '111110000000000' }), false);
 });
 
+test('un tramo que se superpone con el anterior es otra variante, no se suma', () => {
+  const v = parsearHorario('07:00 A 12:00 - 18:00 a 21:00 Hs.- 13:00 a 21:00');
+  assert.equal(v.minutos, 8 * 60);
+  assert.equal(parsearHorario('07:30 a 16:30 Hs. - 12:00 a 21:00', '000001111111110').tramos[0][0], 720);
+});
+
 test('pinta la grilla con la misma regla que la planilla (media hora pinta el bloque)', () => {
   const t = parsearHorario('07:30 a 12:00 - 16:30 a 21:00').tramos;
   assert.equal(bloquesDesdeTramos(t), '111110000111110');
@@ -95,4 +101,30 @@ test('el importador lee el HTML del artifact y descarta encabezados pegados en l
   assert.equal(r.personas.length, 2);
   assert.equal(r.descartadas.length, 2);
   assert.equal(r.personas[1].modalidad, 'parte médico');
+});
+
+test('plantel en Excel: cada columna va a la unidad con la que comparte nombres', async () => {
+  const { default: XLSX } = await import('xlsx');
+  const { leerPlantel, sectorDesdePuesto } = await import('../server/plantel/importarExcel.js');
+  const hoja = XLSX.utils.aoa_to_sheet([
+    ['ACTUAL'],
+    ['PUESTOS', 1, 2, '', 'ENCARGADOS'],
+    ['ENCARGADOS', 'GOMEZ ANA', 'PEREZ JUAN', '', 'DIAZ LUIS'],
+    ['CANT CAJAS', '6 CAJAS', '4CAJAS'],
+    ['CAJAS 1', 'SOSA EVA', '3 CAJEROS + 1 AUX']
+  ]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, hoja, 'prox planteles');
+  // Las hojas de horarios están en el orden inverso al de las columnas.
+  const unidades = [{ clave: 'B' }, { clave: 'A' }];
+  const personas = [{ unidad: 'A', nombre: 'GOMEZ ANA' }, { unidad: 'A', nombre: 'SOSA EVA' }, { unidad: 'B', nombre: 'PEREZ JUAN' }];
+  const r = leerPlantel(wb, unidades, personas);
+  assert.deepEqual(r.columnas, [{ columna: 1, unidad: 'A' }, { columna: 2, unidad: 'B' }]);
+  assert.deepEqual(r.cajasPorUnidad, { A: 6, B: 4 });
+  assert.equal(r.posiciones.length, 3);
+  assert.deepEqual(r.notas, [{ columna: 2, texto: '3 CAJEROS + 1 AUX' }]);
+  assert.deepEqual(r.pool.encargados, ['DIAZ LUIS']);
+  assert.equal(sectorDesdePuesto('CAJERO PART TIME 32'), 'Cajas');
+  assert.equal(sectorDesdePuesto('JEFA. DE FRIAMBRERIA'), 'Frescos');
+  assert.equal(sectorDesdePuesto('AUX. DE SUPERV'), 'Conducción');
 });

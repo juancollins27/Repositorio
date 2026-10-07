@@ -461,3 +461,6 @@ tr.fila-alerta td { color: var(--status-critical); font-weight: 600; }
 .pl-stats { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
 .pl-lista li b { font-weight: 500; }
 .pl-svg-label { fill: var(--ink-soft); font-size: 13px; font-weight: 500; }
+.pl-columnas { margin-top: 0.5rem; }
+.pl-columnas summary { cursor: pointer; }
+.pl-tenue { color: var(--muted); }

@@ -42,12 +42,24 @@ function parsearTramos(texto) {
 // Si la celda trae dos variantes separadas por "//" (semana A / semana B),
 // devuelve todas; la principal es la que coincide con la grilla pintada o,
 // si ninguna coincide, la primera.
+// Colastiné escribe la alternativa con un guion: "07:00 a 12:00 - 18:00 a
+// 21:00 - 13:00 a 21:00". Un tramo que empieza antes de que termine el
+// anterior no es un tramo más del mismo día: es otra variante.
+function separarVariantes(tramos) {
+  const variantes = [];
+  tramos.forEach((t) => {
+    const actual = variantes[variantes.length - 1];
+    if (actual && t[0] >= actual[actual.length - 1][1]) actual.push(t);
+    else variantes.push([t]);
+  });
+  return variantes;
+}
+
 export function parsearHorarioVariantes(texto) {
   if (!texto) return [];
   return String(texto)
     .split('//')
-    .map(parsearTramos)
-    .filter((t) => t.length)
+    .flatMap((parte) => separarVariantes(parsearTramos(parte)))
     .map((tramos) => ({ tramos, minutos: tramos.reduce((acc, [a, b]) => acc + (b - a), 0) }));
 }
 

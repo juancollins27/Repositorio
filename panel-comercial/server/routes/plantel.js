@@ -2,7 +2,9 @@ import { Router } from 'express';
 import multer from 'multer';
 import { leerDB } from '../db.js';
 import { leerPlantel, guardarPlantel, nuevoIdPlantel } from '../plantel/store.js';
+import XLSX from 'xlsx';
 import { extraerDataset, convertirDataset } from '../plantel/importar.js';
+import { convertirLibros, leerPlantel as leerLibroPlantel, esLibroHorarios, esLibroPlantel } from '../plantel/importarExcel.js';
 import {
   HORAS, SECTORES, MODALIDADES, parsearFranco, parsearHorario, parsearHorarioVariantes,
   bloquesDesdeTramos, bloquesVacios, horasSemanales, tieneTurnoCortado, grillaCoincideConTexto,
@@ -180,7 +182,9 @@ router.get('/', (req, res) => {
     ausencias: plantel.ausencias,
     minimos: plantel.minimos,
     config: plantel.config,
-    importacion: plantel.importacion
+    importacion: plantel.importacion,
+    columnasPlantel: plantel.columnasPlantel || [],
+    notasPlantel: plantel.notasPlantel || []
   });
 });
 
@@ -285,6 +289,9 @@ router.get('/productividad', (req, res) => {
     const activas = personas.filter((p) => p.unidad === u.clave && trabaja(p));
     const horasSemana = activas.reduce((acc, p) => acc + p.horasSemana, 0);
     const horasMesProg = horasSemana * SEMANAS_POR_MES;
+    // Lo que la propia planilla calcula (columna de horas/mes: horas por día × 26).
+    const conPlanilla = activas.filter((p) => p.horasMesPlanilla);
+    const horasMesPlanilla = conPlanilla.length ? conPlanilla.reduce((acc, p) => acc + p.horasMesPlanilla, 0) : null;
     const suc = db.sucursales.find((s) => s.id === u.sucursalId);
     const real = u.sucursalId
       ? registros.find((r) => r.sucursalId === u.sucursalId && r.anio === anio && r.mesNro === mesNro)
@@ -296,6 +303,7 @@ router.get('/productividad', (req, res) => {
       dotacionGrilla: activas.length,
       horasSemanaProg: redondear(horasSemana, 0),
       horasMesProg: redondear(horasMesProg, 0),
+      horasMesPlanilla,
       colaboradores: real ? real.colaboradores : null,
       horasReales: real ? real.horas : null,
       tickets: real ? real.tickets : null,
@@ -332,29 +340,70 @@ router.get('/export.csv', (req, res) => {
 
 // ---------- escritura ----------
 
-router.post('/importar', upload.single('archivo'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'no se recibió ningún archivo' });
+// Acepta los dos Excel de origen (horarios y plantel), juntos o por separado,
+// o el HTML/JSON del artifact. Con sólo el plantel, se actualizan las
+// posiciones sobre la grilla ya cargada.
+router.post('/importar', upload.array('archivo', 3), (req, res) => {
+  const archivos = req.files || [];
+  if (!archivos.length) return res.status(400).json({ error: 'no se recibió ningún archivo' });
+  const anterior = leerPlantel();
+  const sucursales = leerDB().sucursales;
   let convertido;
   try {
-    const dataset = extraerDataset(req.file.buffer.toString('utf-8'));
-    convertido = convertirDataset(dataset, leerDB().sucursales);
+    const libros = {};
+    let dataset = null;
+    for (const a of archivos) {
+      if (/\.(xlsx|xlsm|xls)$/i.test(a.originalname)) {
+        const wb = XLSX.read(a.buffer, { type: 'buffer', cellStyles: true });
+        if (esLibroHorarios(wb)) libros.horarios = wb;
+        else if (esLibroPlantel(wb)) libros.plantel = wb;
+        else throw new Error(`"${a.originalname}" no parece la planilla de horarios ni la de plantel`);
+      } else {
+        dataset = extraerDataset(a.buffer.toString('utf-8'));
+      }
+    }
+    if (libros.horarios) {
+      convertido = convertirLibros(libros, sucursales);
+      if (!libros.plantel) {
+        // Sin plantel nuevo se conservan las posiciones y cajas declaradas que había.
+        Object.assign(convertido, { posiciones: anterior.posiciones, pool: anterior.pool, columnasPlantel: anterior.columnasPlantel || [], notasPlantel: anterior.notasPlantel || [] });
+        convertido.nextId.posiciones = anterior.nextId.posiciones;
+        convertido.unidades.forEach((u) => {
+          const previa = anterior.unidades.find((x) => x.clave === u.clave);
+          if (previa) u.cajasDeclaradas = previa.cajasDeclaradas;
+        });
+      }
+    } else if (libros.plantel) {
+      if (!anterior.personas.length) throw new Error('primero importá la planilla de horarios (o subí las dos juntas)');
+      const pl = leerLibroPlantel(libros.plantel, anterior.unidades, anterior.personas);
+      convertido = {
+        posiciones: pl.posiciones,
+        pool: pl.pool,
+        columnasPlantel: pl.columnas,
+        notasPlantel: pl.notas,
+        unidades: anterior.unidades.map((u) => ({ ...u, cajasDeclaradas: pl.cajasPorUnidad[u.clave] ?? u.cajasDeclaradas })),
+        nextId: { ...anterior.nextId, posiciones: pl.nextId }
+      };
+    } else if (dataset) {
+      convertido = convertirDataset(dataset, sucursales);
+    }
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
-  const anterior = leerPlantel();
   const plantel = {
     ...anterior,
     ...convertido,
     // Lo que el usuario configuró a mano sobrevive a una reimportación.
     minimos: anterior.minimos,
-    config: anterior.config,
-    importacion: {
-      fecha: new Date().toISOString(),
-      archivo: req.file.originalname,
-      unidades: convertido.unidades.length,
-      personas: convertido.personas.length,
-      descartadas: convertido.descartadas.length
-    }
+    config: anterior.config
+  };
+  plantel.importacion = {
+    fecha: new Date().toISOString(),
+    archivo: archivos.map((a) => a.originalname).join(' + '),
+    unidades: plantel.unidades.length,
+    personas: plantel.personas.length,
+    posiciones: plantel.posiciones.length,
+    descartadas: plantel.descartadas.length
   };
   guardarPlantel(plantel);
   res.status(201).json(plantel.importacion);
