@@ -5,6 +5,9 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
+// Datos que vienen con el repositorio (sucursales, Productividad y Quiebres
+// de Kilbel). Se usan para arrancar cuando DATA_DIR apunta a un volumen vacío.
+const DB_SEMILLA = path.join(__dirname, '..', 'data', 'db.json');
 
 const DB_INICIAL = {
   sucursales: [],
@@ -29,7 +32,8 @@ const DB_INICIAL = {
 function asegurarDB() {
   if (fs.existsSync(DB_PATH)) return;
   fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(DB_PATH, JSON.stringify(DB_INICIAL, null, 2));
+  if (DB_SEMILLA !== DB_PATH && fs.existsSync(DB_SEMILLA)) fs.copyFileSync(DB_SEMILLA, DB_PATH);
+  else fs.writeFileSync(DB_PATH, JSON.stringify(DB_INICIAL, null, 2));
 }
 
 export function leerDB() {

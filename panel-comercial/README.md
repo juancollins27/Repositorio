@@ -50,6 +50,50 @@ Abrí `http://localhost:3000`.
   (916 brechas, mismo ranking por departamento y por sucursal) que el
   archivo Excel original que hacía este cálculo a mano.
 
+- **Plantel y Horarios**: la grilla de horarios y el plantel por posición de
+  las 12 sucursales + E-Commerce, ahora vivos y editables (antes era un
+  tablero estático). Se carga subiendo **las dos planillas de origen tal
+  cual** desde la sub-pestaña *Importar y configurar*:
+  - `HORARIOS DE SUC. ….xlsx`: una hoja por unidad (LP, FZ, …, ECOM). La
+    grilla se lee del **color de relleno** de las celdas de 7 a 21 hs (el
+    blanco no cuenta); también toma el horario escrito, el franco, el bloque
+    "PARTE MÉDICO PROLONGADO", la lista de part time de "TOTAL SUC." y la
+    hoja "Ausencias". Ignora totales, títulos repetidos y una segunda versión
+    de la grilla en la misma hoja (la propuesta que hay debajo en Balcarce).
+  - `PLANTEL 2026.xlsx` (hoja "prox planteles"): cada columna numerada se
+    asigna a la hoja de horarios con la que comparte más nombres, así que no
+    depende del orden de las columnas. Lee también "CANT CAJAS" y el bloque
+    de encargados y subs sin sucursal.
+
+  Se pueden subir juntas o por separado (con sólo el plantel se actualizan
+  las posiciones sobre la grilla ya cargada). También acepta el HTML del
+  artifact "Plantel y Horarios 2026".
+  Suma sobre lo que mostraba el tablero:
+  - **Cobertura por día real**: interpreta el franco de cada persona ("mierc
+    tard", "juev-ta", "MART/TA", "lunes manaña"…) y lo descuenta del día que
+    corresponde, en vez de mirar sólo la semana tipo.
+  - **Huecos contra mínimos configurables** (p. ej. "Cajas ≥ 2 de 9 a 21 hs"),
+    por sucursal o para todas, sólo en las horas en que la sucursal está abierta.
+  - **Plantel × Productividad**: horas programadas en la grilla (× 4,33
+    semanas) contra las horas-hombre y colaboradores cargados en Productividad
+    para el mismo mes, al lado de la columna de horas/mes que calcula la
+    propia planilla.
+  - **Calidad de datos con arreglo en un clic**: nombres casi iguales entre
+    plantel y horarios (comparación difusa: "IBARRECHE" ↔ "IBARRECHEA",
+    "PEREYRA J." ↔ "PEREYRA JULIAN") con botón *Unificar*; personas
+    cargadas en otra unidad; grillas pintadas distinto del horario escrito con
+    botón *Repintar según horario*; francos ilegibles; la misma persona en dos
+    filas; vacantes; y encabezados de la planilla pegados como si fueran
+    personas (se descartan al importar).
+  - **Edición**: alta, baja, traslado de unidad y cambio de horario; la grilla
+    se pinta sola a partir del horario escrito.
+  - Búsqueda en toda la red y **exportación a CSV** para Excel.
+
+  **Privacidad**: el plantel tiene nombres, partes médicos y ausencias, así
+  que se guarda en `plantel.json` (en `DATA_DIR`), separado de `db.json` y
+  excluido del repositorio con `.gitignore`. En Railway queda en el mismo
+  volumen que el resto de los datos.
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -63,7 +107,17 @@ server/
   routes/
     sucursales.js, vendedores.js, productos.js, ventas.js, objetivos.js
     dashboard.js   → agrega y calcula todos los KPIs del dashboard
+    plantel.js     → API del módulo Plantel y Horarios
+  plantel/
+    analisis.js    → lógica pura: horarios, francos, nombres, cobertura
+                     (la usa también el navegador, servida en /plantel-analisis.js)
+    importarExcel.js → lee los Excel de horarios y de plantel
+    importar.js    → lee el HTML/JSON del artifact (formato anterior)
+    store.js       → lee/guarda plantel.json
+test/
+  plantel.test.js  → npm test
 public/
+  plantel.js                         → pestaña Plantel y Horarios
   index.html, styles.css, app.js   → dibuja los gráficos con SVG a mano,
                                       sin librerías externas
 ```
@@ -82,14 +136,36 @@ Como este proyecto convive en el mismo repositorio que `clases-matematica/`,
 en Railway se agrega como **un servicio nuevo dentro del mismo proyecto**,
 indicándole que la raíz del código es esta carpeta:
 
-1. En tu proyecto de Railway, click **+ New → GitHub Repo** y elegí de nuevo
+1. En tu proyecto de Railway, click **+ New → GitHub Repo** y elegí
    `juancollins27/Repositorio`.
-2. Andá a **Settings** del nuevo servicio → sección **Source** → **Root
-   Directory** → poné `panel-comercial`.
-3. (Igual que con la otra app) en **Settings → Networking** → **Generate
-   Domain** para obtener la URL pública.
-4. Si querés persistencia real de datos: **Settings → Volumes** → crear
-   volumen montado en `/data`, y en **Variables** agregar `DATA_DIR=/data`.
+2. En **Settings → Source**: **Root Directory** = `panel-comercial`, y en
+   **Branch** la rama a publicar (la principal, una vez fusionados los cambios).
+3. **Settings → Volumes** → crear un volumen montado en `/data`. Ahí quedan
+   los datos que cargues (incluido el plantel), y sobreviven a reinicios y
+   redespliegues.
+4. **Variables**:
+
+   | Variable | Valor | Para qué |
+   |---|---|---|
+   | `DATA_DIR` | `/data` | guardar los datos en el volumen |
+   | `APP_PASSWORD` | una contraseña larga | acceso completo (ver y editar) |
+   | `APP_USUARIO` | opcional, por defecto `admin` | usuario del acceso completo |
+   | `APP_PASSWORD_LECTURA` | otra contraseña | opcional: acceso de sólo lectura para compartir |
+   | `APP_USUARIO_LECTURA` | opcional, por defecto `lectura` | usuario de sólo lectura |
+
+5. **Settings → Networking → Generate Domain** para obtener la URL pública.
+6. Entrá con el usuario de acceso completo y en **Plantel y Horarios →
+   Importar y configurar** subí los dos Excel.
+
+**No lo publiques sin `APP_PASSWORD`**: el plantel tiene nombres, partes
+médicos y ausencias, y sin contraseña cualquiera con la URL los ve y puede
+editarlos. Con la contraseña configurada el navegador la pide una vez al
+entrar. El usuario de sólo lectura ve todo pero no tiene formularios ni
+botones de edición, y la API le rechaza cualquier cambio.
+
+La primera vez que arranca con el volumen vacío, la app copia los datos que
+vienen en el repositorio (sucursales, Productividad y Quiebres de Kilbel),
+así no arranca en blanco.
 
 ## Endpoints de la API
 
@@ -112,6 +188,18 @@ indicándole que la raíz del código es esta carpeta:
 | GET | `/api/quiebres` | listar análisis de quiebres importados |
 | POST | `/api/quiebres/importar` | subir un .xlsx (campo `archivo`) y analizarlo |
 | GET/DELETE | `/api/quiebres/:id` | ver / eliminar un análisis guardado |
+| GET | `/api/plantel` | plantel completo: unidades, personas (con horas/semana y alertas), posiciones, mínimos |
+| GET | `/api/plantel/resumen` | KPIs por unidad y cobertura por hora y sector de toda la red |
+| GET | `/api/plantel/cobertura?dia=&sector=` | personas por hora y unidad (`dia` 0–5 = lunes–sábado, con francos) |
+| GET | `/api/plantel/huecos` | horas por debajo de los mínimos, por unidad, día y sector |
+| GET | `/api/plantel/calidad` | diferencias plantel/horarios y demás chequeos de datos |
+| GET | `/api/plantel/productividad?anio=&mes=` | horas programadas vs. horas-hombre reales del mes |
+| GET | `/api/plantel/export.csv` | grilla completa en CSV (separador `;`) |
+| POST | `/api/plantel/importar` | subir los Excel de horarios y/o plantel, o el HTML/JSON del artifact (campo `archivo`, hasta 3) |
+| POST/PUT/DELETE | `/api/plantel/personas[/:id]` | alta / edición / baja de una fila de la grilla |
+| PUT | `/api/plantel/minimos` | reemplazar la lista de mínimos de cobertura |
+| PUT | `/api/plantel/config` | días trabajados por semana (5 o 6) |
+| PUT | `/api/plantel/unidades/:clave` | cajas declaradas / sucursal vinculada |
 
 ## Ideas para seguir extendiendo
 

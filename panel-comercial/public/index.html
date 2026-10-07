@@ -24,6 +24,7 @@
     <button class="tab-btn" data-tab="objetivos">Objetivos</button>
     <button class="tab-btn" data-tab="productividad">Productividad</button>
     <button class="tab-btn" data-tab="quiebres">Quiebres de Stock</button>
+    <button class="tab-btn" data-tab="plantel">Plantel y Horarios</button>
   </nav>
 </header>
 
@@ -332,8 +333,50 @@
     </div>
   </section>
 
+  <!-- PLANTEL Y HORARIOS -->
+  <section id="tab-plantel" class="tab-panel">
+    <div class="seccion-titulo pl-titulo">
+      <div>
+        <span class="eyebrow">Dotación · Turnos · Cobertura</span>
+        <h2>Plantel y horarios</h2>
+      </div>
+      <input type="search" id="pl-buscar" class="pl-buscar" placeholder="Buscar persona o puesto en toda la red" />
+    </div>
+    <nav class="pl-subnav" id="pl-subnav"></nav>
+    <div id="pl-vista"></div>
+
+    <dialog id="pl-dialogo" class="pl-dialogo">
+      <form id="pl-form-persona" method="dialog">
+        <h2 id="pl-dialogo-titulo">Editar persona</h2>
+        <div class="pl-form-grid">
+          <label>Nombre <input type="text" id="plf-nombre" placeholder="Vacío = puesto vacante" /></label>
+          <label>Puesto <input type="text" id="plf-puesto" /></label>
+          <label>Unidad <select id="plf-unidad"></select></label>
+          <label>Sector <select id="plf-sector"></select></label>
+          <label>Modalidad <select id="plf-modalidad"></select></label>
+          <label>Franco <input type="text" id="plf-franco" placeholder="martes tarde" />
+            <span class="hint" id="plf-franco-lectura"></span></label>
+        </div>
+        <label>Horario <input type="text" id="plf-horario" placeholder="07:30 a 12:00 - 16:30 a 21:00" /></label>
+        <div class="pl-form-grilla">
+          <span class="hint">Grilla (se pinta sola con el horario; tocá una hora para corregirla a mano)</span>
+          <div id="plf-grilla" class="pl-grilla-edit"></div>
+          <span class="hint" id="plf-horas"></span>
+        </div>
+        <p class="hint pl-error" id="plf-error"></p>
+        <div class="form-actions pl-dialogo-acciones">
+          <button type="button" class="link pl-borrar" id="plf-borrar">Eliminar fila</button>
+          <span></span>
+          <button type="button" class="pl-secundario" id="plf-cancelar">Cancelar</button>
+          <button type="submit">Guardar</button>
+        </div>
+      </form>
+    </dialog>
+  </section>
+
 </main>
 
 <script src="app.js"></script>
+<script type="module" src="plantel.js"></script>
 </body>
 </html>
