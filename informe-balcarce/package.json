@@ -1,0 +1,11 @@
+{
+  "name": "informe-balcarce",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Informe Balcarce: pedido, envío y venta diaria (22 al 29/09). Página estática servida para compartir.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

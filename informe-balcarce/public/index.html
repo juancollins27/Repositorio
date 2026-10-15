@@ -1,0 +1,661 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Balcarce Pedido y Venta</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: resumen en cifras arriba, tres graficos apilados (pedido/enviado/venta, ritmo de entrega, stock neto estimado), tabla al final. */
+:root{
+  --bg:#F5F6F9; --surface:#FFFFFF; --ink:#1B2233; --ink2:#4A5468; --muted:#7B8497; --grid:#E3E6ED; --line:#CBD0DB;
+  --ped:#AEB9D6; --env:#27345C; --venta:#D9730D; --avg:#1B2233; --bad:#C0392B; --badbg:#FBE9E6; --ok:#2E7D5B; --okbg:#E4F3EC; --warnbg:#FFF1DC; --warn:#9A5B00;
+  --font:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151D; --surface:#1A1F2B; --ink:#E8EBF2; --ink2:#B0B7C8; --muted:#8089A0; --grid:#2A3040; --line:#3A4258;
+  --ped:#56648C; --env:#8FA8F0; --venta:#F0933B; --avg:#E8EBF2; --bad:#F0705F; --badbg:#3A1F1C; --ok:#5CC796; --okbg:#173126; --warnbg:#3A2B12; --warn:#F2B35C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151D; --surface:#1A1F2B; --ink:#E8EBF2; --ink2:#B0B7C8; --muted:#8089A0; --grid:#2A3040; --line:#3A4258;
+  --ped:#56648C; --env:#8FA8F0; --venta:#F0933B; --avg:#E8EBF2; --bad:#F0705F; --badbg:#3A1F1C; --ok:#5CC796; --okbg:#173126; --warnbg:#3A2B12; --warn:#F2B35C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;
+  padding-block:24px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:22px;font-weight:600;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:15px;font-weight:600;margin:0 0 2px}
+.sub{color:var(--ink2);margin:4px 0 0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;min-width:0}
+.kpi .l{font-size:12px;color:var(--ink2)}
+.kpi .v{font-family:var(--mono);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums;margin-top:2px}
+.kpi .n{font-size:11px;color:var(--muted)}
+.kpi.bad .v{color:var(--bad)}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 14px 12px;min-width:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink2);margin:8px 0 4px;align-items:center}
+.legend i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.legend i.ln{height:0;border-top:2px solid;border-radius:0;width:16px;vertical-align:3px}
+.legend i.da{height:0;border-top:2px dashed;border-radius:0;width:16px;vertical-align:3px}
+.legend i.dot{width:9px;height:9px;border-radius:50%;vertical-align:0}
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:7px 9px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.18);min-width:150px;z-index:3;display:none}
+.tip b{font-weight:600}
+.tip div{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.tip span.m{font-family:var(--mono)}
+.ctl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2);margin-top:6px}
+.ctl input{accent-color:var(--env);width:15px;height:15px}
+.strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-top:10px}
+.cell{border:1px solid var(--line);border-radius:5px;padding:7px 7px 8px;font-size:12px;min-width:0;display:flex;flex-direction:column;gap:3px}
+.cell .d{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.cell .pct{font-family:var(--mono);font-size:17px;font-weight:500;font-variant-numeric:tabular-nums}
+.cell .hr{font-size:11px;color:var(--muted)}
+.cell .tag{font-size:10.5px;border-radius:3px;padding:1px 5px;align-self:flex-start;background:var(--okbg);color:var(--ok);font-weight:500}
+.cell.none{background:var(--warnbg);border-color:transparent}
+.cell.none .tag{background:transparent;color:var(--warn);padding-left:0}
+.cell.hot{border-color:var(--bad);background:var(--badbg)}
+.cell.hot .pct,.cell.hot .hr{color:var(--bad)}
+.cell.hot .hr{font-weight:600}
+@media(max-width:700px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:400px){.strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.vp{display:grid;grid-template-columns:78px 1fr 190px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line,rgba(128,128,128,.25))}
+.vp:first-child{border-top:0}
+.vp .d{font-size:12px;color:var(--ink2)}.vp .d b{display:block;color:var(--ink);font-size:13px}
+.vp .bars{display:flex;flex-direction:column;gap:3px}
+.vp .b{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono)}
+.vp .b i{display:block;height:9px;border-radius:2px;min-width:2px}
+.vp .r{font-size:11.5px;color:var(--ink2);line-height:1.55}.vp .r b{color:var(--ink);font-family:var(--mono)}.vp .r b.bad{color:var(--bad)}
+@media(max-width:640px){.vp{grid-template-columns:62px 1fr}.vp .r{grid-column:1/-1}}
+.sh{font-size:12.5px;font-weight:600;margin:18px 0 6px;color:var(--ink)}
+.st{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:10px;align-items:center;font-size:12px;margin-top:6px}
+.st .sb{display:flex;height:22px;border-radius:4px;overflow:hidden;background:var(--grid)}
+.st .sb span{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;color:#fff;min-width:0}
+.sg-bad{background:var(--bad)}.sg-warn{background:#D9A116}.sg-ok{background:var(--ok)}
+.sk{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2);margin-top:6px}.sk i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.pv{display:grid;grid-template-columns:minmax(120px,1.1fr) 38px minmax(0,1.6fr) 38px minmax(110px,150px);gap:8px;align-items:center;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--grid)}
+.pv .dv{display:grid;grid-template-columns:1fr 1fr;height:14px;position:relative}
+.pv .dv:before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--muted)}
+.pv .l{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-family:var(--mono);font-size:10.5px}
+.pv .rr{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10.5px}
+.pv .l i,.pv .rr i{display:block;height:12px;border-radius:2px}
+.pv .n{font-family:var(--mono);text-align:right}.pv .n.bad{color:var(--bad);font-weight:600}
+.pv .ch{font-size:10.5px;border-radius:3px;padding:1px 6px;text-align:center;white-space:nowrap}
+.ch.bad{background:var(--badbg);color:var(--bad)}.ch.warn{background:var(--warnbg);color:var(--warn)}.ch.ok{background:var(--okbg);color:var(--ok)}
+.pvh{font-size:10.5px;color:var(--muted);text-transform:none}
+@media(max-width:700px){.pv{grid-template-columns:1fr 34px 1fr 34px}.pv .ch{grid-column:1/-1}}
+.tw{overflow-x:auto}
+.sumlist{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:5px;max-width:84ch}
+.sumlist li{color:var(--ink2)}
+.sumlist b{color:var(--ink)}
+.hbars{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.hrow{display:grid;grid-template-columns:74px minmax(0,1fr) 64px;gap:8px;align-items:center;font-size:12px}
+.hrow .hl{font-family:var(--mono);color:var(--ink2)}
+.hrow .hv{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.hb{position:relative;height:14px;background:var(--grid);border-radius:3px}
+.hb i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--env)}
+.hb i.bad{background:var(--bad)}
+.hb u{position:absolute;top:-3px;bottom:-3px;border-left:1.5px dashed var(--avg);text-decoration:none}
+.sel{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2);margin-top:8px}
+.sel select{font:inherit;font-size:12px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:3px 6px}
+table{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:600;color:var(--ink2);font-size:11px}
+td.mono{font-family:var(--mono)}
+.note{font-size:12px;color:var(--ink2);margin:8px 0 0;max-width:80ch}
+.note b{color:var(--ink)}
+
+:root{--k2:#7B5EA7;--k4:#1F8A8A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--k2:#B79CE0;--k4:#5CC9C9}}
+:root[data-theme="dark"]{--k2:#B79CE0;--k4:#5CC9C9}
+.cause{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr) 40px;gap:8px;align-items:center;font-size:12px;margin-top:6px}
+.cause .cl{color:var(--ink)}
+.cause .cl small{display:block;color:var(--muted);font-size:11px}
+.cause .cb{height:18px;background:var(--grid);border-radius:3px;position:relative}
+.cause .cb i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.cause .cv{font-family:var(--mono);text-align:right;font-weight:500}
+.gh{margin-top:12px;font-size:12px;font-weight:600;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.gh small{font-weight:400;color:var(--muted)}
+.gh .sw{display:inline-block;width:10px;height:10px;border-radius:2px}
+.grow{display:grid;grid-template-columns:minmax(110px,230px) minmax(0,1fr) 34px;gap:8px;align-items:center;font-size:11.5px;padding:2px 0;border-bottom:1px solid var(--grid)}
+.grow .gl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}
+.grow .gt{position:relative;height:12px;background:var(--grid);border-radius:2px}
+.grow .gt i{position:absolute;top:0;bottom:0}
+.grow .gt u{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1.5px;background:var(--venta);border-radius:1px}
+.grow .gf{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.grow .gf.bad{color:var(--bad);font-weight:600}
+.legend i.tk{width:3px;height:12px;border-radius:1px;vertical-align:-2px;margin-right:6px}
+#gtbl td:nth-child(2),#gtbl td:nth-child(3),#gtbl td:nth-child(7),#gtbl th:nth-child(2),#gtbl th:nth-child(3),#gtbl th:nth-child(7){text-align:left}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Sucursal 10 · Balcarce · 22 al 29 de septiembre de 2026</div>
+    <h1>Pedido, envío y venta diaria en Balcarce</h1>
+    <p class="sub">Qué pidió la sucursal, qué recibió del depósito y cuánto vendió cada día antes del 29/09, con el hueco de 72 horas sin entrega.</p>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section class="card">
+    <h2>Lo que muestran los datos</h2>
+    <ul class="sumlist" id="sum"></ul>
+  </section>
+
+  <section class="card">
+    <h2>Pedido, enviado y venta por día</h2>
+    <div class="legend">
+      <span><i style="background:var(--ped)"></i>Pedido (u)</span>
+      <span><i style="background:var(--env)"></i>Enviado por el depósito (u)</span>
+      <span><i class="ln" style="border-color:var(--venta)"></i><i class="dot" style="background:var(--venta);margin-left:-14px;margin-right:9px"></i>Venta total del día (u)</span>
+      <span><i class="da" style="border-color:var(--avg)"></i>Promedio de venta</span>
+    </div>
+    <div class="chart" id="c1"></div>
+    <label class="ctl"><input type="checkbox" id="adj"> Contar el domingo 27 como día completo (venta ×2) para el promedio</label>
+    <p class="note" id="n1"></p>
+  </section>
+
+  <section class="card">
+    <h2>Lo que vendió, lo que pidió y lo que llegó, día por día</h2>
+    <p class="note" style="margin:0 0 10px">Tres números por día: lo que Balcarce <b>vendió</b>, lo que <b>pidió</b> al depósito central para reponer y lo que el depósito terminó <b>enviando</b>. A la derecha, cuánto representa cada uno del anterior.</p>
+    <div class="legend">
+      <span><i style="background:var(--venta)"></i>Vendió</span>
+      <span><i style="background:var(--ped)"></i>Pidió al depósito</span>
+      <span><i style="background:var(--env)"></i>Le enviaron</span>
+    </div>
+    <div id="vpe"></div>
+    <p class="note" id="nv"></p>
+  </section>
+
+  <section class="card">
+    <h2>Días de entrega y horas de atención</h2>
+    <p class="note" style="margin-top:2px">Cumplimiento de cada picking y horas entre entregas. Las barras cuentan solo las horas con el supermercado abierto. La entrega llega a la sucursal cerca de 1 hora después del cierre del picking.</p>
+    <div class="hbars" id="hrs"></div>
+    <p class="note" id="nh"></p>
+    <div class="strip" id="strip"></div>
+  </section>
+
+  <section class="card">
+    <h2>Saldo: lo recibido menos lo vendido, desde el 22/09</h2>
+    <p class="note" style="margin-top:2px">Se suma día a día lo que Balcarce pidió, lo que recibió y lo que vendió. El saldo es lo recibido menos lo vendido: debajo de cero, la sucursal vendió más de lo que recibió y lo cubrió con el stock que ya tenía.</p>
+    <div class="legend">
+      <span><i class="ln" style="border-color:var(--env)"></i>Saldo real (recibido − vendido)</span>
+      <span><i class="da" style="border-color:var(--ped)"></i>Saldo si hubiera llegado todo lo pedido (pedido − vendido)</span>
+    </div>
+    <div class="chart" id="c3"></div>
+    <p class="note" id="n3"></p>
+  </section>
+
+  <section class="card">
+    <h2>Cobertura en días de venta frente a la meta</h2>
+    <p class="note" style="margin-top:2px">Estimación con la venta que abastece el depósito: cuántos días de venta había en la sucursal, partiendo de una cobertura inicial y sumando lo enviado menos lo vendido. Es un promedio de toda la góndola: los productos que se agotan primero quedan por debajo.</p>
+    <div class="sel"><label for="start">Cobertura al comenzar el 22/09:</label>
+      <select id="start"><option value="4">4,0 días (meta cumplida)</option><option value="3" selected>3,0 días (meta × cumplimiento de la semana)</option><option value="2">2,0 días</option></select></div>
+    <div class="chart" id="c4"></div>
+    <p class="note" id="n4"></p>
+  </section>
+
+  <section class="card">
+    <h2>Faltante acumulado</h2>
+    <p class="note" style="margin-top:2px">Unidades pedidas y no enviadas, sumadas desde el 22/09. Las barras son el faltante de cada día.</p>
+    <div class="chart" id="c5"></div>
+    <p class="note" id="n5"></p>
+  </section>
+
+  <section class="card">
+    <h2>Pedido, enviado y venta acumulados</h2>
+    <div class="legend">
+      <span><i class="ln" style="border-color:var(--ped)"></i>Pedido acumulado</span>
+      <span><i class="ln" style="border-color:var(--env)"></i>Enviado acumulado</span>
+      <span><i class="ln" style="border-color:var(--venta)"></i>Venta acumulada</span>
+    </div>
+    <div class="chart" id="c6"></div>
+    <p class="note" id="n6"></p>
+  </section>
+
+  <section class="card">
+    <h2>Cumplimiento diario de septiembre en Balcarce</h2>
+    <p class="note" style="margin-top:2px">Enviado ÷ pedido en cada día con picking. Las barras oscuras son el 22 y el 29/09 y sus días intermedios.</p>
+    <div class="chart" id="c7"></div>
+    <p class="note" id="n7"></p>
+  </section>
+
+  <section class="card">
+    <h2>Unidades enviadas a toda la red</h2>
+    <div class="legend">
+      <span><i style="background:var(--ped)"></i>Pedido de las 12 sucursales</span>
+      <span><i style="background:var(--env)"></i>Enviado</span>
+    </div>
+    <div class="chart" id="c8"></div>
+    <p class="note" id="n8"></p>
+  </section>
+
+  <section class="card">
+    <h2>Productos sin stock en góndola el 29/09</h2>
+    <p class="note" style="margin-top:2px">Listado de góndola del 29/09 cargado por Ventas: 32 productos con su causa, stock inicial, recepción, venta y stock final.</p>
+    <div class="kpis" id="gk" style="margin-top:10px"></div>
+    <div id="gc" style="margin-top:6px"></div>
+    <p class="note" id="ng"></p>
+  </section>
+
+  <section class="card">
+    <h2>¿Llegó mercadería de cada producto?</h2>
+    <p class="note" style="margin:0 0 10px">Para cada uno de los 32 productos sin stock en góndola: lo que había, lo que se vendió y lo que llegó en el período.</p>
+    <div class="kpis" id="gs"></div>
+    <h3 class="sh">Qué pasó, según la causa informada</h3>
+    <div id="gm"></div>
+    <h3 class="sh">Producto por producto</h3>
+    <div class="legend">
+      <span><i style="background:var(--venta)"></i>Vendió</span>
+      <span><i style="background:var(--env)"></i>Llegó</span>
+      <span style="color:var(--bad)">Rojo = quedó en cero o negativo</span>
+    </div>
+    <div id="gl"></div>
+    <p class="note" id="nl"></p>
+  </section>
+
+  <section class="card">
+    <h2>Listado completo de góndola</h2>
+    <div class="tw"><table id="gtbl"></table></div>
+  </section>
+
+  <section class="card">
+    <h2>Datos del gráfico</h2>
+    <div class="tw"><table id="tbl"></table></div>
+    <p class="note"><b>Fuentes:</b> pedido y enviado del reporte de picking (conceptos 12 y 13). Venta diaria informada por el área de Ventas. Horarios del picking. La venta incluye frescos, pesables y panificados que no pasan por el depósito; por eso se estima que solo el <span id="sh"></span> de la venta sale del depósito (envíos de septiembre ÷ venta de septiembre).</p>
+    <p class="note"><b>Lunes 28/09:</b> el supermercado estuvo cerrado. No tiene venta, no se cuenta en el promedio y tampoco hubo despacho.</p>
+  </section>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA=[
+ {o:13.72,f:'22/09',w:'mar',ped:4035,env:3117,v:3912,ini:'11:07',fin:'13:27',h:24.72},
+ {o:11.85,f:'23/09',w:'mié',ped:3714,env:2746,v:5056,ini:'10:12',fin:'12:18',h:22.85},
+ {o:13.73,f:'24/09',w:'jue',ped:4779,env:3325,v:4019,ini:'10:38',fin:'13:02',h:24.73},
+ {o:12.57,f:'25/09',w:'vie',ped:4507,env:3355,v:5198,ini:'10:04',fin:'12:36',h:23.57},
+ {o:11.65,f:'26/09',w:'sáb',ped:5495,env:4300,v:5250,ini:'09:25',fin:'11:15',h:22.65},
+ {f:'27/09',w:'dom',ped:null,env:0,v:2436,half:true},
+ {f:'28/09',w:'lun',ped:null,env:0,v:0,closed:true},
+ {o:20.27,f:'29/09',w:'mar',ped:6412,env:5275,v:6207,ini:'11:27',fin:'14:01',h:74.77}
+];
+const SHARE=3208.37/4268.05;
+const fmt=n=>Math.round(n).toLocaleString('es-AR');
+const pct=n=>(n*100).toLocaleString('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const $=id=>document.getElementById(id);
+const withV=DATA.filter(d=>d.v!=null&&!d.closed);
+function avg(){
+  const adj=$('adj').checked;
+  const vals=withV.map(d=>d.half&&adj?d.v*2:d.v);
+  return vals.reduce((a,b)=>a+b,0)/vals.length;
+}
+const del=DATA.filter(d=>d.env>0);
+const sPed=del.reduce((a,d)=>a+d.ped,0), sEnv=del.reduce((a,d)=>a+d.env,0), sV=withV.reduce((a,d)=>a+d.v,0);
+// stock neto
+let cum=0; const net=DATA.map(d=>{ if(d.v==null){return {f:d.f,val:null,miss:true}} cum+=d.env-d.v; return {f:d.f,val:cum}});
+let cumPV=0; const netP=DATA.map(d=>{ if(d.v==null){return null} cumPV+=(d.ped||0)-d.v; return cumPV});
+let cumD=0; const netD=DATA.map(d=>{ if(d.v==null){return {f:d.f,val:null}} cumD+=d.env-d.v*SHARE; return {f:d.f,val:cumD}});
+$('sh').textContent=pct(SHARE);
+
+function kpis(){
+  const a=avg();
+  const k=[
+    ['Venta promedio por día',fmt(a)+' u','sobre '+withV.length+' días abiertos (28/09 cerrado)',''],
+    ['Pedido 22 al 29/09',fmt(sPed),'6 días con picking',''],
+    ['Enviado 22 al 29/09',fmt(sEnv),pct(sEnv/sPed)+' de lo pedido',''],
+    ['Horas abiertas sin reposición antes del 29/09','20,3 h','contra 12,7 h habituales; 74,8 h corridas','bad'],
+    ['Saldo recibido − vendido al 29/09',fmt(net[net.length-1].val)+' u','mínimo '+fmt(Math.min(...net.filter(n=>n.val!=null).map(n=>n.val)))+' u el '+net.filter(n=>n.val!=null).reduce((m,n)=>n.val<m.val?n:m).f,'bad']
+  ];
+  $('kpis').innerHTML=k.map(x=>`<div class="kpi ${x[3]}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="n">${x[2]}</div></div>`).join('');
+}
+
+function frame(el,H,ymin,ymax,step,fmtY){
+  const W=Math.max(280,el.clientWidth), m={l:W<480?40:46,r:10,t:12,b:36};
+  const pw=W-m.l-m.r, ph=H-m.t-m.b;
+  const y=v=>m.t+ph-(v-ymin)/(ymax-ymin)*ph;
+  const band=pw/DATA.length, x=i=>m.l+band*i+band/2;
+  let g='';
+  for(let v=ymin;v<=ymax+1e-6;v+=step){
+    g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${css('--grid')}" stroke-width="1"/>`+
+       `<text x="${m.l-6}" y="${y(v)+3.5}" text-anchor="end" font-size="11" fill="${css('--muted')}" font-family="IBM Plex Mono,monospace">${fmtY(v)}</text>`;
+  }
+  DATA.forEach((d,i)=>{
+    g+=`<text x="${x(i)}" y="${H-m.b+14}" text-anchor="middle" font-size="11" fill="${css('--ink2')}" font-family="IBM Plex Sans,sans-serif">${d.f.slice(0,2)}</text>`+
+       `<text x="${x(i)}" y="${H-m.b+27}" text-anchor="middle" font-size="10" fill="${css('--muted')}" font-family="IBM Plex Sans,sans-serif">${d.w}</text>`;
+  });
+  return {W,H,m,pw,ph,y,x,band,g};
+}
+const ky=v=>v>=1000||v<=-1000?(v/1000).toLocaleString('es-AR')+' mil':String(v);
+
+function tip(html,ev,host){
+  const t=$('tip'); const r=host.getBoundingClientRect();
+  t.innerHTML=html; t.style.display='block';
+  const tw=t.offsetWidth;
+  let lx=ev.clientX-r.left+14; if(lx+tw>r.width) lx=ev.clientX-r.left-tw-14;
+  host.appendChild(t); t.style.left=Math.max(0,lx)+'px'; t.style.top=Math.max(0,ev.clientY-r.top-30)+'px';
+}
+function hideTip(){ $('tip').style.display='none'; }
+
+function chart1(){
+  const el=$('c1'), H=el.clientWidth<520?260:320;
+  const F=frame(el,H,0,7000,1000,ky); const {W,m,y,x,band}=F;
+  const bw=Math.min(22,band*0.3);
+  let s=F.g;
+  const a=avg();
+  DATA.forEach((d,i)=>{
+    const cx=x(i);
+    if(d.ped!=null){
+      s+=`<rect x="${cx-bw-1}" y="${y(d.ped)}" width="${bw}" height="${y(0)-y(d.ped)}" fill="${css('--ped')}" rx="2"/>`;
+      s+=`<rect x="${cx+1}" y="${y(d.env)}" width="${bw}" height="${y(0)-y(d.env)}" fill="${css('--env')}" rx="2"/>`;
+    } else {
+      s+=`<text x="${cx}" y="${y(0)-6}" text-anchor="middle" font-size="10" fill="${css('--warn')}" font-family="IBM Plex Sans,sans-serif">${d.closed?'cerrado':'envío'}</text><text x="${cx}" y="${y(0)-18}" text-anchor="middle" font-size="10" fill="${css('--warn')}" font-family="IBM Plex Sans,sans-serif">${d.closed?'':'sin'}</text>`;
+    }
+  });
+  // venta
+  const pts=DATA.map((d,i)=>d.v!=null&&!d.closed?[x(i),y(d.v),i]:null);
+  let path='', started=false;
+  pts.forEach(p=>{ if(!p){started=false;return} path+=(started?'L':'M')+p[0]+' '+p[1]; started=true; });
+  const p27=pts[5], p29=pts[7];
+  s+=`<line x1="${p27[0]}" y1="${p27[1]}" x2="${p29[0]}" y2="${p29[1]}" stroke="${css('--venta')}" stroke-width="1.5" stroke-dasharray="3 4" opacity=".6"/>`;
+  s+=`<path d="${path}" fill="none" stroke="${css('--venta')}" stroke-width="2" stroke-linejoin="round"/>`;
+  pts.forEach(p=>{ if(p) s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${css('--venta')}" stroke="${css('--surface')}" stroke-width="2"/>`; });
+  // promedio
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(a)}" y2="${y(a)}" stroke="${css('--avg')}" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  s+=`<text x="${m.l+6}" y="${y(a)-5}" text-anchor="start" font-size="11" font-weight="500" fill="${css('--ink')}" font-family="IBM Plex Mono,monospace">prom. ${fmt(a)}</text>`;
+  // etiquetas 29/09
+  const d=DATA[7];
+  s+=`<text x="${x(7)+bw/2+1}" y="${y(d.env)-5}" text-anchor="middle" font-size="10.5" fill="${css('--ink')}" font-family="IBM Plex Mono,monospace">${fmt(d.env)}</text>`;
+  s+=`<text x="${x(7)}" y="${y(d.v)-9}" text-anchor="middle" font-size="10.5" font-weight="500" fill="${css('--venta')}" font-family="IBM Plex Mono,monospace">${fmt(d.v)}</text>`;
+  // hover
+  DATA.forEach((d,i)=>{ s+=`<rect data-i="${i}" x="${m.l+band*i}" y="${m.t}" width="${band}" height="${F.ph}" fill="transparent"/>`; });
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Pedido, enviado y venta diaria de Balcarce del 22 al 29 de septiembre">${s}</svg>`;
+  el.querySelectorAll('rect[data-i]').forEach(r=>{
+    r.addEventListener('pointermove',ev=>{
+      const d=DATA[+r.dataset.i];
+      tip(`<b>${d.w} ${d.f}</b>`+
+        `<div><span>Pedido</span><span class="m">${d.ped!=null?fmt(d.ped):'—'}</span></div>`+
+        `<div><span>Enviado</span><span class="m">${fmt(d.env)}</span></div>`+
+        (d.ped!=null?`<div><span>Cumplimiento</span><span class="m">${pct(d.env/d.ped)}</span></div>`:'')+
+        `<div><span>Venta</span><span class="m">${d.closed?'cerrado':d.v!=null?fmt(d.v)+(d.half?' (medio día)':''):'sin dato'}</span></div>`,ev,el);
+    });
+    r.addEventListener('pointerleave',hideTip);
+  });
+  $('n1').innerHTML=`<b>Lectura:</b> de lunes a sábado el depósito envió entre 2.746 y 4.300 u. por día, siempre por debajo de lo pedido. El 27/09 (domingo, medio día de venta) no hubo entrega y el 28/09 el supermercado estuvo cerrado. El 29/09 la venta llegó a ${fmt(DATA[7].v)} u., la más alta de la semana y ${pct(DATA[7].v/avg()-1)} sobre el promedio, con una entrega que recién cerró a las 14:01. Las barras son productos del depósito; la venta incluye todo el surtido.`;
+}
+
+function strip(){
+  $('strip').innerHTML=DATA.map(d=>{
+    if(d.ped==null) return `<div class="cell none"><div class="d">${d.w} ${d.f}</div><div class="pct" style="color:var(--warn)">—</div><div class="tag">${d.closed?'Supermercado cerrado':'Sin despacho'}</div><div class="hr">sin entrega</div></div>`;
+    const hot=d.h>48;
+    return `<div class="cell ${hot?'hot':''}"><div class="d">${d.w} ${d.f}</div><div class="pct">${pct(d.env/d.ped)}</div><div class="tag">Cierra ${d.fin}</div><div class="hr">${dec(d.o)} h abiertas desde la llegada anterior (${dec(d.h,0)} corridas)</div></div>`;
+  }).join('');
+}
+
+function chart3(){
+  const el=$('c3'), H=el.clientWidth<520?220:260;
+  const F=frame(el,H,-12000,2000,2000,ky); const {W,m,y,x}=F;
+  let s=F.g;
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(0)}" y2="${y(0)}" stroke="${css('--ink2')}" stroke-width="1.5"/>`;
+  const pts=net.map((n,i)=>n.val==null?null:[x(i),y(n.val),n.val,i]);
+  const known=pts.filter(Boolean);
+  const first=known;
+  let area=`M${known[0][0]} ${y(0)}`; first.forEach(p=>area+=`L${p[0]} ${p[1]}`); area+=`L${first[first.length-1][0]} ${y(0)}Z`;
+  s+=`<path d="${area}" fill="${css('--bad')}" opacity=".12"/>`;
+  let path=''; first.forEach((p,i)=>path+=(i?'L':'M')+p[0]+' '+p[1]);
+  s+=`<path d="${path}" fill="none" stroke="${css('--env')}" stroke-width="2" stroke-linejoin="round"/>`;
+  const a=first[first.length-1], b=known[known.length-1];
+  s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${css('--env')}" stroke-width="1.5" stroke-dasharray="3 4"/>`;
+  known.forEach(p=>{ s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${css('--env')}" stroke="${css('--surface')}" stroke-width="2"/>`; });
+  const knP=netP.map((v,i)=>v==null?null:[x(i),y(v),v]).filter(Boolean);
+  let pathP=''; knP.forEach((p,i)=>pathP+=(i?'L':'M')+p[0]+' '+p[1]);
+  s+=`<path d="${pathP}" fill="none" stroke="${css('--ped')}" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round"/>`;
+  knP.forEach(p=>{ s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="${css('--ped')}" stroke="${css('--surface')}" stroke-width="1.5"/>`; });
+  const bp=knP[knP.length-1];
+  s+=`<text x="${bp[0]}" y="${bp[1]-9}" text-anchor="middle" font-size="11" fill="${css('--ink2')}" font-family="IBM Plex Mono,monospace">${fmt(bp[2])}</text>`;
+  const lo=first.reduce((mn,p)=>p[2]<mn[2]?p:mn);
+  s+=`<text x="${b[0]-10}" y="${b[1]+4}" text-anchor="end" font-size="11" fill="${css('--ink')}" font-family="IBM Plex Mono,monospace">${fmt(b[2])}</text>`;
+  s+=`<text x="${x(6)}" y="${y(0)+16}" text-anchor="middle" font-size="10" fill="${css('--warn')}" font-family="IBM Plex Sans,sans-serif">cerrado</text>`;
+  DATA.forEach((d,i)=>{ s+=`<rect data-i="${i}" x="${m.l+F.band*i}" y="${m.t}" width="${F.band}" height="${F.ph}" fill="transparent"/>`; });
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Saldo acumulado: recibido menos vendido">${s}</svg>`;
+  el.querySelectorAll('rect[data-i]').forEach(r=>{
+    r.addEventListener('pointermove',ev=>{
+      const i=+r.dataset.i, d=DATA[i], n=net[i];
+      tip(`<b>${d.w} ${d.f}</b>`+
+        `<div><span>Pidió</span><span class="m">${d.ped?fmt(d.ped):'—'}</span></div>`+
+        `<div><span>Recibió</span><span class="m">${fmt(d.env)}</span></div>`+
+        `<div><span>Vendió</span><span class="m">${d.v!=null?fmt(d.v):'sin dato'}</span></div>`+
+        `<div><span>Saldo del día</span><span class="m">${d.v!=null?fmt(d.env-d.v):'—'}</span></div>`+
+        `<div><span>Saldo acumulado</span><span class="m">${n.val!=null?fmt(n.val):'—'}</span></div>`,ev,el);
+    });
+    r.addEventListener('pointerleave',hideTip);
+  });
+  const fin=known[known.length-1][2], finP=knP[knP.length-1][2];
+  $('n3').innerHTML=`<b>Lectura:</b> entre el 22 y el 29/09 Balcarce recibió ${fmt(sEnv)} u. y vendió ${fmt(sV)}: un saldo de ${fmt(fin)} u. De esa diferencia, ${fmt(sPed-sEnv)} u. son lo que pidió y el depósito no envió; las otras ${fmt(Math.abs(finP))} u. son venta por encima de lo pedido. El saldo baja todos los días con venta: el domingo 27/09 cae otras ${fmt(DATA[5].v)} u. sin recibir nada y el 29/09 la entrega (${fmt(DATA[7].env)} u.) no alcanza a compensar la venta del día (${fmt(DATA[7].v)} u.). <b>Ojo:</b> parte de la venta (frescos, pesables, panificados) no se repone desde este depósito, así que el saldo es el peor caso; con solo la venta que abastece el depósito (${pct(SHARE)}) el saldo al 29/09 sería de unas ${fmt(sEnv-sV*SHARE)} u.`;
+}
+
+function table(){
+  const a=avg();
+  let h='<tr><th>Día</th><th>Pedido</th><th>Enviado</th><th>Cumpl.</th><th>Faltante</th><th>Venta</th><th>Vs. promedio</th><th>Saldo acum.</th></tr>';
+  DATA.forEach((d,i)=>{
+    const n=net[i];
+    h+=`<tr><td>${d.w} ${d.f}</td><td class="mono">${d.ped!=null?fmt(d.ped):'—'}</td><td class="mono">${fmt(d.env)}</td><td class="mono">${d.ped!=null?pct(d.env/d.ped):'—'}</td><td class="mono">${d.ped!=null?fmt(d.ped-d.env):'—'}</td><td class="mono">${d.closed?'cerrado':d.v!=null?fmt(d.v):'sin dato'}</td><td class="mono">${d.v!=null&&!d.closed?((d.v/a-1)*100).toLocaleString('es-AR',{maximumFractionDigits:0,signDisplay:'always'})+'%':'—'}</td><td class="mono">${n.val!=null?fmt(n.val):'—'}</td></tr>`;
+  });
+  h+=`<tr><td><b>Total / prom.</b></td><td class="mono"><b>${fmt(sPed)}</b></td><td class="mono"><b>${fmt(sEnv)}</b></td><td class="mono"><b>${pct(sEnv/sPed)}</b></td><td class="mono"><b>${fmt(sPed-sEnv)}</b></td><td class="mono"><b>${fmt(sV)}</b></td><td class="mono"><b>prom. ${fmt(a)}</b></td><td></td></tr>`;
+  $('tbl').innerHTML=h;
+}
+
+const SEPT=[["01",4382,3389],["02",5916,4978],["03",4035,3114],["04",5895,4867],["05",5521,4495],["07",7068,5725],["08",4101,2909],["09",5144,3751],["10",5749,4453],["11",3920,2743],["12",6205,4710],["14",4977,3718],["15",4464,3297],["16",5168,3954],["17",4626,3510],["18",3375,2401],["19",5515,4539],["21",4493,3525],["22",4035,3117],["23",3714,2746],["24",4779,3325],["25",4507,3355],["26",5495,4300],["29",6412,5275],["30",5273,4055]];
+const NET=[["22/09","mar",80494,68176],["23/09","mié",66530,53421],["24/09","jue",76961,63002],["25/09","vie",74978,60624],["26/09","sáb",56520,43225],["27/09","dom",null,0],["28/09","lun",null,0],["29/09","mar",80525,68917],["30/09","mié",93436,76602],["01/10","jue",86980,70768],["02/10","vie",93155,78155]];
+const DEM=3208.37;
+function frameN(el,H,labs,ymin,ymax,step,fmtY,fs){
+  const W=Math.max(280,el.clientWidth), m={l:W<480?40:46,r:12,t:14,b:36};
+  const pw=W-m.l-m.r, ph=H-m.t-m.b, band=pw/labs.length;
+  const y=v=>m.t+ph-(v-ymin)/(ymax-ymin)*ph, x=i=>m.l+band*i+band/2;
+  let g='';
+  for(let v=ymin;v<=ymax+1e-6;v+=step) g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${css('--grid')}"/><text x="${m.l-6}" y="${y(v)+3.5}" text-anchor="end" font-size="11" fill="${css('--muted')}" font-family="IBM Plex Mono,monospace">${fmtY(v)}</text>`;
+  labs.forEach((l,i)=>{ g+=`<text x="${x(i)}" y="${H-m.b+14}" text-anchor="middle" font-size="${fs||11}" fill="${css('--ink2')}" font-family="IBM Plex Sans,sans-serif">${l[0]}</text>`+(l[1]?`<text x="${x(i)}" y="${H-m.b+27}" text-anchor="middle" font-size="10" fill="${css('--muted')}" font-family="IBM Plex Sans,sans-serif">${l[1]}</text>`:''); });
+  return {W,H,m,pw,ph,y,x,band,g,n:labs.length};
+}
+function hoverN(el,F,fn){
+  let h=''; for(let i=0;i<F.n;i++) h+=`<rect data-i="${i}" x="${F.m.l+F.band*i}" y="${F.m.t}" width="${F.band}" height="${F.ph}" fill="transparent"/>`;
+  el.querySelector('svg').insertAdjacentHTML('beforeend',h);
+  el.querySelectorAll('rect[data-i]').forEach(r=>{ r.addEventListener('pointermove',ev=>tip(fn(+r.dataset.i),ev,el)); r.addEventListener('pointerleave',hideTip); });
+}
+const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" text-anchor="${o.a||'middle'}" font-size="${o.s||11}" ${o.w?`font-weight="${o.w}"`:''} fill="${o.c||css('--ink')}" font-family="IBM Plex Mono,monospace">${t}</text>`;
+const dec=(n,d=1)=>n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+// acumulados
+const falt=DATA.map(d=>d.ped!=null?d.ped-d.env:0); let fc=0; const faltCum=falt.map(v=>fc+=v);
+let pc=0,ec=0,vc=0; const cumP=DATA.map(d=>pc+=d.ped||0), cumE=DATA.map(d=>ec+=d.env), cumV=DATA.map(d=>d.v==null?null:(vc+=d.v));
+
+function summary(GG){
+  const lo=net.filter(n=>n.val!=null).reduce((m,n)=>n.val<m.val?n:m);
+  const items=[
+   `<b>No fue sobrepedido:</b> Balcarce pidió ${fmt(sPed)} u. y vendió ${fmt(sV)} u. entre el 22 y el 29/09 (sin contar el 28/09). El pedido acompañó a la venta.`,
+   `<b>El depósito entregó el ${pct(sEnv/sPed)} de lo pedido:</b> ${fmt(sEnv)} u., con un faltante acumulado de ${fmt(faltCum[7])} u., unas ${dec(faltCum[7]/DEM)} jornadas de venta.`,
+   `<b>El intervalo entre entregas fue de 74,8 horas corridas, pero solo 20,3 con el supermercado abierto</b>, contra 12,7 habituales: 1,6 veces el intervalo normal, no 3,2. Equivale a unos 2,2 días de venta del depósito.`,
+   `<b>La última entrega antes del corte llegó incompleta:</b> el sábado 26/09 se entregó el 78,3% de lo pedido, justo antes del domingo de medio día y el lunes cerrado.`,
+   `<b>El 29/09, primer día de venta completo tras el cierre, fue el de mayor venta de la semana</b> (${fmt(DATA[7].v)} u.), con una góndola ya consumida: el saldo entre lo recibido y lo vendido desde el 22/09 llegó a ${fmt(net[7].val)} u.`
+  ];
+  if(GG) items.push(`<b>Listado de góndola del 29/09:</b> ${GG.n} productos sin stock. ${GG.v} por venta, ${GG.u} por UG mal asignada, ${GG.s} sin stock en el depósito (Compras) y ${GG.c} no enviado por el CDR (Logística).`);
+  $('sum').innerHTML=items.map(t=>`<li>${t}</li>`).join('');
+}
+
+function hrs(){
+  const rows=DATA.filter(d=>d.h!=null), mx=24, norm=rows.slice(0,5).reduce((a,d)=>a+d.o,0)/5, normC=rows.slice(0,5).reduce((a,d)=>a+d.h,0)/5;
+  $('hrs').innerHTML=rows.map(d=>`<div class="hrow" style="grid-template-columns:74px minmax(0,1fr) 112px"><span class="hl">${d.w} ${d.f}</span><div class="hb"><i class="${d.o>16?'bad':''}" style="width:${d.o/mx*100}%"></i><u style="left:${norm/mx*100}%"></u></div><span class="hv" style="${d.o>16?'color:var(--bad);font-weight:600':''}">${dec(d.o)} h <span style="color:var(--muted);font-weight:400;font-size:11px">de ${dec(d.h,0)} corridas</span></span></div>`).join('');
+  $('nh').innerHTML=`Horas con el supermercado abierto entre la llegada de una entrega y la siguiente (cierre del picking más 1 hora de viaje; lunes a sábado de 8:00 a 21:00, domingo de 9:00 a 13:30, lunes 28/09 cerrado). La línea punteada es el intervalo habitual de la semana (${dec(norm)} h abiertas, ${dec(normC)} h corridas). Antes del 29/09 hubo <b>${dec(rows[5].o)} h abiertas</b>: ${dec(rows[5].o/norm)} veces el intervalo habitual, y no ${dec(rows[5].h/normC)} veces como sugieren las horas corridas. Estimación de venta en esa ventana (sábado desde las 12:15, domingo y martes hasta las 15:01, a la tasa horaria de cada día): unas 9.300 u. en total, cerca de 7.000 u. del depósito, o 2,2 días de venta del depósito.`;
+}
+
+function chart4(){
+  const el=$('c4'), H=el.clientWidth<520?240:280, st=+$('start').value;
+  const labs=DATA.map(d=>[d.f.slice(0,2),d.w]); const F=frameN(el,H,labs,0,5,1,v=>dec(v,0)); const {W,m,y,x}=F;
+  const vals=netD.map(n=>n.val==null?null:st+n.val/DEM);
+  let s=F.g;
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(4)}" y2="${y(4)}" stroke="${css('--ok')}" stroke-width="1.5" stroke-dasharray="5 4"/>`+T(m.l+6,y(4)-5,'meta Ventas: 4 días',{a:'start',c:css('--ok'),w:500});
+  const pts=vals.map((v,i)=>v==null?null:[x(i),y(v),v]); const kn=pts.filter(Boolean), first=kn;
+  let path=''; first.forEach((p,i)=>path+=(i?'L':'M')+p[0]+' '+p[1]);
+  s+=`<path d="${path}" fill="none" stroke="${css('--env')}" stroke-width="2" stroke-linejoin="round"/>`;
+  const a=first[first.length-1], b=kn[kn.length-1];
+  s+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${css('--env')}" stroke-width="1.5" stroke-dasharray="3 4"/>`;
+  kn.forEach(p=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${css('--env')}" stroke="${css('--surface')}" stroke-width="2"/>`);
+  const lo=first.reduce((mn,p)=>p[2]<mn[2]?p:mn);
+  s+=T(lo[0],lo[1]+17,dec(lo[2])+' d',{c:css('--bad'),w:500});
+  s+=T(kn[0][0],kn[0][1]-9,dec(kn[0][2])+' d');
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Cobertura en días de venta">${s}</svg>`;
+  hoverN(el,F,i=>`<b>${DATA[i].w} ${DATA[i].f}</b><div><span>Cobertura estimada</span><span class="m">${vals[i]!=null?dec(vals[i])+' d':'sin dato'}</span></div><div><span>Brecha con la meta</span><span class="m">${vals[i]!=null?dec(4-vals[i])+' d':'—'}</span></div>`);
+  const low=lo[2];
+  $('n4').innerHTML=`<b>Lectura:</b> con ${dec(st,1)} días de partida, la cobertura promedio baja a ${dec(low)} días el ${netD.filter(n=>n.val!=null).reduce((m,n)=>n.val<m.val?n:m).f}, ${dec(4-low)} días por debajo de la meta. En la góndola real la caída es peor para los productos con más rotación o con entrega incompleta, que se agotan antes que el promedio.`;
+}
+
+function chart5(){
+  const el=$('c5'), H=el.clientWidth<520?240:280;
+  const labs=DATA.map(d=>[d.f.slice(0,2),d.w]); const F=frameN(el,H,labs,0,8000,2000,ky); const {W,m,y,x,band}=F;
+  const bw=Math.min(24,band*.4); let s=F.g;
+  falt.forEach((v,i)=>{ if(v>0) s+=`<rect x="${x(i)-bw/2}" y="${y(v)}" width="${bw}" height="${y(0)-y(v)}" fill="${css('--bad')}" opacity=".35" rx="2"/>`; });
+  let path=''; faltCum.forEach((v,i)=>path+=(i?'L':'M')+x(i)+' '+y(v));
+  s+=`<path d="${path}" fill="none" stroke="${css('--bad')}" stroke-width="2" stroke-linejoin="round"/>`;
+  faltCum.forEach((v,i)=>{ s+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${css('--bad')}" stroke="${css('--surface')}" stroke-width="2"/>`; });
+  s+=T(x(7),y(faltCum[7])-10,fmt(faltCum[7])+' u',{c:css('--bad'),w:500,a:'middle'});
+  s+=T(x(4),y(faltCum[4])-10,fmt(faltCum[4]),{c:css('--bad')});
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Faltante acumulado">${s}</svg>`;
+  hoverN(el,F,i=>`<b>${DATA[i].w} ${DATA[i].f}</b><div><span>Faltante del día</span><span class="m">${fmt(falt[i])}</span></div><div><span>Acumulado</span><span class="m">${fmt(faltCum[i])}</span></div><div><span>En días de venta</span><span class="m">${dec(faltCum[i]/DEM)}</span></div>`);
+  $('n5').innerHTML=`<b>Lectura:</b> el faltante creció todos los días con picking y no hubo ninguna recuperación. Al cierre del 29/09 suma ${fmt(faltCum[7])} u., unos ${dec(faltCum[7]/DEM)} días de venta que la sucursal pidió y no recibió.`;
+}
+
+function chart6(){
+  const el=$('c6'), H=el.clientWidth<520?260:300;
+  const labs=DATA.map(d=>[d.f.slice(0,2),d.w]); const F=frameN(el,H,labs,0,35000,5000,ky); const {W,m,y,x}=F;
+  let s=F.g;
+  const line=(arr,col,w)=>{ let p='',st=false; arr.forEach((v,i)=>{ if(v==null){st=false;return} p+=(st?'L':'M')+x(i)+' '+y(v); st=true }); return `<path d="${p}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linejoin="round"/>`; };
+  s+=line(cumP,css('--ped'),2)+line(cumE,css('--env'),2)+line(cumV,css('--venta'),2);
+  [[cumP,css('--ped')],[cumE,css('--env')],[cumV,css('--venta')]].forEach(([a,c])=>a.forEach((v,i)=>{ if(v!=null) s+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.5" fill="${c}" stroke="${css('--surface')}" stroke-width="2"/>`; }));
+  s+=T(x(7),y(cumV[7])-9,fmt(cumV[7]),{c:css('--venta'),w:500,a:'end'});
+  s+=T(x(7),y(cumP[7])+16,fmt(cumP[7]),{a:'end'});
+  s+=T(x(7),y(cumE[7])+16,fmt(cumE[7]),{a:'end'});
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Pedido, enviado y venta acumulados">${s}</svg>`;
+  hoverN(el,F,i=>`<b>${DATA[i].w} ${DATA[i].f}</b><div><span>Pedido acum.</span><span class="m">${fmt(cumP[i])}</span></div><div><span>Enviado acum.</span><span class="m">${fmt(cumE[i])}</span></div><div><span>Venta acum.</span><span class="m">${cumV[i]!=null?fmt(cumV[i]):'sin dato'}</span></div>`);
+  $('n6').innerHTML=`<b>Lectura:</b> la curva de pedido sigue de cerca a la de venta (${pct(sPed/sV)} de la venta), así que la sucursal pidió lo que necesitaba. La curva de envío se separa hacia abajo y llega al ${pct(sEnv/sV)} de la venta. La venta incluye productos que no pasan por el depósito.`;
+}
+
+function chart7(){
+  const el=$('c7'), H=el.clientWidth<520?240:280;
+  const labs=SEPT.map(r=>[r[0],'']); const F=frameN(el,H,labs,0,1,.2,v=>Math.round(v*100)+'%',el.clientWidth<520?8:10); const {W,m,y,x,band}=F;
+  const bw=Math.min(22,band*.7); let s=F.g;
+  const av=SEPT.reduce((a,r)=>a+r[2],0)/SEPT.reduce((a,r)=>a+r[1],0);
+  SEPT.forEach((r,i)=>{ const v=r[2]/r[1], hi=+r[0]>=22; s+=`<rect x="${x(i)-bw/2}" y="${y(v)}" width="${bw}" height="${y(0)-y(v)}" fill="${hi?css('--env'):css('--ped')}" rx="2"/>`; });
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(av)}" y2="${y(av)}" stroke="${css('--avg')}" stroke-width="1.5" stroke-dasharray="5 4"/>`+T(m.l+6,y(av)-5,'prom. septiembre '+pct(av),{a:'start',w:500});
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(1)}" y2="${y(1)}" stroke="${css('--ok')}" stroke-width="1.5"/>`+T(W-m.r-2,y(1)+13,'100% = pedido completo',{a:'end',c:css('--ok'),s:10});
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Cumplimiento diario de septiembre">${s}</svg>`;
+  hoverN(el,F,i=>{const r=SEPT[i];return `<b>${r[0]}/09</b><div><span>Pedido</span><span class="m">${fmt(r[1])}</span></div><div><span>Enviado</span><span class="m">${fmt(r[2])}</span></div><div><span>Cumplimiento</span><span class="m">${pct(r[2]/r[1])}</span></div>`});
+  const mx=SEPT.reduce((m,r)=>r[2]/r[1]>m?r[2]/r[1]:m,0), cnt=SEPT.filter(r=>r[2]/r[1]>=.9).length;
+  $('n7').innerHTML=`<b>Lectura:</b> en septiembre ningún día de Balcarce llegó al 100% (el máximo fue ${pct(mx)}) y ${cnt===0?'ninguno llegó':'solo '+cnt+' llegaron'} al 90%. La semana del 22 al 29/09 está dentro del patrón del mes, que fue de abastecimiento incompleto de forma sostenida, no de un hecho aislado.`;
+}
+
+function chart8(){
+  const el=$('c8'), H=el.clientWidth<520?250:300;
+  const labs=NET.map(r=>[r[0].slice(0,2),r[1]]); const F=frameN(el,H,labs,0,100000,20000,ky); const {W,m,y,x,band}=F;
+  const bw=Math.min(22,band*.3); let s=F.g;
+  NET.forEach((r,i)=>{
+    if(r[2]!=null){ s+=`<rect x="${x(i)-bw-1}" y="${y(r[2])}" width="${bw}" height="${y(0)-y(r[2])}" fill="${css('--ped')}" rx="2"/><rect x="${x(i)+1}" y="${y(r[3])}" width="${bw}" height="${y(0)-y(r[3])}" fill="${css('--env')}" rx="2"/>`; if(i===7) s+=T(x(i)+bw/2,y(r[3])-5,fmt(r[3]),{s:10}); }
+    else s+=`<text x="${x(i)}" y="${y(0)-6}" text-anchor="middle" font-size="10" fill="${css('--warn')}" font-family="IBM Plex Sans,sans-serif">envío</text><text x="${x(i)}" y="${y(0)-18}" text-anchor="middle" font-size="10" fill="${css('--warn')}" font-family="IBM Plex Sans,sans-serif">sin</text>`;
+  });
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Unidades enviadas a toda la red">${s}</svg>`;
+  hoverN(el,F,i=>{const r=NET[i];return `<b>${r[1]} ${r[0]}</b>`+(r[2]!=null?`<div><span>Pedido red</span><span class="m">${fmt(r[2])}</span></div><div><span>Enviado red</span><span class="m">${fmt(r[3])}</span></div><div><span>Cumplimiento</span><span class="m">${pct(r[3]/r[2])}</span></div>`:`<div><span>Sin despacho a ninguna sucursal</span></div>`)});
+  $('n8').innerHTML=`<b>Lectura:</b> el 28/09 no hubo despacho a ninguna de las 12 sucursales. El 29/09 el depósito despachó ${fmt(NET[7][3])} u. a la red, contra ${fmt(NET[3][3])} u. del viernes 25/09: una entrega mayor, con un cumplimiento de red del ${pct(NET[7][3]/NET[7][2])}. Reponer después de un corte de tres días es una decisión de planificación de Logística y Compras.`;
+}
+
+const OBS={V:{n:'Por venta',c:'--env',a:'La demanda superó lo disponible',r:'Ventas y Logística: cantidad y frecuencia de reposición'},
+ U:{n:'Error de UG asignada',c:'--k2',a:'Parámetro de góndola mal cargado',r:'Ventas: corregir UG y UD'},
+ S:{n:'Sin stock',c:'--bad',a:'Sin stock para enviar',r:'Compras: reponer el depósito'},
+ C:{n:'No enviado por CDR',c:'--k4',a:'Había stock y no se envió',r:'Logística: revisar el envío'}};
+// [codigo, marca, descripcion, UG, UD, venta, obs, stock inicial, recepcion, stock final, nota]
+const G=[
+[29734,'CIF','DETERG. LIQ.ULTRA LIMON 300ML',18,6,6,'V',7,12,13],
+[43486,'CIF','LIMP. LIQ.ANTIGR.EXPERT - D.PA 450 ML',30,15,24,'V',26,15,17],
+[45453,'HEROE','DETERG. LIQ.ULTRA LIMON - D.PA 450 ML',10,6,8,'U',13,0,5],
+[46452,'HEROE','DETERG. LIQ.ULTRA MZNA. - D.PA 450 ML',10,8,8,'U',9,12,13],
+[18353,'MAGISTRAL','DETERG.LIQ.ULTRA LIMON 750 ML',5,4,2,'U',4,0,2],
+[32217,'MAGISTRAL','DETERG.LIQ.ULTRA LIMON 500 ML',8,5,8,'U',3,10,5],
+[2703,'PINCILISTO','BROCHES MADERA 12 U',12,6,1,'U',0,0,-1,'ver movimientos y cuándo ingresó'],
+[2704,'PINCILISTO','BROCHES PLASTICO 12 U',12,6,1,'U',0,0,-1,'ver movimientos y cuándo ingresó'],
+[38550,'HEROE','SUAVIZANTE FR.MATINAL - D.PACK 900 ML',12,6,8,'V',2,18,12],
+[38549,'HEROE','SUAVIZANTE FR.SILVESTRE - D.PACK 900 ML',12,6,10,'V',6,16,12],
+[39470,'SUSSEX','ROLLO COCINA FAMILIAR X200 1 U',24,12,31,'V',4,36,9],
+[23505,'ECO DE LOS ANDES','AGUA MINERAL 2 LT',24,6,22,'V',19,24,21],
+[46704,'BAUDUCCO','CHOCOBISCUIT CHOC.C/LECHE 80 GR',6,3,1,'S',0,0,-1],
+[46705,'BAUDUCCO','CHOCOBISCUIT CHOC.BLANCO 80 GR',6,3,1,'S',0,0,-1],
+[46706,'BAUDUCCO','CHOCOBISCUIT CHOC.SEMI AMARGO 80 GR',6,3,1,'S',0,0,-1],
+[22382,'LINCOLN','GALLETITA CLASICA 153 GR',24,10,18,'V',5,30,17],
+[46165,'CRUNCHIPS','GALLETITA CHOCOLATE C/CHIPS 132 GR',12,4,6,'V',10,4,8],
+[16880,'MAURI','GALLETITA VAINILLA 160 GR',36,12,25,'V',21,42,38],
+[39019,'CHEETOS','PALITO DE MAIZ 140 GR',4,2,2,'V',2,0,0],
+[2656,'ROSAMONTE','YERBA MATE C/PALO 1 KG',12,6,8,'V',9,6,7],
+[29424,'SINCERIDAD','YERBA MATE C/PALO 500 GR',40,10,37,'V',34,40,37],
+[39154,'PLAYADITO','YERBA MATE C/PALO 500 GR',34,10,16,'V',26,20,30],
+[42399,'PIPORE','YERBA MATE SUBLIME 500GRS',14,6,7,'S',7,0,0],
+[42400,'PIPORE','YERBA MATE DESPALADA 500 GR',14,6,1,'S',0,0,-1],
+[45249,'DON BASILIO','YERBA MATE SEL.ESPECIAL 500 GR',18,6,4,'C',9,10,15],
+[45248,'DON BASILIO','YERBA MATE C/PALO 1 KG',12,5,14,'V',8,15,9],
+[32932,'DOLCA','CAFE INST.TOR. - POUCH 160 GR',12,6,13,'V',5,18,10],
+[43245,'DOLCA','CAFE INST.TOR.SUAVE - POUCH 100 GR',24,8,10,'V',20,8,18],
+[32090,'REINHARINA','HARINA TRIGO 000 1KG',15,6,18,'V',16,20,18],
+[34977,'GAONA','MAGDALENAS VAINILLA 200 GR',8,4,5,'V',6,8,9],
+[46168,'GAONA','GALLETITAS PEPAS 180GRS',10,4,17,'V',7,20,10],
+[26159,'GRANIX FRUTIGRAM','GALLETITA CHIA/LINO 240 GR',18,9,4,'V',12,0,8]];
+function gondola(){
+  const n=G.length, cnt=k=>G.filter(r=>r[6]===k).length;
+  const ok=G.filter(r=>r[7]+r[8]-r[5]===r[9]).length;
+  const sinRec=G.filter(r=>r[8]===0).length, recMenor=G.filter(r=>r[8]<r[5]).length;
+  const finLE0=G.filter(r=>r[9]<=0).length, finUD=G.filter(r=>r[9]<r[4]).length;
+  const iniMenorUD=G.filter(r=>r[7]<r[4]).length;
+  const kp=[['Productos listados',n,'sin stock en góndola el 29/09',''],
+    ['Por venta',cnt('V'),pct(cnt('V')/n)+' del listado',''],
+    ['Sin stock',cnt('S'),'Compras: depósito sin stock','bad'],
+    ['No enviado por CDR',cnt('C'),'Logística','']];
+  $('gk').innerHTML=kp.map(x=>`<div class="kpi ${x[3]}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="n">${x[2]}</div></div>`).join('');
+  const mx=Math.max(...Object.keys(OBS).map(cnt));
+  $('gc').innerHTML=Object.keys(OBS).map(k=>`<div class="cause"><div class="cl">${OBS[k].n}<small>${OBS[k].r}</small></div><div class="cb"><i style="width:${cnt(k)/mx*100}%;background:var(${OBS[k].c})"></i></div><div class="cv">${cnt(k)}</div></div>`).join('');
+  $('ng').innerHTML=`<b>Lectura:</b> ${cnt('V')} de ${n} productos se agotaron por venta, y ${sinRec} de ${n} no recibieron nada en el período (recepción en cero). ${cnt('S')} no tenían stock para enviar (Compras), ${cnt('C')} no fue enviado por el CDR (Logística) y ${cnt('U')} tienen la UG mal asignada (Ventas). El área sugerida sale de la causa que cargó Ventas; confirmala antes de presentarla.`;
+  const st=r=>r[8]===0?'bad':(r[8]<r[5]?'warn':'ok');
+  const stT={bad:'No llegó nada',warn:'Llegó menos de lo vendido',ok:'Llegó lo vendido o más'};
+  const nb=G.filter(r=>st(r)==='bad').length, nw=G.filter(r=>st(r)==='warn').length, no=G.filter(r=>st(r)==='ok').length;
+  $('gs').innerHTML=[['No llegó nada',nb,'de '+n+' productos sin recepción en el período','bad'],['Llegó menos de lo vendido',nw,'se repuso solo una parte',''],['Llegó lo vendido o más',no,'la mercadería sí llegó',''],['Quedó en cero o negativo',finLE0,'stock final del sistema','bad']].map(x=>`<div class="kpi ${x[3]}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="n">${x[2]}</div></div>`).join('');
+  $('gm').innerHTML=['V','U','S','C'].map(k=>{const rs=G.filter(r=>r[6]===k), c={bad:0,warn:0,ok:0};rs.forEach(r=>c[st(r)]++);
+    const seg=['bad','warn','ok'].map(s=>c[s]?`<span class="sg-${s}" style="width:${c[s]/rs.length*100}%">${c[s]}</span>`:'').join('');
+    return `<div class="st"><div class="cl">${OBS[k].n} <b>(${rs.length})</b><small style="display:block;color:var(--muted);font-size:11px">${OBS[k].r}</small></div><div class="sb">${seg}</div></div>`}).join('')+
+    `<div class="sk"><span><i class="sg-bad"></i>No llegó nada</span><span><i class="sg-warn"></i>Llegó menos de lo vendido</span><span><i class="sg-ok"></i>Llegó lo vendido o más</span></div>`;
+  const mxv=Math.max(...G.map(r=>Math.max(r[5],r[8])));
+  const msg={V:()=>{const k=G.filter(r=>r[6]==='V'&&r[8]>0).length;return `En ${k} de ${cnt('V')} llegó mercadería y aun así figuran sin stock en góndola: revisar la cantidad (UG) y a qué hora llega.`},U:()=>`En ${G.filter(r=>r[6]==='U'&&r[8]===0).length} de ${cnt('U')} no llegó nada: el parámetro mal cargado hizo que no se pidiera.`,S:()=>`Los ${cnt('S')} no tenían stock en el depósito para enviar: no llegó nada y terminaron en cero o negativo.`,C:()=>`El depósito tenía stock y no se envió por el CDR.`};
+  $('gl').innerHTML=['V','U','S','C'].map(k=>{
+    const rows=G.filter(r=>r[6]===k).sort((a,b)=>(a[8]/Math.max(a[5],1))-(b[8]/Math.max(b[5],1)));
+    return `<div class="gh"><span class="sw" style="background:var(${OBS[k].c})"></span>${OBS[k].n} <small>${rows.length} ${rows.length===1?'producto':'productos'} · ${msg[k]()}</small></div>`+
+    `<div class="pv pvh"><div>Producto</div><div class="n">Había</div><div style="text-align:center">◂ vendió · llegó ▸</div><div class="n">Quedó</div><div></div></div>`+
+    rows.map(r=>{const s=st(r);return `<div class="pv" title="UG ${r[3]} · UD ${r[4]}"><div>${r[1].toLowerCase().replace(/(^|\s)\S/g,c=>c.toUpperCase())} ${r[2].toLowerCase()}</div><div class="n">${r[7]}</div><div class="dv"><div class="l">${r[5]}<i style="width:${r[5]/mxv*100}%;background:var(--venta)"></i></div><div class="rr"><i style="width:${r[8]/mxv*100}%;background:var(--env)"></i>${r[8]}</div></div><div class="n ${r[9]<=0?'bad':''}">${r[9]}</div><div class="ch ${s}">${stT[s]}</div></div>`}).join('');
+  }).join('');
+  $('nl').innerHTML=`<b>Lectura:</b> ${nb} de ${n} productos no recibieron nada, ${nw} recibieron menos de lo que vendieron y ${no} recibieron lo vendido o más. Aun así, el stock final del sistema es positivo en ${n-finLE0} de ${n}: son productos sin stock en góndola que figuran con mercadería en el sistema. <b>A confirmar:</b> si esa mercadería estaba en la sucursal sin llegar a la góndola (por ejemplo, llegó tarde en el camión) y si la columna Venta es la del 29/09 o la de los días desde el último abastecimiento. Los saldos de −1 pueden ser ventas sin stock registrado; Ventas indicó revisar los movimientos de las brochas.`;
+  $('gtbl').innerHTML='<tr><th>Código</th><th>Marca</th><th>Descripción</th><th>UG</th><th>UD</th><th>Venta</th><th>Observación</th><th>Stock inicial</th><th>Recepción</th><th>Stock final</th></tr>'+
+   G.map(r=>`<tr><td class="mono">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="mono">${r[3]}</td><td class="mono">${r[4]}</td><td class="mono">${r[5]}</td><td>${OBS[r[6]].n}</td><td class="mono">${r[7]}</td><td class="mono">${r[8]}</td><td class="mono" style="${r[9]<=0?'color:var(--bad);font-weight:600':''}">${r[9]}</td></tr>`).join('');
+  return {n,v:cnt('V'),s:cnt('S'),c:cnt('C'),u:cnt('U'),sinRec};
+}
+
+function vpe(){
+  const mx=Math.max(...DATA.map(d=>Math.max(d.v||0,d.ped||0,d.env||0)));
+  const bar=(lab,val,col)=>`<div class="b"><i style="width:${val/mx*100*0.78}%;background:var(${col})"></i>${fmt(val)}</div>`;
+  $('vpe').innerHTML=DATA.map(d=>{
+    if(d.closed) return `<div class="vp"><div class="d"><b>${d.w} ${d.f}</b></div><div class="r">Supermercado cerrado: sin venta, sin pedido y sin envío.</div><div></div></div>`;
+    const noPick=!d.ped;
+    const side=noPick?`<div class="r">Sin picking ese día: vendió ${fmt(d.v)} u. sin recibir mercadería.</div>`:
+      `<div class="r">Pidió <b>${pct(d.ped/d.v)}</b> de lo que vendió<br>Le enviaron <b>${pct(d.env/d.ped)}</b> de lo pedido<br>Le enviaron <b class="${d.env/d.v<0.7?'bad':''}">${pct(d.env/d.v)}</b> de lo que vendió</div>`;
+    return `<div class="vp"><div class="d"><b>${d.w} ${d.f}</b></div><div class="bars">${bar('Vendió',d.v,'--venta')}${noPick?'':bar('Pidió',d.ped,'--ped')+bar('Envió',d.env,'--env')}</div>${side}</div>`;
+  }).join('');
+  $('nv').innerHTML=`<b>Semana (22 al 29/09):</b> vendió ${fmt(sV)} u., pidió ${fmt(sPed)} (${pct(sPed/sV)} de lo vendido) y le enviaron ${fmt(sEnv)} (${pct(sEnv/sPed)} de lo pedido, ${pct(sEnv/sV)} de lo vendido). Ningún día el envío llegó al 100% de lo pedido. Nota: parte de la venta (frescos, pesables y panificados) no se repone desde este depósito, así que "enviado ÷ vendido" es una lectura conservadora.`;
+}
+function all(){const GG=gondola();summary(GG);kpis();chart1();vpe();hrs();strip();chart3();chart4();chart5();chart6();chart7();chart8();table();}
+$('start').addEventListener('change',all);
+$('adj').addEventListener('change',all);
+let rt; window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(all,80)});
+all();
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(all);
+</script>
+
+</body></html>
