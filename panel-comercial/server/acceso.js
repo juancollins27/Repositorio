@@ -43,7 +43,9 @@ export function controlDeAcceso(req, res, next) {
     res.setHeader('WWW-Authenticate', 'Basic realm="Panel Comercial", charset="UTF-8"');
     return res.status(401).send('Hace falta usuario y contraseña para ver el panel.');
   }
-  if (cuenta.rol === 'lectura' && !['GET', 'HEAD'].includes(req.method)) {
+  // El consultor usa POST para recibir la consulta, pero sólo lee datos.
+  const soloLee = ['GET', 'HEAD'].includes(req.method) || req.path === '/api/asistente';
+  if (cuenta.rol === 'lectura' && !soloLee) {
     return res.status(403).json({ error: 'este usuario es de sólo lectura' });
   }
   req.rol = cuenta.rol;

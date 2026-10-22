@@ -25,6 +25,7 @@
     <button class="tab-btn" data-tab="productividad">Productividad</button>
     <button class="tab-btn" data-tab="quiebres">Quiebres de Stock</button>
     <button class="tab-btn" data-tab="plantel">Plantel y Horarios</button>
+    <button class="tab-btn" data-tab="consultor">Consultor IA</button>
   </nav>
 </header>
 
@@ -374,9 +375,40 @@
     </dialog>
   </section>
 
+  <!-- CONSULTOR IA -->
+  <section id="tab-consultor" class="tab-panel">
+    <div class="seccion-titulo">
+      <span class="eyebrow">Análisis · Recomendaciones</span>
+      <h2>Consultor IA</h2>
+    </div>
+    <div class="card cs-card">
+      <p class="card-nota">
+        Hacé una pregunta de gestión y el consultor consulta los datos del panel (productividad,
+        quiebres, plantel y ventas) para armar un diagnóstico con recomendaciones. Sólo lee datos:
+        no modifica nada, y del plantel ve totales por sucursal, no nombres.
+      </p>
+      <p class="hint" id="cs-aviso" hidden></p>
+      <div class="cs-sugerencias" id="cs-sugerencias">
+        <button type="button" class="cs-sugerencia">¿Qué sucursales tienen la peor productividad por hora en lo que va del año y por qué?</button>
+        <button type="button" class="cs-sugerencia">Armá un informe ejecutivo de quiebres de stock con las 3 acciones prioritarias.</button>
+        <button type="button" class="cs-sugerencia">¿La dotación programada en la grilla es coherente con las horas reales de cada sucursal?</button>
+        <button type="button" class="cs-sugerencia">Compará Market vs. Express y decime dónde está la mayor oportunidad de mejora.</button>
+      </div>
+      <div class="cs-chat" id="cs-chat" aria-live="polite"></div>
+      <div class="cs-entrada">
+        <textarea id="cs-mensaje" rows="2" placeholder="Escribí tu consulta… (Enter envía, Shift+Enter salto de línea)"></textarea>
+        <div class="cs-acciones">
+          <button type="button" class="link" id="cs-nueva">Nueva conversación</button>
+          <button type="button" id="cs-enviar">Consultar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <script src="app.js"></script>
 <script type="module" src="plantel.js"></script>
+<script src="consultor.js"></script>
 </body>
 </html>

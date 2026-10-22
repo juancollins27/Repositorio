@@ -465,6 +465,49 @@ tr.fila-alerta td { color: var(--status-critical); font-weight: 600; }
 .pl-columnas summary { cursor: pointer; }
 .pl-tenue { color: var(--muted); }
 
+/* ---------- consultor IA ---------- */
+
+.cs-card { max-width: 980px; }
+.cs-sugerencias { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.cs-sugerencias[hidden] { display: none; }
+button.cs-sugerencia {
+  background: var(--accent-tint);
+  color: var(--accent);
+  font-weight: 500;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+button.cs-sugerencia:hover { background: var(--surface-2); }
+.cs-chat { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1rem; }
+.cs-msg { border-radius: 10px; padding: 0.8rem 1rem; max-width: 100%; overflow-wrap: anywhere; }
+.cs-msg p { margin: 0 0 0.6rem; }
+.cs-msg p:last-child { margin-bottom: 0; }
+.cs-msg h3, .cs-msg h4, .cs-msg h5 { font-family: "Public Sans", system-ui, sans-serif; font-size: 0.95rem; margin: 0.9rem 0 0.4rem; }
+.cs-msg ul, .cs-msg ol { margin: 0 0 0.6rem; padding-left: 1.3rem; }
+.cs-msg code { font-family: "IBM Plex Mono", monospace; font-size: 0.85em; }
+.cs-msg hr { border: none; border-top: 1px solid var(--line); margin: 0.8rem 0; }
+.cs-usuario { align-self: flex-end; background: var(--accent); color: white; max-width: 80%; }
+.cs-agente { align-self: stretch; background: var(--surface-2); }
+.cs-pensando { color: var(--muted); font-style: italic; }
+.cs-error { background: var(--status-critical-tint); color: var(--status-critical); }
+.cs-tabla { overflow-x: auto; margin: 0 0 0.6rem; }
+.cs-tabla table { background: var(--surface); font-size: 0.84rem; }
+.cs-fuentes { font-size: 0.75rem; color: var(--muted); margin-top: 0.6rem !important; }
+.cs-entrada textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.92rem;
+  resize: vertical;
+  background: var(--surface);
+  color: var(--ink);
+}
+.cs-entrada textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.cs-acciones { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
+#cs-enviar:disabled { opacity: 0.6; cursor: wait; }
+
 /* ---------- usuario de sólo lectura ---------- */
 .solo-lectura form,
 .solo-lectura [data-borrar-objetivo], .solo-lectura [data-borrar-productividad], .solo-lectura [data-borrar-producto],

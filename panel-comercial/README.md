@@ -94,6 +94,13 @@ Abrí `http://localhost:3000`.
   excluido del repositorio con `.gitignore`. En Railway queda en el mismo
   volumen que el resto de los datos.
 
+- **Consultor IA**: un agente con IA (Claude, de Anthropic) al que se le
+  hacen preguntas de gestión en lenguaje natural ("¿qué sucursales tienen la
+  peor productividad por hora y por qué?", "armá un informe de quiebres con 3
+  acciones prioritarias") y responde como un consultor: conclusión,
+  diagnóstico con números y recomendaciones priorizadas. Para eso consulta
+  solo los datos del panel. Ver [Cómo funciona el Consultor IA](#cómo-funciona-el-consultor-ia).
+
 ## Arquitectura (igual patrón que el resto del repo)
 
 Mismo enfoque que `clases-matematica/`: Node.js + Express exponiendo una API
@@ -108,6 +115,7 @@ server/
     sucursales.js, vendedores.js, productos.js, ventas.js, objetivos.js
     dashboard.js   → agrega y calcula todos los KPIs del dashboard
     plantel.js     → API del módulo Plantel y Horarios
+    asistente.js   → Consultor IA: agente con Claude y sus herramientas
   plantel/
     analisis.js    → lógica pura: horarios, francos, nombres, cobertura
                      (la usa también el navegador, servida en /plantel-analisis.js)
@@ -118,6 +126,7 @@ test/
   plantel.test.js  → npm test
 public/
   plantel.js                         → pestaña Plantel y Horarios
+  consultor.js                       → pestaña Consultor IA (chat)
   index.html, styles.css, app.js   → dibuja los gráficos con SVG a mano,
                                       sin librerías externas
 ```
@@ -129,6 +138,45 @@ con generar el SVG desde JavaScript calculando escalas simples (valor →
 píxel). Esto evita sumar una dependencia pesada y hace que el código de
 `renderLineChart` / `renderBarChart` en `app.js` sea fácil de leer y de
 adaptar.
+
+## Cómo funciona el Consultor IA
+
+Es un **agente**: un modelo de IA que, además de conversar, puede usar
+herramientas. El ciclo, en `server/routes/asistente.js`, es:
+
+1. La consulta se manda a Claude junto con la lista de **herramientas**
+   disponibles. Cada herramienta es una consulta de sólo lectura a un
+   endpoint que el panel ya tenía (`/api/productividad/resumen`,
+   `/api/quiebres/:id`, `/api/plantel/resumen`, `/api/plantel/huecos`,
+   `/api/plantel/productividad`, `/api/dashboard`…).
+2. Claude decide qué datos necesita y pide una o varias herramientas.
+3. El servidor llama a esos endpoints (con el mismo usuario y contraseña de
+   quien pregunta) y le devuelve los resultados.
+4. Se repite hasta que tiene lo necesario y redacta la respuesta.
+
+La conversación se recuerda mientras el servidor esté encendido (2 horas
+sin uso como máximo), así que se pueden hacer preguntas de seguimiento.
+Debajo de cada respuesta se listan los datos que consultó.
+
+**Qué puede y qué no:**
+- **Sólo lee.** No tiene herramientas para crear, editar ni borrar, así que
+  también lo puede usar el usuario de sólo lectura.
+- **No ve datos personales.** Del plantel sólo recibe totales por sucursal
+  (personas, cajas, part time, vacantes, huecos), nunca nombres, partes
+  médicos ni ausencias individuales.
+- Las consultas y los datos que usa se envían a la API de Anthropic para
+  generar la respuesta.
+
+**Para agregarle capacidades** se suma un objeto a la lista `HERRAMIENTAS`
+de `asistente.js`: nombre, descripción (es lo que lee el modelo para saber
+cuándo usarla), parámetros y el endpoint que consulta. Cómo se comporta
+(tono, estructura de las respuestas) se ajusta en `instrucciones()`.
+
+**Modelo y costo:** usa `claude-opus-5-5` con esfuerzo `high`. Cada consulta
+hace varias llamadas a la API (una por ronda de herramientas), así que
+conviene mirar el consumo en la consola de Anthropic las primeras semanas.
+Si el modelo rechaza una consulta por sus filtros de seguridad, la API la
+reintenta sola con otro modelo (`fallbacks: "default"`).
 
 ## Publicar en Railway (segundo servicio en el mismo repo)
 
@@ -152,6 +200,7 @@ indicándole que la raíz del código es esta carpeta:
    | `APP_USUARIO` | opcional, por defecto `admin` | usuario del acceso completo |
    | `APP_PASSWORD_LECTURA` | otra contraseña | opcional: acceso de sólo lectura para compartir |
    | `APP_USUARIO_LECTURA` | opcional, por defecto `lectura` | usuario de sólo lectura |
+   | `ANTHROPIC_API_KEY` | tu clave de [console.anthropic.com](https://console.anthropic.com) | activa el Consultor IA (sin ella, la pestaña avisa que no está configurado) |
 
 5. **Settings → Networking → Generate Domain** para obtener la URL pública.
 6. Entrá con el usuario de acceso completo y en **Plantel y Horarios →
@@ -200,6 +249,8 @@ así no arranca en blanco.
 | PUT | `/api/plantel/minimos` | reemplazar la lista de mínimos de cobertura |
 | PUT | `/api/plantel/config` | días trabajados por semana (5 o 6) |
 | PUT | `/api/plantel/unidades/:clave` | cajas declaradas / sucursal vinculada |
+| GET | `/api/asistente/estado` | si el Consultor IA está configurado |
+| POST | `/api/asistente` | consulta al Consultor IA (`mensaje`, `conversacionId` opcional para seguir una conversación) |
 
 ## Ideas para seguir extendiendo
 

@@ -10,6 +10,7 @@ import dashboardRouter from './routes/dashboard.js';
 import productividadRouter from './routes/productividad.js';
 import quiebresRouter from './routes/quiebres.js';
 import plantelRouter from './routes/plantel.js';
+import asistenteRouter from './routes/asistente.js';
 import { controlDeAcceso, proteccionActiva } from './acceso.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -31,6 +32,7 @@ app.use('/api/dashboard', dashboardRouter);
 app.use('/api/productividad', productividadRouter);
 app.use('/api/quiebres', quiebresRouter);
 app.use('/api/plantel', plantelRouter);
+app.use('/api/asistente', asistenteRouter);
 
 // La lógica de horarios y francos es la misma en el servidor y en el
 // navegador (el formulario de edición pinta la grilla en vivo).
